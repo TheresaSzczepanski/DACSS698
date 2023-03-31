@@ -9,6 +9,25 @@ server <- function(input, output){
     hist(data)
   })
   
+  output$plot2 <- renderPlot({
+    data <- histdata[seq_len(input$slider)]
+    hist(data)
+  })
+  
+  output$progressBox <- renderValueBox({
+    valueBox(
+      paste0(25 + input$count, "%"), "Progress", icon = icon("list"),
+      color = "purple"
+    )
+  })
+  
+  output$approvalBox <- renderValueBox({
+    valueBox(
+      "80%", "Approval", icon = icon("thumbs-up", lib = "glyphicon"),
+      color = "yellow"
+    )
+  })
+  
 }
 #                    session) {
 # 
