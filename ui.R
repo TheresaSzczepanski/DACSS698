@@ -13,17 +13,17 @@ ui <- dashboardPage(
     sidebarMenu(
       menuItem("Home", tabName = "home", icon = icon("home")),
       menuItem("Science", tabName = "science", icon = icon("microscope"),
-               menuSubItem("Introductory Physics", tabName = "introPhysics"),
-              menuSubItem("G9 Physics Performance", tabName = "physicsPerf"),
+               menuSubItem("G9 Physics Content", tabName = "g9PhysicsContent"),
+              menuSubItem("G9 Physics Performance", tabName = "g9PhysicsPerf"),
                   
-               menuSubItem("Grade 6", tabName = "grade6"))
+               menuSubItem("G9 Physics Analysis", tabName = "g9PhysicsAnalysis"))
     )
   ),
   ##Body content
   dashboardBody(# Boxes need to be put in a row (or column)
     tabItems(
       #First tab content
-      tabItem(tabName = "dashboard",
+      tabItem(tabName = "home",
         fluidRow(
           box(plotOutput("plot1", height = 250)),
           box(
@@ -39,8 +39,11 @@ ui <- dashboardPage(
               
       ),
       #Physics Content
-      tabItem("introPhysics",
-              span(h1("What were our students asked?", style = "color:navy")),
+      tabItem("g9PhysicsContent",
+              span(h1("What were our students asked?")), #style = "color:black")),
+              HTML("<p>Explore all released questions in the  
+                   <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=ALL'>
+                   digital item library</a>.</p>"),
               h3("Content Reporting Category"),
               # fluidRow(
               #   box(
@@ -59,18 +62,21 @@ ui <- dashboardPage(
                 ),
               
               
-              h3("Science Practice Category", color = "navy"),
+              h3("Science Practice Category"),
+              HTML("<p>Explore all released questions by   
+                   <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=PracticeCategory'>
+                   science practice category</a>.</p>"),
               fluidRow(
                 # A static valueBox
                 
-                valueBox(1, "Investigating \n Questioning", icon = icon("question"), color = "light-blue"),
+                valueBox(1, "Investigating and Questioning", icon = icon("question"), color = "light-blue"),
                 
-                valueBox(19, "Mathematics and \n Data", icon = icon("calculator"), color = "light-blue"),
+                valueBox(19, "Mathematics and Data", icon = icon("calculator"), color = "light-blue"),
                 
-                valueBox(17, "Evidence, Reasoning \n and Modeling", icon = icon("magnifying-glass-chart"), color = "light-blue") 
+                valueBox(17, "Evidence, Reasoning, and Modeling", icon = icon("magnifying-glass-chart"), color = "light-blue") 
     
                 
-                #valueBox(4, "No Practice Reported", color = "aqua")
+               # valueBox(4,  "no category reported ", color = "aqua")
                 
               ),
               h3("Question Type"),
@@ -82,9 +88,9 @@ ui <- dashboardPage(
                
               )
             ),
-      tabItem("physicsPerf", "Introductory Physics Performance tab content"),
+      tabItem("g9PhysicsPerf", "Introductory Physics Performance tab content"),
       
-      tabItem("grade6", "grade 6 tab content", 
+      tabItem("g9PhysicsAnalysis", "G9 Introductory Physics Analysis Content", 
               fluidRow(
                 box(plotOutput("plot2", height = 250)),
                 box(
@@ -94,10 +100,12 @@ ui <- dashboardPage(
               ),
               fluidRow(
                 # A static valueBox
-                valueBox(10 * 2, "Expressions and Equations", icon = icon("credit-card"), color = "red"),
+                valueBox(10 * 2, "Expressions and Equations", 
+                         icon = icon("credit-card"), color = "red"),
                 
-                # Dynamic valueBoxes as Sample Code
-                valueBoxOutput("progressBox"),
+                # Test Data Table output
+                box(width = NULL, solidHeader = TRUE,
+                    dataTableOutput("SG9Item")),
                 
                 valueBoxOutput("approvalBox")
               )
