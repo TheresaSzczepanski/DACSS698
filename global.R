@@ -2,13 +2,15 @@
 
 source('dependencies.R')
 
+## Read In Function Library---------------------------------------------------
 
 ## Function Read-in Item
-
-#Item analysis Read in Function: Input: sheet_name, subject, grade; return: student item report for a given grade level and subject.
-
+#Item analysis Read in Function: Input: sheet_name, subject, grade; return: 
+#student item report for a given grade level and subject.
 #subject must be: "math", "ela", or "science"
 
+#To-Do1: Update this function to include ELA
+#To-Do2: Update this function for column names that are added to the item reports
 read_item<-function(sheet_name, subject, grade){
   subject_item<-case_when(
     subject == "science"~"sitem",
@@ -52,5 +54,40 @@ read_item<-function(sheet_name, subject, grade){
   }
 
 }
+## Create Item Data Frame-----------------------------------###
 SG9_item <-read_item("SG9Physics", "science", 9)
 SG9_item
+
+##Exam Content Functions -----------------------#####
+
+##Function for dataframe with points available by reporting category
+
+Reporting_Cat_Points <-function(subject, reportingCategory, subjectItemDF){
+  if(subject == "science"){
+    subjectItemDF%>%
+      select(`sitem`, `item Possible Points`, `Reporting Category`)%>%
+      group_by(`Reporting Category`)%>%
+      summarize(available_points = sum(`item Possible Points`, na.rm=TRUE))#%>%
+      #filter(`Reporting Category` == reportingCategory)
+    
+    
+  }
+  else if (subject == "math"){
+    subjectItemDF%>%
+      select(`mitem`, `item Possible Points`, `Reporting Category`)%>%
+      group_by(`Reporting Category`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE))
+    
+  } 
+  else if (subject == "ELA"){
+    subjectItemDF%>%
+      select(`eitem`, `item Possible Points`, `Reporting Category`)%>%
+      group_by(`Reporting Category`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE))
+    
+  }
+}
+
+## Create Exam Content Data Frames
+
+SG9_EN_PTS<-Reporting_Cat_Points("science", "MF", SG9_item)

@@ -14,7 +14,7 @@ server <- function(input, output){
     hist(data)
   })
   
-  output$SG9Item <- renderDataTable(SG9_item)
+  #output$SG9Item <- renderDataTable(SG9_item)
   
   output$approvalBox <- renderValueBox({
     valueBox(

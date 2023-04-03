@@ -88,7 +88,16 @@ ui <- dashboardPage(
                
               )
             ),
-      tabItem("g9PhysicsPerf", "Introductory Physics Performance tab content"),
+      tabItem("g9PhysicsPerf", "Introductory Physics Performance tab content",
+      fluidRow(
+        # A static valueBox Extracting value from dataframe
+        valueBox(SG9_item[1,6], "Expressions and Equations", 
+                 icon = icon("credit-card"), color = "red")
+        
+        # box(width = NULL, solidHeader = TRUE,
+        #     dataTableOutput("SG9Item")),
+        )
+      ),
       
       tabItem("g9PhysicsAnalysis", "G9 Introductory Physics Analysis Content", 
               fluidRow(
@@ -100,12 +109,12 @@ ui <- dashboardPage(
               ),
               fluidRow(
                 # A static valueBox
-                valueBox(10 * 2, "Expressions and Equations", 
+                valueBox(SG9_EN_PTS[1,2], "Expressions and Equations", 
                          icon = icon("credit-card"), color = "red"),
                 
                 # Test Data Table output
-                box(width = NULL, solidHeader = TRUE,
-                    dataTableOutput("SG9Item")),
+               # box(width = NULL, solidHeader = TRUE,
+                #    dataTableOutput("SG9Item")),
                 
                 valueBoxOutput("approvalBox")
               )
