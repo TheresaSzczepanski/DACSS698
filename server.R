@@ -17,8 +17,9 @@ server <- function(input, output){
   #output$SG9Item <- renderDataTable(SG9_item)
   
   output$approvalBox <- renderValueBox({
+    MF_Points<-Reporting_Cat_Points("science", "MF", SG9_item)[1,2]
     valueBox(
-      "80%", "Approval", icon = icon("thumbs-up", lib = "glyphicon"),
+      MF_Points, "MF TEST", icon = icon("thumbs-up", lib = "glyphicon"),
       color = "yellow"
     )
   })

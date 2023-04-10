@@ -41,10 +41,12 @@ ui <- dashboardPage(
       #Physics Content
       tabItem("g9PhysicsContent",
               span(h1("What were our students asked?")), #style = "color:black")),
-              HTML("<p>Explore all released questions in the  
+              HTML("<p>The 2022 Introductory Physics exam consisted of 42 questions
+              (5 Constructed Response and 37 Selected Response) worth in total 60 points.
+              Explore all released questions in the  
                    <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=ALL'>
                    digital item library</a>.</p>"),
-              h3("Content Reporting Category"),
+              h3("Available Points by Content Category"),
               # fluidRow(
               #   box(
               #   title = "What was the content make-up of the exam?", background = "light-blue",
@@ -54,44 +56,47 @@ ui <- dashboardPage(
              
               fluidRow(
                 # A static valueBox
-                  valueBox( scales::percent(22/42), "Motions, Forces, \n and Interactions", icon = icon("rocket"), color = "blue"),
-                  valueBox( 10 * 2,"Energy",icon = icon("atom"), color = "blue"),
-                  valueBox(10 * 2, "Waves", icon = icon("wave-square"), color = "blue")
+                  #valueBox( scales::percent(22/42), "Motions, Forces, \n and Interactions", icon = icon("rocket"), color = "blue"),
+                
+                 valueBox(SG9_MF_PTS[1,2], "Motions, Forces, and Interactions", icon = icon("rocket"), color = "blue"),
+                 valueBox( SG9_EN_PTS[1,2],"Energy",icon = icon("atom"), color = "blue"),
+                  valueBox(SG9_WA_PTS[1,2], "Waves", icon = icon("wave-square"), color = "blue")
                 
               
                 ),
               
               
-              h3("Science Practice Category"),
+              h3("Available Points by Practice Category"),
               HTML("<p>Explore all released questions by   
                    <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=PracticeCategory'>
-                   science practice category</a>.</p>"),
+                   science practice category</a>. \n Note that there are 5 unreleased
+                   items which do not have a listed science practice category. </p>"),
               fluidRow(
                 # A static valueBox
                 
-                valueBox(1, "Investigating and Questioning", icon = icon("question"), color = "light-blue"),
+                valueBox(SG9_IQ_PTS[1,2], "Investigating and Questioning", icon = icon("question"), color = "light-blue"),
                 
-                valueBox(19, "Mathematics and Data", icon = icon("calculator"), color = "light-blue"),
+                valueBox(SG9_MD_PTS[1,2], "Mathematics and Data", icon = icon("calculator"), color = "light-blue"),
                 
-                valueBox(17, "Evidence, Reasoning, and Modeling", icon = icon("magnifying-glass-chart"), color = "light-blue") 
+                valueBox(SG9_ERM_PTS[1,2], "Evidence, Reasoning, and Modeling", icon = icon("magnifying-glass-chart"), color = "light-blue") 
     
                 
                # valueBox(4,  "no category reported ", color = "aqua")
                 
               ),
-              h3("Question Type"),
+              h3("Available Points by Question Type"),
               fluidRow(
                 # A static valueBox
-                valueBox(37, "Selected Response", icon=icon("square-check")),
+                valueBox(SG9_SR_PTS[1,2], "Selected Response", icon=icon("square-check")),
                 
-                valueBox(5, "Constructed Response",icon=icon("pencil") )
+                valueBox(SG9_CR_PTS[1,2], "Constructed Response",icon=icon("pencil") )
                
               )
             ),
       tabItem("g9PhysicsPerf", "Introductory Physics Performance tab content",
       fluidRow(
         # A static valueBox Extracting value from dataframe
-        valueBox(SG9_item[1,6], "Expressions and Equations", 
+        valueBox(SG9_item[16,6], "Expressions and Equations", 
                  icon = icon("credit-card"), color = "red")
         
         # box(width = NULL, solidHeader = TRUE,
@@ -109,7 +114,7 @@ ui <- dashboardPage(
               ),
               fluidRow(
                 # A static valueBox
-                valueBox(SG9_EN_PTS[1,2], "Expressions and Equations", 
+                valueBox("20%", "Expressions and Equations", 
                          icon = icon("credit-card"), color = "red"),
                 
                 # Test Data Table output
