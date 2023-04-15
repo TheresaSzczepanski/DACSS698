@@ -240,11 +240,8 @@ Practice_Cat_Points <-function(subject, practiceCategory, subjectItemDF){
       select(`sitem`, `item Possible Points`, `Practice Category`)%>%
       group_by(`Practice Category`)%>%
       summarize(available_points = sum(`item Possible Points`, na.rm=TRUE))%>%
-      filter(`Practice Category` == practiceCategory)#%>%
-    
-    
-    
-  }
+      filter(`Practice Category` == practiceCategory)
+    }
   ##To-Do Need to Identify Equivalent to Practice category in math (perhaps representation type?)
   # else if (subject == "math"){
   #   subjectItemDF%>%
@@ -253,7 +250,7 @@ Practice_Cat_Points <-function(subject, practiceCategory, subjectItemDF){
   #     summarise(available_points = sum(`item Possible Points`, na.rm=TRUE))
   
   #} 
-  else if (subject == "ELA"){
+  else if (subject == "ela"){
     subjectItemDF%>%
       select(`eitem`, `item Possible Points`, `Cluster`)%>%
       group_by(`Cluster`)%>%
@@ -285,7 +282,7 @@ Reporting_Cat_Points <-function(subject, reportingCategory, subjectItemDF){
       filter(`Reporting Category` == reportingCategory)
     
   } 
-  else if (subject == "ELA"){
+  else if (subject == "ela"){
     subjectItemDF%>%
       select(`eitem`, `item Possible Points`, `Reporting Category`)%>%
       group_by(`Reporting Category`)%>%
@@ -435,22 +432,41 @@ MG5_NT_PTS<-Reporting_Cat_Points("math", "NT", MG5_item)
 MG5_OA_PTS<-Reporting_Cat_Points("math", "OA", MG5_item)
 
 #Reporting Categories: G10 ELA: 
-# 
 #"LA":E, 
 #"RE":Reading
 # "WR": Writing,
-
+#
 # Question Type: G10 ELA:
 #"ES": Essay,  "SR": Selected Response
-
 
 ELA10_ES_PTS<-Item_Type_Points("ES", ELA10_item)
 #ELA10_SA_PTS<-Item_Type_Points("SA", ELA10_item)
 ELA10_SR_PTS<-Item_Type_Points("SR", ELA10_item)
 
-ELA10_LA_PTS<-Reporting_Cat_Points("ela", "LA", ELA10_item)
 ELA10_RE_PTS<-Reporting_Cat_Points("ela", "RE", ELA10_item)
 ELA10_WR_PTS<-Reporting_Cat_Points("ela", "WR", ELA10_item)
 
+## Writing language Points
+ELA10_ESLA_item<-ELA10_item %>%
+  filter(str_detect(eitem,"LA"))
+ELA10_ESLA_pts<-Reporting_Cat_Points("ela", "LA", ELA10_ESLA_item)
+
+## Reading Language Points
+ELA10_RELA_item<-ELA10_item %>%
+  filter(!str_detect(eitem,"LA"))
+ELA10_RELA_PTS<-Reporting_Cat_Points("ela", "LA", ELA10_RELA_item)
+
+# Domain Cluster Points
+
+ELA10_CS_PTS<-Practice_Cat_Points("ela", "Craft and Structure", ELA10_item)
+ELA10_CV_PTS<-Practice_Cat_Points("ela", "Conventions", ELA10_item)
+ELA10_KD_PTS<-Practice_Cat_Points("ela", "Key Ideas and Details", ELA10_item)
+ELA10_KL_PTS<-Practice_Cat_Points("ela", "Knowledge of Language", ELA10_item)
+ELA10_ID_PTS<-Practice_Cat_Points("ela", "Idea Development", ELA10_item)
+ELA10_IK_PTS<-Practice_Cat_Points("ela", "Integration of Knowledge and Ideas", ELA10_item)
+ELA10_VA_PTS<-Practice_Cat_Points("ela", "Vocabulary Acquisition and Use", ELA10_item)
+ELA10_WC_PTS<-Practice_Cat_Points("ela", "Writing Combined (Conv/Idea Dev)", ELA10_item)
+#SG5_ERM_PTS<-Practice_Cat_Points("science", "Evidence, Reasoning, and Modeling", SG5_item)
+#SG5_IQ_PTS<-Practice_Cat_Points("science", "Investigations and Questioning", SG5_item)
 ##-----------------------------------------------------------------------------
 

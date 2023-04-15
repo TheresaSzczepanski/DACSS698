@@ -29,7 +29,7 @@ ui <- dashboardPage(
                menuSubItem("G6 Math Content", tabName = "g6MathContent"),
                menuSubItem("G5 Math Content", tabName = "g5MathContent")
               ),
-      menuItem("ELA", tabName = "ela", icon = icon("book"),
+      menuItem("ELA", tabName = "ela", icon = icon("book-bookmark"),
                menuSubItem("G10 ELA Content", tabName = "g10ELAContent")
       )
       
@@ -293,6 +293,8 @@ ui <- dashboardPage(
                 # valueBox(4,  "no category reported ", color = "aqua")
                 
               ),
+              
+              
               h3("Available Points by Question Type"),
               fluidRow(
                 # A static valueBox
@@ -624,7 +626,7 @@ ui <- dashboardPage(
       tabItem("g10ELAContent",
               span(h1("How were students assessed?")), #style = "color:black")),
               HTML("<p>The 2022 G10 ELA exam consisted of 28 selected response 
-              questions and two essays worth in <b>total 35 points </b>.
+              questions and two essays worth in <b>total 51 points </b>.
                Explore the released materials:
                 <ul>
                 <li> Complete and Score released questions in the  
@@ -650,38 +652,61 @@ ui <- dashboardPage(
               h3("Available Points by Content Category"),
               
               fluidRow(
-                #To-Do: figure out why these points aren't displaying
-                valueBox(ELA10_LA_PTS[1,2], HTML("<p> Language </p>"), icon = icon("earth"), color = "blue"),
-                valueBox( ELA10_RE_PTS[1,2],"Reading",icon = icon("book"), color = "blue"),
-                valueBox( ELA10_WR_PTS[1,2],"Writing",icon = icon("pen"), color = "blue")
+                valueBox( ELA10_RE_PTS[1,2],HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
+                valueBox(ELA10_RELA_PTS[1,2], HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
+                
+                
+              ),
+              fluidRow(
+                valueBox( ELA10_WR_PTS[1,2],HTML("<p>Writing: <br> Idea Development <p>"),icon = icon("file-pen"), color = "blue"),
+                valueBox( ELA10_ESLA_pts[1,2],HTML("<p>Writing: <br> Language Conv. <p>"),icon = icon("indent"), color = "blue")
               ),
             
               
               
               h3("Available Points by Domain Cluster"),
-              HTML("<p>Explore all released questions by   
-                   <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Grade%208&view=PracticeCategory'>
-                   science practice category</a>. \n Note that there are 15 released items and 26 unreleased
-                   items which do not have a listed science practice category. </p>"),
+              
+              
               fluidRow(
                 # A static valueBox
                 
-                valueBox(SG8_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
+                valueBox(ELA10_CS_PTS[1,2], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "light-blue"),
+                valueBox(ELA10_CV_PTS[1,2], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "light-blue"),
+                valueBox(ELA10_ID_PTS[1,2], HTML("<p> Idea Development </p>"), icon = icon("lightbulb"), color = "light-blue"),
                 
-                valueBox(SG8_MD_PTS[1,2], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+                valueBox(ELA10_IK_PTS[1,2], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
                 
-                valueBox(SG8_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+                valueBox(ELA10_KD_PTS[1,2], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "light-blue"), 
+                
+               # valueBox(ELA10_KL_PTS[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "light-blue"),
+                
+                valueBox(ELA10_VA_PTS[1,2], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue") 
                 
                 
-                # valueBox(4,  "no category reported ", color = "aqua")
+               
+                
+              ),
+              h3("Available Points by Text Type and Quantity"),
+              fluidRow(
+                # A static valueBox
+                valueBox(ELA10_SR_PTS[1,2], HTML("<p> Fiction </p>"), icon=icon("book")),
+                
+                valueBox(ELA10_ES_PTS[1,2], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper") )
+                
+              ),
+              fluidRow(
+                # A static valueBox
+                valueBox(ELA10_SR_PTS[1,2], HTML("<p> Single Text </p>"), icon=icon("1")),
+                
+                valueBox(ELA10_ES_PTS[1,2], HTML("<p> Multiple Texts </p>"),icon=icon("right-left") )
                 
               ),
               h3("Available Points by Question Type"),
               fluidRow(
                 # A static valueBox
-                valueBox(ELA10_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+                valueBox(ELA10_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check"), color = "teal"),
                 
-                valueBox(ELA10_ES_PTS[1,2], HTML("<p> Essay </p>"),icon=icon("pencil") )
+                valueBox(ELA10_ES_PTS[1,2], HTML("<p> Essay: Lang. <br>& Idea Dev.</p>"),icon=icon("file-pen"), color = "teal" )
                 
               )
       )
