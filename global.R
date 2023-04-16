@@ -100,7 +100,11 @@ read_item_xwalk<-function(file_path, sheet_name, subject){
   }
   else if(subject == "math"){
     read_excel(file_path, sheet = sheet_name, 
-               skip = 1, col_names= c(subject_item, "Type", "Reporting Category", "Standard", "item Desc", "delete", "item Possible Points","delete","RT Percent Points", "State Percent Points", "RT-State Diff"))%>%
+               skip = 1, col_names= c(subject_item, "Type", "Reporting Category", 
+                                      "Standard", "item Desc", "delete", 
+                                      "item Possible Points","delete",
+                                      "RT Percent Points", "State Percent Points", 
+                                      "RT-State Diff"))%>%
       select(!contains("delete"))%>%
       filter(!str_detect(mitem,"Legend|legend"))%>%
       mutate(mitem = as.character(mitem))%>%
@@ -312,7 +316,27 @@ ELA_NumText_Points<-function(value, subjectItemDF){
     filter(`Num Texts` == value)
 }
 
+## Median RT % points earned vs. State % points earned:
+# To-Do: Create Private Raw Item report and read in function, join to student 
+# item and calculate strict percent points earned and points available to get, 
+# authentic RT-State diff
 
+ELA_NumText_RTState<-function(value, subjectItemDF){
+  subjectItemDF%>%
+    select(contains("item"), `Num Texts`, `RT-State Diff`, `State Percent Points`, 
+           `RT Percent Points`)%>%
+    group_by(`Num Texts`)%>%
+    summarise(median_RTSTateDiff = median(`RT-State Diff`, na.rm = TRUE))%>%
+    filter(`Num Texts`==value)
+}
+ELA_Fiction_RTState<-function(value, subjectItemDF){
+  subjectItemDF%>%
+    select(contains("item"), `Fiction-Non`, `RT-State Diff`, `State Percent Points`, 
+           `RT Percent Points`)%>%
+    group_by(`Fiction-Non`)%>%
+    summarise(median_RTSTateDiff = median(`RT-State Diff`, na.rm = TRUE))%>%
+    filter(`Fiction-Non`==value)
+}
 
 ## Create Points Available by Category Data Frames------------------------------
 #Reporting Categories: HS Bio: "EC", "EV", "HE", "MO" for science grade levels
@@ -492,6 +516,12 @@ ELA10_F_PTS<-ELA_Fiction_Points("Fiction", ELA10_item)
 ELA10_NF_PTS<-ELA_Fiction_Points("Non-Fiction", ELA10_item)
 ELA10_2Text_PTS<-ELA_NumText_Points("More than 1", ELA10_item)
 ELA10_1Text_PTS<-ELA_NumText_Points("1.0", ELA10_item)
+
+# Med RT-State Diff
+ELA10_F_Diff<-ELA_Fiction_RTState("Fiction", ELA10_item)
+ELA10_NF_Diff<-ELA_Fiction_RTState("Non-Fiction", ELA10_item)
+ELA10_2Text_Diff<-ELA_NumText_RTState("More than 1", ELA10_item)
+ELA10_1Text_Diff<-ELA_NumText_RTState("1.0", ELA10_item)
 
 #SG5_ERM_PTS<-Practice_Cat_Points("science", "Evidence, Reasoning, and Modeling", SG5_item)
 #SG5_IQ_PTS<-Practice_Cat_Points("science", "Investigations and Questioning", SG5_item)
