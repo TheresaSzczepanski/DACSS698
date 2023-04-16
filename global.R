@@ -291,6 +291,28 @@ Reporting_Cat_Points <-function(subject, reportingCategory, subjectItemDF){
     
   }
 }
+## ELA xWalk Points Functions--------------------------------------------------
+# Fiction-Non
+ELA_Fiction_Points<-function(value, subjectItemDF){
+  subjectItemDF%>%
+    select(contains("item"), `Fiction-Non`)%>%
+    filter(!str_detect(eitem,"LA|WR"))%>%
+    group_by(`Fiction-Non`)%>%
+    summarise(available_points = sum(`item Possible Points`, na.rm=TRUE))%>%
+    filter(`Fiction-Non` == value)
+}
+
+## Num Texts
+ELA_NumText_Points<-function(value, subjectItemDF){
+  subjectItemDF%>%
+    select(contains("item"), `Num Texts`)%>%
+    filter(!str_detect(eitem,"LA|WR"))%>%
+    group_by(`Num Texts`)%>%
+    summarise(available_points = sum(`item Possible Points`, na.rm=TRUE))%>%
+    filter(`Num Texts` == value)
+}
+
+
 
 ## Create Points Available by Category Data Frames------------------------------
 #Reporting Categories: HS Bio: "EC", "EV", "HE", "MO" for science grade levels
@@ -466,6 +488,11 @@ ELA10_ID_PTS<-Practice_Cat_Points("ela", "Idea Development", ELA10_item)
 ELA10_IK_PTS<-Practice_Cat_Points("ela", "Integration of Knowledge and Ideas", ELA10_item)
 ELA10_VA_PTS<-Practice_Cat_Points("ela", "Vocabulary Acquisition and Use", ELA10_item)
 ELA10_WC_PTS<-Practice_Cat_Points("ela", "Writing Combined (Conv/Idea Dev)", ELA10_item)
+ELA10_F_PTS<-ELA_Fiction_Points("Fiction", ELA10_item)
+ELA10_NF_PTS<-ELA_Fiction_Points("Non-Fiction", ELA10_item)
+ELA10_2Text_PTS<-ELA_NumText_Points("More than 1", ELA10_item)
+ELA10_1Text_PTS<-ELA_NumText_Points("1.0", ELA10_item)
+
 #SG5_ERM_PTS<-Practice_Cat_Points("science", "Evidence, Reasoning, and Modeling", SG5_item)
 #SG5_IQ_PTS<-Practice_Cat_Points("science", "Investigations and Questioning", SG5_item)
 ##-----------------------------------------------------------------------------

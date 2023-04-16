@@ -686,19 +686,20 @@ ui <- dashboardPage(
                
                 
               ),
-              h3("Available Points by Text Type and Quantity"),
+              h3("Available Points by Text Type"),
               fluidRow(
                 # A static valueBox
-                valueBox(ELA10_SR_PTS[1,2], HTML("<p> Fiction </p>"), icon=icon("book")),
+                valueBox(ELA10_F_PTS[1,2], HTML("<p> Fiction </p>"), icon=icon("book")),
                 
-                valueBox(ELA10_ES_PTS[1,2], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper") )
+                valueBox(ELA10_NF_PTS[1,2], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper") )
                 
               ),
+              h3("Available Points by Text Quantity"),
               fluidRow(
                 # A static valueBox
-                valueBox(ELA10_SR_PTS[1,2], HTML("<p> Single Text </p>"), icon=icon("1")),
+                valueBox(ELA10_1Text_PTS[1,2], HTML("<p> Single Text </p>"), icon=icon("1")),
                 
-                valueBox(ELA10_ES_PTS[1,2], HTML("<p> Multiple Texts </p>"),icon=icon("right-left") )
+                valueBox(ELA10_2Text_PTS[1,2], HTML("<p> Multiple Texts </p>"),icon=icon("right-left") )
                 
               ),
               h3("Available Points by Question Type"),
