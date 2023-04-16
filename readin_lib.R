@@ -176,6 +176,10 @@ read_MCAS_Prelim_Private<-function(format, file_path){
       #Recode all ordinal variable as factors
       
       mutate(grade = as.factor(grade))%>%
+      #To-do mutate the idea items so they join with item report
+      # mutate(idea1 = recode_factor(idea1,
+      #                              "BL"=-2,
+      #                              "OT"=-1))%>%
       #To-Do will need to change this for each year...perhaps don't use this variable?
       mutate(grade2021 = as.factor(grade2021))%>%
       mutate(eperf2 = recode_factor(eperf2,
@@ -286,5 +290,66 @@ read_MCAS_Prelim_Private<-function(format, file_path){
   
 }
 
-student_itemDF<-read_MCAS_Prelim_Private("csv","data/PrivProtectSpring2022_MCAS_full_preliminary_results_04830305.csv")
-view(student_itemDF)
+## Function to Create Tidy Student Performance Data Frame by Grade level and Subject
+## subject = science, math, ela, physics, or biology
+Student_Perf<-function(subject, gradeLevel, rawStudentPerfDF){
+  if(subject == "science"){
+    select( rawStudentPerfDF, grade, contains("scaleds"), contains("perf"), contains("sgp"),
+            contains("sitem"), contains("attempt"), contains("subject"))%>%
+      filter((grade == gradeLevel) & sattempt != "N")%>%
+      pivot_longer(contains("sitem"), names_to = "sitem", values_to = "sitem_score")
+        }else if (subject == "physics"){
+          select( rawStudentPerfDF, grade, contains("scaleds"), contains("perf"), 
+                  contains("sgp"),contains("sitem"), contains("attempt"), contains("subject"))%>%
+            filter((grade == gradeLevel) & sattempt != "N")%>%
+            filter(ssubject==6)%>%
+            pivot_longer(contains("sitem"), names_to = "sitem", values_to = "sitem_score")
+        }#To-Do add function for other science tests?
+        else if (subject == "math"){
+          select( rawStudentPerfDF, grade, contains("scaleds"), contains("perf"), 
+          contains("sgp"),contains("mitem"), contains("attempt"), contains("subject"))%>%
+            filter((grade == gradeLevel) & mattempt != "N")%>%
+            pivot_longer(contains("mitem"), names_to = "mitem", values_to = "mitem_score")
+          }
+#T0-Do review the eitem codings in raw performance data
+          else if(subject == "ela"){
+            select(rawStudentPerfDF, grade, contains("scaleds"),contains("perf"), 
+                    contains("sgp"),contains("eitem"),contains("conv"),contains("idea"),
+                   contains("attempt"), contains("subject"))%>%
+              filter((grade == gradeLevel) & eattempt != "N")%>%
+              #to-do figure out how to add the essay idea and conv. sub scores
+              pivot_longer(contains("eitem"), 
+                           names_to = "eitem", values_to = "eitem_score")
+          }
+}
+### Function to Join Student Performance to Item Report
+
+##to-do this is copied in from old file,needs to be adjusted
+
+Student_Item_Perf<-function(subject, gradeLevel, subjectItemDF, studentPerfDF){
+  if(subject == "science"){
+    select( studentPerfDF, contains("sitem"), gender, grade, yrsinsch,
+            race, IEP, `plan504`, sattempt, sperflev, sperf2, sscaleds)%>%
+      filter((grade == gradeLevel) & sattempt != "N")%>%
+      pivot_longer(contains("sitem"), names_to = "sitem", values_to = "sitem_score")%>%
+      left_join(subjectItemDF, "sitem")
+  }
+  if(subject == "math"){
+    select( studentPerfDF, contains("mitem"), gender, grade, yrsinsch,
+            race, IEP, `plan504`, mattempt, mperflev, mperf2, mscaleds)%>%
+      filter((grade == gradeLevel) & mattempt != "N")%>%
+      pivot_longer(contains("mitem"), names_to = "mitem", values_to = "mitem_score")%>%
+      left_join(subjectItemDF, "mitem")
+  }#T0-Do review the eitem codings in raw performance data
+  if(subject == "ela"){
+    select( studentPerfDF, contains("eitem"), gender, grade, yrsinsch,
+            race, IEP, `plan504`, eattempt, eperflev, eperf2, escaleds)%>%
+      filter((grade == gradeLevel) & eattempt != "N")%>%
+      pivot_longer(contains("eitem"), names_to = "eitem", values_to = "eitem_score")%>%
+      left_join(subjectItemDF, "eitem")
+  }
+}
+
+## Function to Join Student Performance Data Frame with Item Data Frame
+
+

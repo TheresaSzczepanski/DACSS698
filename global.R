@@ -50,8 +50,21 @@ ELA10_item<-Join_ELAItem_Cluster(ELA10_item, ELA_cluster_xwalk)
 
 ## Create Student Item Data Frames----------------------------------------------
 student_itemDF<-read_MCAS_Prelim_Private("csv","data/PrivProtectSpring2022_MCAS_full_preliminary_results_04830305.csv")
+#%>%
+ # pivot_longer(contains("sitem"), names_to = "sitem", values_to = "sitem_score")
+  #pivot_longer(contains("mitem"), names_to = "mitem", values_to = "mitem_score")%>%
+  #pivot_longer(contains("eitem"), names_to = "eitem", values_to = "eitem_score")
 view(student_itemDF)
-
+SG9_student_perf<-Student_Perf("physics", 9, student_itemDF)
+view(SG9_student_perf)
+SG8_student_perf<-Student_Perf("science", 8, student_itemDF)
+view(SG8_student_perf)
+SG5_student_perf<-Student_Perf("science", 5, student_itemDF)
+view(SG5_student_perf)
+MG10_student_perf<-Student_Perf("math", 10, student_itemDF)
+view(MG10_student_perf)
+ELAG10_student_perf<-Student_Perf("ela", 10, student_itemDF)
+view(ELAG10_student_perf)
 ## Create Points Available by Category Data Frames------------------------------
 #Reporting Categories: HS Bio: "EC", "EV", "HE", "MO" for science grade levels
 #G11 Biology
