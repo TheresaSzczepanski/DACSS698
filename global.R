@@ -96,8 +96,21 @@ SG9_IQ_PTS<-Practice_Cat_Points("science", "Investigations and Questioning", SG9
 SG9_MF_PTS<-Reporting_Cat_Points("science", "MF", SG9_item)
 SG9_EN_PTS<-Reporting_Cat_Points("science", "EN", SG9_item)
 SG9_WA_PTS<-Reporting_Cat_Points("science", "WA", SG9_item)
+#RT-State Diff
+#G9 Intro Physics
+#To-Do: Change the name of this function to mimic the points naming convention?
+SG9_CR_Diff<-Type_RTState_Diff("science", "CR", SG9_student_item_perf)
+view(SG9_CR_Diff)
+SG9_SR_Diff<-Type_RTState_Diff("science", "SR", SG9_student_item_perf)
+SG9_MD_Diff<-Practice_Cat_Diff("science", "Mathematics and Data", SG9_student_item_perf)
+view(SG9_MD_Diff)
+SG9_ERM_Diff<-Practice_Cat_Diff("science", "Evidence, Reasoning, and Modeling", SG9_student_item_perf)
+SG9_IQ_Diff<-Practice_Cat_Diff("science", "Investigations and Questioning", SG9_student_item_perf)
+SG9_MF_PTS<-Reporting_Cat_Points("science", "MF", SG9_item)
+SG9_EN_PTS<-Reporting_Cat_Points("science", "EN", SG9_item)
+SG9_WA_PTS<-Reporting_Cat_Points("science", "WA", SG9_item)
 
-#Reporting Categories: Intro Physics: "MF", "EN", "WA" for science grade levels
+#Reporting Categories: G8STE: "MF", "EN", "WA" for science grade levels
 #G8 STE: "ES", ""LS", PS", "TE"
 SG8_CR_PTS<-Item_Type_Points("CR", SG8_item)
 SG8_SR_PTS<-Item_Type_Points("SR", SG8_item)
@@ -243,9 +256,9 @@ EG10_RELA_PTS<-Reporting_Cat_Points("ela", "LA", EG10_RELA_item)
 
 ##Diff by LA and RE (need to separate WR LA and RE LA)
 EG10_LA_Diff<-Cat_RTState_Diff("ela", "LA", EG10_student_item_perf)
-view(EG10_LA_Diff)
+#view(EG10_LA_Diff)
 EG10_RE_Diff<-Cat_RTState_Diff("ela", "RE", EG10_student_item_perf)
-view(EG10_RE_Diff)
+#view(EG10_RE_Diff)
 
 # Domain Cluster Points
 

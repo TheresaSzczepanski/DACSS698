@@ -94,7 +94,9 @@ Practice_Cat_Diff <-function(subject, practiceCategory, studentItemPerfDF){
   
   #} 
   else if(subject == "ela"){
+   # if (practiceCategory == ""){
     studentItemPerfDF%>%
+      #filter(!str_detect(eitem,"LA|WR"))%>%
       group_by(`Cluster`)%>%
       summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
                 RT_points = sum(`eitem_score`, na.rm = TRUE),
@@ -103,6 +105,18 @@ Practice_Cat_Diff <-function(subject, practiceCategory, studentItemPerfDF){
       mutate(`RT-State Diff` =RT_Percent_Points-State_Percent_Points)%>%
       filter(`Cluster` == practiceCategory)
     
+    # #}else{
+    #  studentItemPerfDF%>%
+    #   filter(!str_detect(eitem,"LA|WR"))%>%
+    #   group_by(`Cluster`)%>%
+    #   summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+    #             RT_points = sum(`eitem_score`, na.rm = TRUE),
+    #             RT_Percent_Points = 100*round(RT_points/available_points,2),
+    #             State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+    #   mutate(`RT-State Diff` =RT_Percent_Points-State_Percent_Points)%>%
+    #   filter(`Cluster` == practiceCategory)
+    # 
+    # }
   }
 }    
 

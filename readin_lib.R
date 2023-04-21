@@ -317,6 +317,16 @@ Student_Perf<-function(subject, gradeLevel, rawStudentPerfDF){
                     contains("sgp"),contains("eitem"),contains("conv"),contains("idea"),
                    contains("attempt"), contains("subject"))%>%
               filter((grade == gradeLevel) & eattempt != "N")%>%
+              #ToDo-Address the Essay subscores and Item report join to student performance
+              # mutate(eitem_conv1 = recode_factor(conv1,
+              #                                     "OT" = "0.0",
+              #                                     "0.0" = "0.0",
+              #                                     "1.0" = "1.0",
+              #                                     "2.0" = "2.0",
+              #                                     "3.0" = "3.0",
+              #                                     "4.0" = "4.0",
+              #                                     "5.0" = "5.0"))%>%
+              # mutate(eitem_conv1 = as.integer(eitem_conv1))%>%
               #to-do figure out how to add the essay idea and conv. sub scores
               pivot_longer(contains("eitem"), 
                            names_to = "eitem", values_to = "eitem_score")
@@ -324,7 +334,6 @@ Student_Perf<-function(subject, gradeLevel, rawStudentPerfDF){
 }
 ### Function to Join Student Performance Data Frame to Subject Item Data Frame
 
-##to-do this is copied in from old file,needs to be adjusted
 
 Student_Item_Perf<-function(subject, subjectItemDF, studentPerfDF){
   if(subject == "science"){
@@ -332,12 +341,12 @@ Student_Item_Perf<-function(subject, subjectItemDF, studentPerfDF){
     
   }else if(subject == "math"){
     item_type = "mitem"
-  }#T0-Do review the eitem codings in raw performance data for the essay subscores...
+  }#To-Do review the eitem codings in raw performance data for the essay subscores...
   ##and address in crosswalk or read?
   else if(subject == "ela"){
     item_type = "eitem"
   }
-  left_join(studentPerfDF, subjectItemDF, item_type)%>%
+  left_join(subjectItemDF, studentPerfDF, item_type)%>%
     filter(`item Possible Points` >=1)
   
 }

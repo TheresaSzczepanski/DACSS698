@@ -176,10 +176,7 @@ ui <- dashboardPage(
               
               
               h3("Available Points by Practice Category"),
-              HTML("<p>Explore all released questions by   
-                   <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=PracticeCategory'>
-                   science practice category</a>. \n Note that there are 5 unreleased
-                   items which do not have a listed science practice category. </p>"),
+             
               fluidRow(
                 # A static valueBox
                 
@@ -202,37 +199,51 @@ ui <- dashboardPage(
                
               )
             ),
-      tabItem("g9PhysicsPerf", "Introductory Physics Performance tab content",
-      fluidRow(
-        # A static valueBox Extracting value from dataframe
-        valueBox(SG9_item[16,6], "Expressions and Equations", 
-                 icon = icon("credit-card"), color = "red")
-        
-        # box(width = NULL, solidHeader = TRUE,
-        #     dataTableOutput("SG9Item")),
-        )
-      ),
-      
-      tabItem("g9PhysicsAnalysis", "G9 Introductory Physics Analysis Content", 
-              fluidRow(
-                box(plotOutput("plot2", height = 250)),
-                box(
-                  title = "Controls",
-                  sliderInput("slider", "Number of observations:", 1, 100, 50)
-                )
-              ),
+      tabItem("g9PhysicsPerf", 
+              
+              span(h1("How did our students perform?")), #style = "color:black")),
+              
+              h3("Content Category"),
+              
+              
               fluidRow(
                 # A static valueBox
-                valueBox("20%", "Expressions and Equations", 
-                         icon = icon("credit-card"), color = "red"),
+                #valueBox( scales::percent(22/42), "Motions, Forces, \n and Interactions", icon = icon("rocket"), color = "blue"),
                 
-                # Test Data Table output
-               # box(width = NULL, solidHeader = TRUE,
-                #    dataTableOutput("SG9Item")),
+                valueBox(SG9_MF_PTS[1,2], HTML("<p> Motions, Forces, <br> and Interactions </p>"), icon = icon("rocket"), color = "blue"),
+                valueBox( SG9_EN_PTS[1,2],"Energy",icon = icon("atom"), color = "blue"),
+                valueBox(SG9_WA_PTS[1,2], "Waves", icon = icon("wave-square"), color = "blue")
                 
-                valueBoxOutput("approvalBox")
-              )
+                
+              ),
               
+              
+              h3("Practice Category"),
+              HTML("<p>Explore all released questions by   
+                   <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=PracticeCategory'>
+                   science practice category</a>. \n Note that there are 5 unreleased
+                   items which do not have a listed science practice category. </p>"),
+              fluidRow(
+                # A static valueBox
+                
+                valueBox(SG9_IQ_Diff[1,6], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
+                
+                valueBox(SG9_MD_Diff[1,6], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+                
+                valueBox(SG9_ERM_Diff[1,6], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+                
+                
+                # valueBox(4,  "no category reported ", color = "aqua")
+                
+              ),
+              h3("Available Points by Question Type"),
+              fluidRow(
+                # A static valueBox
+                valueBox(SG9_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+                
+                valueBox(SG9_CR_Diff[1,6], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+                
+              )
       ),
      
       #G8 Sci Content
@@ -722,13 +733,13 @@ ui <- dashboardPage(
               
               fluidRow(
                 valueBox( EG10_RE_Diff[1,6],HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
-                #valueBox(EG10_RELA_PTS[1,2], HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
+                valueBox(EG10_RELA_PTS[1,2], HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
                 
                 
               ),
               fluidRow(
-               # valueBox( EG10_WR_PTS[1,2],HTML("<p>Writing: <br> Idea Development <p>"),icon = icon("file-pen"), color = "blue"),
-                valueBox( EG10_LA_Diff[1,6],HTML("Language Conv. <p>"),icon = icon("indent"), color = "blue")
+                valueBox( -6,HTML("<p>Writing: <br> Idea Development <p>"),icon = icon("file-pen"), color = "blue"),
+                valueBox( -4,HTML("<p> Writing: Language Conv. <p>"),icon = icon("indent"), color = "blue")
               ),
               
               
