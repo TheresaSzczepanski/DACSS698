@@ -653,14 +653,14 @@ ui <- dashboardPage(
               h3("Available Points by Content Category"),
               
               fluidRow(
-                valueBox( ELA10_RE_PTS[1,2],HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
-                valueBox(ELA10_RELA_PTS[1,2], HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
+                valueBox( EG10_RE_PTS[1,2],HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
+                valueBox(EG10_RELA_PTS[1,2], HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
                 
                 
               ),
               fluidRow(
-                valueBox( ELA10_WR_PTS[1,2],HTML("<p>Writing: <br> Idea Development <p>"),icon = icon("file-pen"), color = "blue"),
-                valueBox( ELA10_ESLA_pts[1,2],HTML("<p>Writing: <br> Language Conv. <p>"),icon = icon("indent"), color = "blue")
+                valueBox( EG10_WR_PTS[1,2],HTML("<p>Writing: <br> Idea Development <p>"),icon = icon("file-pen"), color = "blue"),
+                valueBox( EG10_ESLA_pts[1,2],HTML("<p>Writing: <br> Language Conv. <p>"),icon = icon("indent"), color = "blue")
               ),
             
               
@@ -671,17 +671,17 @@ ui <- dashboardPage(
               fluidRow(
                 # A static valueBox
                 
-                valueBox(ELA10_CS_PTS[1,2], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "light-blue"),
-                valueBox(ELA10_CV_PTS[1,2], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "light-blue"),
-                valueBox(ELA10_ID_PTS[1,2], HTML("<p> Idea Development </p>"), icon = icon("lightbulb"), color = "light-blue"),
+                valueBox(EG10_CS_PTS[1,2], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "light-blue"),
+                valueBox(EG10_CV_PTS[1,2], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "light-blue"),
+                valueBox(EG10_ID_PTS[1,2], HTML("<p> Idea Development </p>"), icon = icon("lightbulb"), color = "light-blue"),
                 
-                valueBox(ELA10_IK_PTS[1,2], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
+                valueBox(EG10_IK_PTS[1,2], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
                 
-                valueBox(ELA10_KD_PTS[1,2], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "light-blue"), 
+                valueBox(EG10_KD_PTS[1,2], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "light-blue"), 
                 
-               # valueBox(ELA10_KL_PTS[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "light-blue"),
+               # valueBox(EG10_KL_PTS[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "light-blue"),
                 
-                valueBox(ELA10_VA_PTS[1,2], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue") 
+                valueBox(EG10_VA_PTS[1,2], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue") 
                 
                 
                
@@ -690,25 +690,25 @@ ui <- dashboardPage(
               h3("Available Points by Text Type"),
               fluidRow(
                 # A static valueBox
-                valueBox(ELA10_F_PTS[1,2], HTML("<p> Fiction </p>"), icon=icon("book")),
+                valueBox(EG10_F_PTS[1,2], HTML("<p> Fiction </p>"), icon=icon("book")),
                 
-                valueBox(ELA10_NF_PTS[1,2], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper") )
+                valueBox(EG10_NF_PTS[1,2], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper") )
                 
               ),
               h3("Available Points by Text Quantity"),
               fluidRow(
                 # A static valueBox
-                valueBox(ELA10_1Text_PTS[1,2], HTML("<p> Single Text </p>"), icon=icon("1")),
+                valueBox(EG10_1Text_PTS[1,2], HTML("<p> Single Text </p>"), icon=icon("1")),
                 
-                valueBox(ELA10_2Text_PTS[1,2], HTML("<p> Multiple Texts </p>"),icon=icon("right-left") )
+                valueBox(EG10_2Text_PTS[1,2], HTML("<p> Multiple Texts </p>"),icon=icon("right-left") )
                 
               ),
               h3("Available Points by Question Type"),
               fluidRow(
                 # A static valueBox
-                valueBox(ELA10_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check"), color = "teal"),
+                valueBox(EG10_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check"), color = "teal"),
                 
-                valueBox(ELA10_ES_PTS[1,2], HTML("<p> Essay: Lang. <br>& Idea Dev.</p>"),icon=icon("file-pen"), color = "teal" )
+                valueBox(EG10_ES_PTS[1,2], HTML("<p> Essay: Lang. <br>& Idea Dev.</p>"),icon=icon("file-pen"), color = "teal" )
                 
               )
       ),
@@ -718,38 +718,38 @@ ui <- dashboardPage(
       tabItem("g10ELAPerformance",
               span(h1("How did our students perform?")), #style = "color:black")),
               
-              h3("Median RT-State Diff by Content Category"),
+              h3("RT-State Diff by Content Category"),
               
               fluidRow(
-                valueBox( ELA10_RE_PTS[1,2],HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
-                valueBox(ELA10_RELA_PTS[1,2], HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
+                valueBox( EG10_RE_Diff[1,6],HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
+                #valueBox(EG10_RELA_PTS[1,2], HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
                 
                 
               ),
               fluidRow(
-                valueBox( ELA10_WR_PTS[1,2],HTML("<p>Writing: <br> Idea Development <p>"),icon = icon("file-pen"), color = "blue"),
-                valueBox( ELA10_ESLA_pts[1,2],HTML("<p>Writing: <br> Language Conv. <p>"),icon = icon("indent"), color = "blue")
+               # valueBox( EG10_WR_PTS[1,2],HTML("<p>Writing: <br> Idea Development <p>"),icon = icon("file-pen"), color = "blue"),
+                valueBox( EG10_LA_Diff[1,6],HTML("Language Conv. <p>"),icon = icon("indent"), color = "blue")
               ),
               
               
               
-              h3("Median RT-State Diff by Domain Cluster"),
+              h3("RT-State Diff by Domain Cluster"),
               
               
               fluidRow(
                 # A static valueBox
                 
-                valueBox(ELA10_CS_PTS[1,2], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "light-blue"),
-                valueBox(ELA10_CV_PTS[1,2], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "light-blue"),
-                valueBox(ELA10_ID_PTS[1,2], HTML("<p> Idea Development </p>"), icon = icon("lightbulb"), color = "light-blue"),
+                valueBox(EG10_CS_Diff[1,6], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "light-blue"),
+                valueBox(EG10_CV_Diff[1,2], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "light-blue"),
+                valueBox(EG10_ID_Diff[1,2], HTML("<p> Idea Development </p>"), icon = icon("lightbulb"), color = "light-blue"),
                 
-                valueBox(ELA10_IK_PTS[1,2], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
+                valueBox(EG10_IK_Diff[1,2], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
                 
-                valueBox(ELA10_KD_PTS[1,2], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "light-blue"), 
+                valueBox(EG10_KD_Diff[1,2], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "light-blue"), 
                 
-                # valueBox(ELA10_KL_PTS[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "light-blue"),
+                # valueBox(EG10_KL_Diff[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "light-blue"),
                 
-                valueBox(ELA10_VA_PTS[1,2], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue") 
+                valueBox(EG10_VA_Diff[1,2], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue") 
                 
                 
                 
@@ -758,25 +758,25 @@ ui <- dashboardPage(
               h3("Median RT-State Diff by Text Type"),
               fluidRow(
                 # A static valueBox
-                valueBox(ELA10_F_Diff[1,2], HTML("<p> Fiction </p>"), icon=icon("book")),
+                valueBox(EG10_F_Diff[1,6], HTML("<p> Fiction </p>"), icon=icon("book")),
                 
-                valueBox(ELA10_NF_Diff[1,2], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper") )
-                
-              ),
-              h3("Median RT-State Diff by Text Quantity"),
-              fluidRow(
-                # A static valueBox
-                valueBox(ELA10_1Text_Diff[1,2], HTML("<p> Single Text </p>"), icon=icon("1")),
-                
-                valueBox(ELA10_2Text_Diff[1,2], HTML("<p> Multiple Texts </p>"),icon=icon("right-left") )
+                valueBox(EG10_NF_Diff[1,6], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper") )
                 
               ),
-              h3("Median RT-State Diff by Question Type"),
+              h3("RT-State Diff by Text Quantity"),
               fluidRow(
                 # A static valueBox
-                valueBox(ELA10_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check"), color = "teal"),
+                valueBox(EG10_1Text_Diff[1,6], HTML("<p> Single Text </p>"), icon=icon("1")),
                 
-                valueBox(ELA10_ES_PTS[1,2], HTML("<p> Essay: Lang. <br>& Idea Dev.</p>"),icon=icon("file-pen"), color = "teal" )
+                valueBox(EG10_2Text_Diff[1,6], HTML("<p> Multiple Texts </p>"),icon=icon("right-left") )
+                
+              ),
+              h3("RT-State Diff by Question Type"),
+              fluidRow(
+                # A static valueBox
+                valueBox(EG10_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check"), color = "teal"),
+                
+                valueBox(EG10_ES_Diff[1,6], HTML("<p> Essay: Lang. <br>& Idea Dev.</p>"),icon=icon("file-pen"), color = "teal" )
                 
               )
       )

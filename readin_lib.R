@@ -322,34 +322,26 @@ Student_Perf<-function(subject, gradeLevel, rawStudentPerfDF){
                            names_to = "eitem", values_to = "eitem_score")
           }
 }
-### Function to Join Student Performance to Item Report
+### Function to Join Student Performance Data Frame to Subject Item Data Frame
 
 ##to-do this is copied in from old file,needs to be adjusted
 
-Student_Item_Perf<-function(subject, gradeLevel, subjectItemDF, studentPerfDF){
+Student_Item_Perf<-function(subject, subjectItemDF, studentPerfDF){
   if(subject == "science"){
-    select( studentPerfDF, contains("sitem"), gender, grade, yrsinsch,
-            race, IEP, `plan504`, sattempt, sperflev, sperf2, sscaleds)%>%
-      filter((grade == gradeLevel) & sattempt != "N")%>%
-      pivot_longer(contains("sitem"), names_to = "sitem", values_to = "sitem_score")%>%
-      left_join(subjectItemDF, "sitem")
+    item_type = "sitem"
+    
+  }else if(subject == "math"){
+    item_type = "mitem"
+  }#T0-Do review the eitem codings in raw performance data for the essay subscores...
+  ##and address in crosswalk or read?
+  else if(subject == "ela"){
+    item_type = "eitem"
   }
-  if(subject == "math"){
-    select( studentPerfDF, contains("mitem"), gender, grade, yrsinsch,
-            race, IEP, `plan504`, mattempt, mperflev, mperf2, mscaleds)%>%
-      filter((grade == gradeLevel) & mattempt != "N")%>%
-      pivot_longer(contains("mitem"), names_to = "mitem", values_to = "mitem_score")%>%
-      left_join(subjectItemDF, "mitem")
-  }#T0-Do review the eitem codings in raw performance data
-  if(subject == "ela"){
-    select( studentPerfDF, contains("eitem"), gender, grade, yrsinsch,
-            race, IEP, `plan504`, eattempt, eperflev, eperf2, escaleds)%>%
-      filter((grade == gradeLevel) & eattempt != "N")%>%
-      pivot_longer(contains("eitem"), names_to = "eitem", values_to = "eitem_score")%>%
-      left_join(subjectItemDF, "eitem")
-  }
+  left_join(studentPerfDF, subjectItemDF, item_type)%>%
+    filter(`item Possible Points` >=1)
+  
 }
 
-## Function to Join Student Performance Data Frame with Item Data Frame
+
 
 

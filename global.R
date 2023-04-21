@@ -42,12 +42,12 @@ MG5_item <-read_item("data/2022MCASItemAnalysis.xlsx", "MG5", "math")
 ELA_cluster_xwalk<-read_ela_clusterXwalk("data/2022MCASItemXWalk.xlsx", "ELA_cluster_xwalk")
 
 #G10 ELA
-ELA10_item<-read_item("data/2022MCASItemAnalysis.xlsx", "EG10", "ela")
-ELA10_xWalk<-read_item_xwalk("data/2022MCASItemXWalk.xlsx", "ELA10_xwalk", 
+EG10_item<-read_item("data/2022MCASItemAnalysis.xlsx", "EG10", "ela")
+EG10_xWalk<-read_item_xwalk("data/2022MCASItemXWalk.xlsx", "EG10_xwalk", 
                            "ela")
-ELA10_item<-Join_Item_Xwalk("ela", ELA10_item, ELA10_xWalk)
-ELA10_item<-Join_ELAItem_Cluster(ELA10_item, ELA_cluster_xwalk)
-
+EG10_item<-Join_Item_Xwalk("ela", EG10_item, EG10_xWalk)
+EG10_item<-Join_ELAItem_Cluster(EG10_item, ELA_cluster_xwalk)
+view(EG10_item)
 ## Create Student Item Data Frames----------------------------------------------
 student_itemDF<-read_MCAS_Prelim_Private("csv","data/PrivProtectSpring2022_MCAS_full_preliminary_results_04830305.csv")
 #%>%
@@ -56,16 +56,24 @@ student_itemDF<-read_MCAS_Prelim_Private("csv","data/PrivProtectSpring2022_MCAS_
   #pivot_longer(contains("eitem"), names_to = "eitem", values_to = "eitem_score")
 view(student_itemDF)
 SG9_student_perf<-Student_Perf("physics", 9, student_itemDF)
-view(SG9_student_perf)
+SG9_student_item_perf<-Student_Item_Perf("science", SG9_item, SG9_student_perf)
+view(SG9_student_item_perf)
+#view(SG9_student_perf)
 SG8_student_perf<-Student_Perf("science", 8, student_itemDF)
-view(SG8_student_perf)
+#view(SG8_student_perf)
 SG5_student_perf<-Student_Perf("science", 5, student_itemDF)
-view(SG5_student_perf)
+#view(SG5_student_perf)
 MG10_student_perf<-Student_Perf("math", 10, student_itemDF)
-view(MG10_student_perf)
-ELAG10_student_perf<-Student_Perf("ela", 10, student_itemDF)
-view(ELAG10_student_perf)
-## Create Points Available by Category Data Frames------------------------------
+#view(MG10_student_perf)
+MG10_student_item_perf<-Student_Item_Perf("math", MG10_item, MG10_student_perf)
+#view(MG10_student_item_perf)
+EG10_student_perf<-Student_Perf("ela", 10, student_itemDF)
+EG10_student_item_perf<-Student_Item_Perf("ela", EG10_item, EG10_student_perf)
+view(EG10_student_item_perf)
+#view(EG10_student_perf)
+
+
+## Create Points Available and RT-State Diff by Category Data Frames------------------------------
 #Reporting Categories: HS Bio: "EC", "EV", "HE", "MO" for science grade levels
 #G11 Biology
 SG11_CR_PTS<-Item_Type_Points("CR", SG11_item)
@@ -212,43 +220,76 @@ MG5_OA_PTS<-Reporting_Cat_Points("math", "OA", MG5_item)
 # Question Type: G10 ELA:
 #"ES": Essay,  "SR": Selected Response
 
-ELA10_ES_PTS<-Item_Type_Points("ES", ELA10_item)
-#ELA10_SA_PTS<-Item_Type_Points("SA", ELA10_item)
-ELA10_SR_PTS<-Item_Type_Points("SR", ELA10_item)
+EG10_ES_PTS<-Item_Type_Points("ES", EG10_item)
+EG10_SR_PTS<-Item_Type_Points("SR", EG10_item)
 
-ELA10_RE_PTS<-Reporting_Cat_Points("ela", "RE", ELA10_item)
-ELA10_WR_PTS<-Reporting_Cat_Points("ela", "WR", ELA10_item)
+###RT-State Diff by Question Type
+EG10_SR_Diff<-Type_RTState_Diff("ela", "SR", EG10_student_item_perf)
+EG10_ES_Diff<-Type_RTState_Diff("ela", "ES", EG10_student_item_perf)
+
+
+EG10_RE_PTS<-Reporting_Cat_Points("ela", "RE", EG10_item)
+EG10_WR_PTS<-Reporting_Cat_Points("ela", "WR", EG10_item)
 
 ## Writing language Points
-ELA10_ESLA_item<-ELA10_item %>%
+EG10_ESLA_item<-EG10_item %>%
   filter(str_detect(eitem,"LA"))
-ELA10_ESLA_pts<-Reporting_Cat_Points("ela", "LA", ELA10_ESLA_item)
+EG10_ESLA_pts<-Reporting_Cat_Points("ela", "LA", EG10_ESLA_item)
 
 ## Reading Language Points
-ELA10_RELA_item<-ELA10_item %>%
+EG10_RELA_item<-EG10_item %>%
   filter(!str_detect(eitem,"LA"))
-ELA10_RELA_PTS<-Reporting_Cat_Points("ela", "LA", ELA10_RELA_item)
+EG10_RELA_PTS<-Reporting_Cat_Points("ela", "LA", EG10_RELA_item)
+
+##Diff by LA and RE (need to separate WR LA and RE LA)
+EG10_LA_Diff<-Cat_RTState_Diff("ela", "LA", EG10_student_item_perf)
+view(EG10_LA_Diff)
+EG10_RE_Diff<-Cat_RTState_Diff("ela", "RE", EG10_student_item_perf)
+view(EG10_RE_Diff)
 
 # Domain Cluster Points
 
-ELA10_CS_PTS<-Practice_Cat_Points("ela", "Craft and Structure", ELA10_item)
-ELA10_CV_PTS<-Practice_Cat_Points("ela", "Conventions", ELA10_item)
-ELA10_KD_PTS<-Practice_Cat_Points("ela", "Key Ideas and Details", ELA10_item)
-ELA10_KL_PTS<-Practice_Cat_Points("ela", "Knowledge of Language", ELA10_item)
-ELA10_ID_PTS<-Practice_Cat_Points("ela", "Idea Development", ELA10_item)
-ELA10_IK_PTS<-Practice_Cat_Points("ela", "Integration of Knowledge and Ideas", ELA10_item)
-ELA10_VA_PTS<-Practice_Cat_Points("ela", "Vocabulary Acquisition and Use", ELA10_item)
-ELA10_WC_PTS<-Practice_Cat_Points("ela", "Writing Combined (Conv/Idea Dev)", ELA10_item)
-ELA10_F_PTS<-ELA_Fiction_Points("Fiction", ELA10_item)
-ELA10_NF_PTS<-ELA_Fiction_Points("Non-Fiction", ELA10_item)
-ELA10_2Text_PTS<-ELA_NumText_Points("More than 1", ELA10_item)
-ELA10_1Text_PTS<-ELA_NumText_Points("1.0", ELA10_item)
+EG10_CS_PTS<-Practice_Cat_Points("ela", "Craft and Structure", EG10_item)
+EG10_CS_Diff<-Practice_Cat_Diff("ela", "Craft and Structure", EG10_student_item_perf)
+EG10_CV_PTS<-Practice_Cat_Points("ela", "Conventions", EG10_item)
+EG10_CV_Diff<-Practice_Cat_Points("ela", "Conventions", EG10_student_item_perf)
+view(EG10_CV_Diff)
+EG10_KD_PTS<-Practice_Cat_Points("ela", "Key Ideas and Details", EG10_item)
+EG10_KL_PTS<-Practice_Cat_Points("ela", "Knowledge of Language", EG10_item)
+EG10_ID_PTS<-Practice_Cat_Points("ela", "Idea Development", EG10_item)
+EG10_IK_PTS<-Practice_Cat_Points("ela", "Integration of Knowledge and Ideas", EG10_item)
+EG10_VA_PTS<-Practice_Cat_Points("ela", "Vocabulary Acquisition and Use", EG10_item)
+EG10_WC_PTS<-Practice_Cat_Points("ela", "Writing Combined (Conv/Idea Dev)", EG10_item)
+EG10_KD_Diff<-Practice_Cat_Points("ela", "Key Ideas and Details", EG10_student_item_perf)
+view(EG10_KD_Diff)
+EG10_KL_Diff<-Practice_Cat_Points("ela", "Knowledge of Language", EG10_student_item_perf)
+view(EG10_KL_Diff)
+EG10_ID_Diff<-Practice_Cat_Points("ela", "Idea Development", EG10_student_item_perf)
+view(EG10_ID_Diff)
+EG10_IK_Diff<-Practice_Cat_Points("ela", "Integration of Knowledge and Ideas", EG10_student_item_perf)
+view(EG10_IK_Diff)
+EG10_VA_Diff<-Practice_Cat_Points("ela", "Vocabulary Acquisition and Use", EG10_student_item_perf)
+view(EG10_VA_Diff)
+EG10_WC_Diff<-Practice_Cat_Points("ela", "Writing Combined (Conv/Idea Dev)", EG10_student_item_perf)
+view(EG10_WC_Diff)
 
-# Med RT-State Diff
-ELA10_F_Diff<-ELA_Fiction_RTState("Fiction", ELA10_item)
-ELA10_NF_Diff<-ELA_Fiction_RTState("Non-Fiction", ELA10_item)
-ELA10_2Text_Diff<-ELA_NumText_RTState("More than 1", ELA10_item)
-ELA10_1Text_Diff<-ELA_NumText_RTState("1.0", ELA10_item)
+# xWalk Items Pts & RT-State Diff
+EG10_F_PTS<-ELA_Fiction_Points("Fiction", EG10_item)
+EG10_NF_PTS<-ELA_Fiction_Points("Non-Fiction", EG10_item)
+EG10_2Text_PTS<-ELA_NumText_Points("More than 1", EG10_item)
+EG10_1Text_PTS<-ELA_NumText_Points("1.0", EG10_item)
+EG10_F_Diff<-ELA_Fiction_RTState("Fiction", EG10_student_item_perf)
+EG10_NF_Diff<-ELA_Fiction_RTState("Non-Fiction", EG10_student_item_perf)
+EG10_2Text_Diff<-ELA_NumText_RTState("More than 1", EG10_student_item_perf)
+EG10_1Text_Diff<-ELA_NumText_RTState("1.0", EG10_student_item_perf)
+
+EG10_test<-EG10_student_item_perf%>%
+  group_by(`Cluster`)%>%
+  summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+            RT_points = sum(`eitem_score`, na.rm = TRUE),
+            RT_Percent_Points = 100*round(RT_points/available_points,2),
+            State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))
+view(EG10_test)
 
 ##-----------------------------------------------------------------------------
 

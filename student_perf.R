@@ -1,24 +1,133 @@
 ##Student Performance Functions
 
-## Median RT % points earned vs. State % points earned:
-# To-Do: Create Private Raw Item report and read in function, join to student
-# item and calculate strict percent points earned and points available to get,
-# authentic RT-State diff
+##RT-State Diff by Item Type
+Type_RTState_Diff<-function(subject, item_type, studentItemPerfDF){
+  if(subject == "math"){
+    studentItemPerfDF%>%
+      group_by(`Type`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`mitem_score`, na.rm = TRUE),
+                RT_Percent_Points = 100*round(RT_points/available_points,2),
+                State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+      mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
+      filter(`Type` == item_type)
+  }
+  #to-do try with other subjects
+  else if(subject == "science"){
+    studentItemPerfDF%>%
+      group_by(`Type`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`sitem_score`, na.rm = TRUE),
+                RT_Percent_Points = 100*round(RT_points/available_points,2),
+                State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+      mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
+      filter(`Type` == item_type)
+  }
+  else if(subject == "ela"){
+    studentItemPerfDF%>%
+      group_by(`Type`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`eitem_score`, na.rm = TRUE),
+                RT_Percent_Points = 100*round(RT_points/available_points,2),
+                State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+      mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
+      filter(`Type` == item_type)
+  }
+}
 
-ELA_NumText_RTState<-function(value, subjectItemDF){
-  subjectItemDF%>%
-    select(contains("item"), `Num Texts`, `RT-State Diff`, `State Percent Points`,
-           `RT Percent Points`)%>%
+##RT-Stat Diff by reporting category
+
+Cat_RTState_Diff<-function(subject, category, studentItemPerfDF){
+  if(subject == "math"){
+    studentItemPerfDF%>%
+    group_by(`Reporting Category`)%>%
+    summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+              RT_points = sum(`mitem_score`, na.rm = TRUE),
+              RT_Percent_Points = 100*round(RT_points/available_points,2),
+              State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+    mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
+      filter(`Reporting Category` == category)
+  }
+  else if(subject == "science"){
+    studentItemPerfDF%>%
+      group_by(`Reporting Category`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`sitem_score`, na.rm = TRUE),
+                RT_Percent_Points = 100*round(RT_points/available_points,2),
+                State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+      mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
+      filter(`Reporting Category` == category)
+  }
+  else if(subject == "ela"){
+    studentItemPerfDF%>%
+      group_by(`Reporting Category`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`eitem_score`, na.rm = TRUE),
+                RT_Percent_Points = 100*round(RT_points/available_points,2),
+                State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+      mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
+      filter(`Reporting Category` == category)
+  }
+}
+
+##RT-Stat Diff by ELA cluster or Science Practice category
+
+Practice_Cat_Diff <-function(subject, practiceCategory, studentItemPerfDF){
+  if(subject == "science"){
+    studentItemPerfDF%>%
+      group_by(`Practice Category`)%>%
+      summarize(available_points = sum(`item Possible Points`, na.rm=TRUE),
+      RT_points = sum(`sitem_score`, na.rm = TRUE),
+      RT_Percent_Points = 100*round(RT_points/available_points,2),
+      State_Percent_Points = 
+        100*round(sum(`State Percent Points`*`item Possible Points`/available_points, 
+                      na.rm = TRUE),2))%>%
+      mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
+      filter(`Practice Category` == practiceCategory)
+  }
+  ##To-Do Need to Identify Equivalent to Practice category in math (perhaps representation type?)
+  # else if (subject == "math"){
+  #   subjectItemDF%>%
+  #     select(`mitem`, `item Possible Points`, `Reporting Category`)%>%
+  #     group_by(`Reporting Category`)%>%
+  #     summarise(available_points = sum(`item Possible Points`, na.rm=TRUE))
+  
+  #} 
+  else if(subject == "ela"){
+    studentItemPerfDF%>%
+      group_by(`Cluster`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`eitem_score`, na.rm = TRUE),
+                RT_Percent_Points = 100*round(RT_points/available_points,2),
+                State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+      mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
+      filter(`Cluster` == practiceCategory)
+    
+  }
+}    
+
+## RT State-Diff for ELA xWalk Items
+
+ELA_NumText_RTState<-function(value, studentItemPerfDF){
+  studentItemPerfDF%>%
     group_by(`Num Texts`)%>%
-    summarise(median_RTSTateDiff = median(`RT-State Diff`, na.rm = TRUE))%>%
+    summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+              RT_points = sum(`eitem_score`, na.rm = TRUE),
+              RT_Percent_Points = 100*round(RT_points/available_points,2),
+              State_Percent_Points = 100*round(
+                sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+    mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
     filter(`Num Texts`==value)
 }
-ELA_Fiction_RTState<-function(value, subjectItemDF){
-  subjectItemDF%>%
-    select(contains("item"), `Fiction-Non`, `RT-State Diff`, `State Percent Points`,
-           `RT Percent Points`)%>%
-    group_by(`Fiction-Non`)%>%
-    summarise(median_RTSTateDiff = median(`RT-State Diff`, na.rm = TRUE))%>%
+ELA_Fiction_RTState<-function(value, studentItemPerfDF){
+  studentItemPerfDF%>%
+    group_by(`Fiction-Non`)%>% 
+    summarise(available_points = 
+                sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`eitem_score`, na.rm = TRUE),
+                RT_Percent_Points = 100*round(RT_points/available_points,2),
+                State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+    mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
     filter(`Fiction-Non`==value)
 }
 
