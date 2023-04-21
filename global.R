@@ -54,10 +54,10 @@ student_itemDF<-read_MCAS_Prelim_Private("csv","data/PrivProtectSpring2022_MCAS_
  # pivot_longer(contains("sitem"), names_to = "sitem", values_to = "sitem_score")
   #pivot_longer(contains("mitem"), names_to = "mitem", values_to = "mitem_score")%>%
   #pivot_longer(contains("eitem"), names_to = "eitem", values_to = "eitem_score")
-view(student_itemDF)
+#view(student_itemDF)
 SG9_student_perf<-Student_Perf("physics", 9, student_itemDF)
 SG9_student_item_perf<-Student_Item_Perf("science", SG9_item, SG9_student_perf)
-view(SG9_student_item_perf)
+#view(SG9_student_item_perf)
 #view(SG9_student_perf)
 SG8_student_perf<-Student_Perf("science", 8, student_itemDF)
 #view(SG8_student_perf)
@@ -250,28 +250,32 @@ view(EG10_RE_Diff)
 # Domain Cluster Points
 
 EG10_CS_PTS<-Practice_Cat_Points("ela", "Craft and Structure", EG10_item)
-EG10_CS_Diff<-Practice_Cat_Diff("ela", "Craft and Structure", EG10_student_item_perf)
+
 EG10_CV_PTS<-Practice_Cat_Points("ela", "Conventions", EG10_item)
-EG10_CV_Diff<-Practice_Cat_Points("ela", "Conventions", EG10_student_item_perf)
-view(EG10_CV_Diff)
+
 EG10_KD_PTS<-Practice_Cat_Points("ela", "Key Ideas and Details", EG10_item)
 EG10_KL_PTS<-Practice_Cat_Points("ela", "Knowledge of Language", EG10_item)
 EG10_ID_PTS<-Practice_Cat_Points("ela", "Idea Development", EG10_item)
 EG10_IK_PTS<-Practice_Cat_Points("ela", "Integration of Knowledge and Ideas", EG10_item)
 EG10_VA_PTS<-Practice_Cat_Points("ela", "Vocabulary Acquisition and Use", EG10_item)
 EG10_WC_PTS<-Practice_Cat_Points("ela", "Writing Combined (Conv/Idea Dev)", EG10_item)
-EG10_KD_Diff<-Practice_Cat_Points("ela", "Key Ideas and Details", EG10_student_item_perf)
-view(EG10_KD_Diff)
-EG10_KL_Diff<-Practice_Cat_Points("ela", "Knowledge of Language", EG10_student_item_perf)
-view(EG10_KL_Diff)
-EG10_ID_Diff<-Practice_Cat_Points("ela", "Idea Development", EG10_student_item_perf)
-view(EG10_ID_Diff)
-EG10_IK_Diff<-Practice_Cat_Points("ela", "Integration of Knowledge and Ideas", EG10_student_item_perf)
-view(EG10_IK_Diff)
-EG10_VA_Diff<-Practice_Cat_Points("ela", "Vocabulary Acquisition and Use", EG10_student_item_perf)
-view(EG10_VA_Diff)
-EG10_WC_Diff<-Practice_Cat_Points("ela", "Writing Combined (Conv/Idea Dev)", EG10_student_item_perf)
-view(EG10_WC_Diff)
+
+##Domain Cluster RT-State
+EG10_CS_Diff<-Practice_Cat_Diff("ela", "Craft and Structure", EG10_student_item_perf)
+EG10_CV_Diff<-Practice_Cat_Diff("ela", "Conventions", EG10_student_item_perf)
+#view(EG10_CV_Diff)
+EG10_KD_Diff<-Practice_Cat_Diff("ela", "Key Ideas and Details", EG10_student_item_perf)
+#view(EG10_KD_Diff)
+EG10_KL_Diff<-Practice_Cat_Diff("ela", "Knowledge of Language", EG10_student_item_perf)
+#view(EG10_KL_Diff)
+EG10_ID_Diff<-Practice_Cat_Diff("ela", "Idea Development", EG10_student_item_perf)
+#view(EG10_ID_Diff)
+EG10_IK_Diff<-Practice_Cat_Diff("ela", "Integration of Knowledge and Ideas", EG10_student_item_perf)
+#view(EG10_IK_Diff)
+EG10_VA_Diff<-Practice_Cat_Diff("ela", "Vocabulary Acquisition and Use", EG10_student_item_perf)
+#view(EG10_VA_Diff)
+EG10_WC_Diff<-Practice_Cat_Diff("ela", "Writing Combined (Conv/Idea Dev)", EG10_student_item_perf)
+#view(EG10_WC_Diff)
 
 # xWalk Items Pts & RT-State Diff
 EG10_F_PTS<-ELA_Fiction_Points("Fiction", EG10_item)
@@ -283,13 +287,15 @@ EG10_NF_Diff<-ELA_Fiction_RTState("Non-Fiction", EG10_student_item_perf)
 EG10_2Text_Diff<-ELA_NumText_RTState("More than 1", EG10_student_item_perf)
 EG10_1Text_Diff<-ELA_NumText_RTState("1.0", EG10_student_item_perf)
 
-EG10_test<-EG10_student_item_perf%>%
-  group_by(`Cluster`)%>%
-  summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
-            RT_points = sum(`eitem_score`, na.rm = TRUE),
-            RT_Percent_Points = 100*round(RT_points/available_points,2),
-            State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))
-view(EG10_test)
+# EG10_test<-EG10_student_item_perf%>%
+#   group_by(`Cluster`)%>%
+#   summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+#             RT_points = sum(`eitem_score`, na.rm = TRUE),
+#             RT_Percent_Points = 100*round(RT_points/available_points,2),
+#             State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+#   mutate(`RT-State Diff` =RT_Percent_Points-State_Percent_Points)
+#   
+# view(EG10_test)
 
 ##-----------------------------------------------------------------------------
 

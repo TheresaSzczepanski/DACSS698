@@ -740,16 +740,16 @@ ui <- dashboardPage(
                 # A static valueBox
                 
                 valueBox(EG10_CS_Diff[1,6], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "light-blue"),
-                valueBox(EG10_CV_Diff[1,2], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "light-blue"),
-                valueBox(EG10_ID_Diff[1,2], HTML("<p> Idea Development </p>"), icon = icon("lightbulb"), color = "light-blue"),
+                valueBox(EG10_CV_Diff[1,6], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "light-blue"),
+                valueBox(EG10_ID_Diff[1,6], HTML("<p> Idea Development </p>"), icon = icon("lightbulb"), color = "light-blue"),
                 
-                valueBox(EG10_IK_Diff[1,2], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
+                valueBox(EG10_IK_Diff[1,6], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
                 
-                valueBox(EG10_KD_Diff[1,2], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "light-blue"), 
+                valueBox(EG10_KD_Diff[1,6], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "light-blue"), 
                 
                 # valueBox(EG10_KL_Diff[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "light-blue"),
                 
-                valueBox(EG10_VA_Diff[1,2], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue") 
+                valueBox(EG10_VA_Diff[1,6], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue") 
                 
                 
                 
