@@ -20,15 +20,22 @@ ui <- dashboardPage(
                menuSubItem("G9 Physics Analysis", tabName = "g9PhysicsAnalysis"),
               menuSubItem("G8 STE Content", tabName = "g8SteContent"),
               menuSubItem("G8 STE Performance", tabName = "g8StePerf"),
-              menuSubItem("G5 STE Content", tabName = "g5SteContent")
+              menuSubItem("G5 STE Content", tabName = "g5SteContent"),
+              menuSubItem("G5 STE Perfromance", tabName = "g5StePerf")
+              
               ),
       menuItem("Mathematics", tabName = "math", icon = icon("infinity"),
                menuSubItem("G10 Math Content", tabName = "g10MathContent"),
+               menuSubItem("G10 Math Performance", tabName = "g10MathPerf"),
                menuSubItem("G8 Math Content", tabName = "g8MathContent"),
+               menuSubItem("G8 Math Performance", tabName = "g8MathPerf"),
                
                menuSubItem("G7 Math Content", tabName = "g7MathContent"),
+               menuSubItem("G7 Math Performance", tabName = "g7MathPerf"),
                menuSubItem("G6 Math Content", tabName = "g6MathContent"),
-               menuSubItem("G5 Math Content", tabName = "g5MathContent")
+               menuSubItem("G6 Math Performance", tabName = "g6MathPerf"),
+               menuSubItem("G5 Math Content", tabName = "g5MathContent"),
+               menuSubItem("G5 Math Performance", tabName = "g5MathPerf")
               ),
       menuItem("ELA", tabName = "ela", icon = icon("book-bookmark"),
                menuSubItem("G10 ELA Content", tabName = "g10ELAContent"),
@@ -436,11 +443,62 @@ ui <- dashboardPage(
               )
       ),
       
+      #G5 STE Student Performance
+      
+      tabItem("g5StePerf",
+              span(h1("How did our students perform?")), #style = "color:black")),
+              
+              h2("RT-State Diff by:"),
+              h3("Content Category"),
+              
+              
+              fluidRow(
+                valueBox(SG5_ES_Diff[1,6], HTML("<p> Earth & <br> Space Science</p>"), icon = icon("earth"), color = "blue"),
+                valueBox( SG5_LS_Diff[1,6],"Life Science",icon = icon("dna"), color = "blue")
+              ),
+              
+              fluidRow(
+                valueBox(SG5_PS_Diff[1,6], "Physical Science", icon = icon("atom"), color = "blue"),
+                valueBox(SG5_TE_Diff[1,6], HTML("<p> Technology & <br> Engineering</p>"), icon = icon("bridge"), color = "blue")
+              ),
+              
+              
+              h3("Practice Category"),
+              HTML("<p>Explore all released questions by   
+                   <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Grade%208&view=PracticeCategory'>
+                   science practice category</a>. \n Note that there are 15 released items and 26 unreleased
+                   items which do not have a listed science practice category. </p>"),
+              fluidRow(
+                # A static valueBox
+                
+                valueBox(SG5_IQ_Diff[1,6], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
+                
+                valueBox(SG5_MD_Diff[1,6], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+                
+                valueBox(SG5_ERM_Diff[1,6], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+                
+                
+                # valueBox(4,  "no category reported ", color = "aqua")
+                
+              ),
+              
+              
+              h3("Question Type"),
+              fluidRow(
+                # A static valueBox
+                valueBox(SG5_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+                
+                valueBox(SG5_CR_Diff[1,6], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+                
+              )
+      ),
+      
       # Math tab content
       tabItem(tabName = "math",
               h2("Math Trends Overview content")
       
       ),
+      # G10 Math Content
       tabItem("g10MathContent",
               span(h1("How were students assessed?")), #style = "color:black")),
               HTML("<p>The 2022 G10 Math exam consisted of 42 questions worth in <b>total 60 points </b>.
@@ -487,8 +545,38 @@ ui <- dashboardPage(
               )
       ),
       
+      #G10 Math Perf
+      
+      tabItem("g10MathPerf",
+              span(h1("How did our students perform?")), #style = "color:black")),
+              h2("RT-State Diff by"),
+              h3("Content Category"),
+              
+              
+              fluidRow(
+                valueBox(MG10_AF_Diff[1,6], HTML("<p> Algebra and <br> Functions </p>"), icon = icon("square-root-variable"), color = "blue"),
+                valueBox( MG10_GE_Diff[1,6],"Geometry",icon = icon("shapes"), color = "blue")
+              ),
+              
+              fluidRow(
+                valueBox(MG10_NQ_Diff[1,6], HTML(" <p> Numbers and <br> Quantity </p>"), icon = icon("plus-minus"), color = "blue"),
+                valueBox(MG10_SP_Diff[1,6], HTML("<p> Statistics and <br> Probability </p>"), icon = icon("chart-line"), color = "blue")
+              ),
+              
+              h3("Question Type"),
+              fluidRow(
+                # A static valueBox
+                valueBox(MG10_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+                
+                valueBox(MG10_SA_Diff[1,6], "Short Answer", icon=icon("pen-to-square")),
+                
+                valueBox(MG10_CR_Diff[1,6], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+                
+              )
+      ),
+      
       #G8 Math
-      # To-Do: Update for G8 content
+      
       tabItem("g8MathContent",
               span(h1("How were students assessed?")), #style = "color:black")),
               HTML("<p>The 2022 G8 Math exam consisted of 40 questions worth 
@@ -537,9 +625,41 @@ ui <- dashboardPage(
                 
               )
       ),
+      #G8 Math Perf:
+      
+      tabItem("g8MathPerf",
+              span(h1("How did our students perform?")),
+              h2("RT-State Diff by"),
+              
+              h3("Content Category"),
+              
+              
+              fluidRow(
+                valueBox(MG8_FN_Diff[1,6], "Functions", icon = icon("square-root-variable"), color = "blue"),
+                valueBox( MG8_GE_Diff[1,6],"Geometry",icon = icon("shapes"), color = "blue")
+                
+              ),
+              
+              fluidRow(
+                
+                valueBox(MG8_NSEE_Diff[1,6], HTML("<p> Number System: <br> Expressions <br> and Equations </p>"), icon = icon("equals"), color = "blue"),
+                valueBox(MG8_SP_Diff[1,6], HTML("<p> Statistics and <br> Probability </p>"), icon = icon("chart-line"), color = "blue")
+              ),
+              
+              h3("Question Type"),
+              fluidRow(
+                # A static valueBox
+                valueBox(MG8_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+                
+                valueBox(MG8_SA_Diff[1,6], "Short Answer", icon=icon("pen-to-square")),
+                
+                valueBox(MG8_CR_Diff[1,6], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+                
+              )
+      ),
       
       #G7 Math
-      # To-Do: Update for G7 content
+      
       tabItem("g7MathContent",
               span(h1("How were students assessed?")), #style = "color:black")),
               HTML("<p>The 2022 G7 Math exam consisted of 40 questions worth 
@@ -584,7 +704,35 @@ ui <- dashboardPage(
                 
               )
       ),
-      
+      #G7 Math Performance
+      tabItem("g7MathPerf",
+              span(h1("How were students assessed?")), #style = "color:black")),
+              h2("RT-State Diff by"),
+              h3("Content Category"),
+              
+              
+              fluidRow(
+                valueBox(MG7_EE_Diff[1,6], HTML("<p> Expressions <br> and Equations </p>"), icon = icon("equals"), color = "blue"),
+                valueBox( MG7_GE_Diff[1,6],"Geometry",icon = icon("shapes"), color = "blue")
+              ),
+              
+              fluidRow(
+                valueBox(MG7_NS_Diff[1,6], "Number System", icon = icon("less-than-equal"), color = "blue"),
+                valueBox(MG7_RP_Diff[1,6], HTML("<p> Ratios and <br> Proportions </p>"), icon = icon("chart-pie"), color = "blue"),
+                valueBox(MG7_SP_Diff[1,6], HTML("<p> Statistics and <br> Probability </p>"), icon = icon("chart-line"), color = "blue")
+              ),
+              
+              h3("Question Type"),
+              fluidRow(
+                # A static valueBox
+                valueBox(MG7_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+                
+                valueBox(MG7_SA_Diff[1,6], "Short Answer", icon=icon("pen-to-square")),
+                
+                valueBox(MG7_CR_Diff[1,6], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+                
+              )
+      ),
       #G6 Math
       tabItem("g6MathContent",
               span(h1("How were students assessed?")), #style = "color:black")),
@@ -631,8 +779,38 @@ ui <- dashboardPage(
               )
       ),
       
+      #G6 Math Performance
+      tabItem("g6MathPerf",
+              span(h1("How did our students perform?")), #style = "color:black")),
+              h2("RT-State Diff by:"),
+              h3("Content Category"),
+              
+              
+              fluidRow(
+                valueBox(MG6_EE_Diff[1,6], HTML("<p>Expressions <br> and Equations</p>"), icon = icon("equals"), color = "blue"),
+                valueBox( MG6_GE_Diff[1,6],"Geometry",icon = icon("shapes"), color = "blue")
+              ),
+              
+              fluidRow(
+                valueBox(MG6_NS_Diff[1,6], "Number System", icon = icon("less-than-equal"), color = "blue"),
+                valueBox(MG6_RP_Diff[1,6], HTML("<p> Ratios and <br> Proportions </p>"), icon = icon("chart-pie"), color = "blue"),
+                valueBox(MG6_SP_Diff[1,6], HTML("<p> Statistics and <br> Probability </p>"), icon = icon("chart-line"), color = "blue")
+              ),
+              
+              h3("Question Type"),
+              fluidRow(
+                # A static valueBox
+                valueBox(MG6_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+                
+                valueBox(MG6_SA_Diff[1,6], "Short Answer", icon=icon("pen-to-square")),
+                
+                valueBox(MG6_CR_Diff[1,6], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+                
+              )
+      ),
+      
       #G5 Math
-      # To-Do: Update for G5 content
+      
       tabItem("g5MathContent",
               span(h1("How were students assessed?")), #style = "color:black")),
               HTML("<p>The 2022 G5 Math exam consisted of 40 questions worth 
@@ -675,6 +853,37 @@ ui <- dashboardPage(
                 valueBox(MG5_SA_PTS[1,2], "Short Answer", icon=icon("pen-to-square")),
                 
                 valueBox(MG5_CR_PTS[1,2], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+                
+              )
+              
+      ),
+      # MG5 Performance
+      tabItem("g5MathPerf",
+              span(h1("How were students assessed?")), #style = "color:black")),
+              h2("RT-State Diff by"),
+              
+              h3("Content Category"),
+              
+              
+              fluidRow(
+                valueBox(MG5_GE_Diff[1,6], "Geometry", icon = icon("shapes"), color = "blue"),
+                valueBox( MG5_MD_Diff[1,6],HTML("<p> Measurement <br> and Data </p>"),icon = icon("ruler"), color = "blue")
+              ),
+              
+              fluidRow(
+                valueBox(MG5_NF_Diff[1,6], HTML("<p>Numbers and <br> Operations: Fractions</p>"), icon = icon("divide"), color = "blue"),
+                valueBox(MG5_NT_Diff[1,6], HTML("<p>Numbers and <br> Operations: Base 10</p>"), icon = icon("plus-minus"), color = "blue"),
+                valueBox(MG5_OA_Diff[1,6], HTML("<p> Operations and <br> Aglebraic Thinking</p>"), icon = icon("subscript"), color = "blue")
+              ),
+              
+              h3("Question Type"),
+              fluidRow(
+                # A static valueBox
+                valueBox(MG5_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+                
+                valueBox(MG5_SA_Diff[1,6], "Short Answer", icon=icon("pen-to-square")),
+                
+                valueBox(MG5_CR_Diff[1,6], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
                 
               )
               

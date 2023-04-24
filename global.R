@@ -70,6 +70,15 @@ MG10_student_perf<-Student_Perf("math", 10, student_itemDF)
 #view(MG10_student_perf)
 MG10_student_item_perf<-Student_Item_Perf("math", MG10_item, MG10_student_perf)
 #view(MG10_student_item_perf)
+MG8_student_perf<-Student_Perf("math", 8, student_itemDF)
+MG8_student_item_perf<-Student_Item_Perf("math", MG8_item, MG8_student_perf)
+MG7_student_perf<-Student_Perf("math", 7, student_itemDF)
+MG7_student_item_perf<-Student_Item_Perf("math", MG7_item, MG7_student_perf)
+MG6_student_perf<-Student_Perf("math", 6, student_itemDF)
+MG6_student_item_perf<-Student_Item_Perf("math", MG6_item, MG6_student_perf)
+MG5_student_perf<-Student_Perf("math", 5, student_itemDF)
+MG5_student_item_perf<-Student_Item_Perf("math", MG5_item, MG5_student_perf)
+
 EG10_student_perf<-Student_Perf("ela", 10, student_itemDF)
 EG10_student_item_perf<-Student_Item_Perf("ela", EG10_item, EG10_student_perf)
 #view(EG10_student_item_perf)
@@ -119,23 +128,14 @@ SG9_WA_Diff<-Reporting_Cat_Diff("science", "WA", SG9_student_item_perf)
 
 #Reporting Categories: G8STE: "MF", "EN", "WA" for science grade levels
 #G8 STE: "ES", ""LS", PS", "TE"
-view(SG8_student_item_perf)
+#view(SG8_student_item_perf)
 SG8_CR_PTS<-Item_Type_Points("CR", SG8_item)
 SG8_CR_Diff<-Item_Type_Diff("science", "CR", SG8_student_item_perf)
-SG8_CR_Test<-SG8_student_item_perf%>%
-  group_by(`Type`)%>%
-  summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
-                      RT_points = sum(`sitem_score`, na.rm = TRUE),
-                      RT_Percent_Points = 100*round(RT_points/available_points,2),
-                      State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
-                      mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
-                      filter(`Type`=="SR")
-view(SG8_CR_Test)
-            
-view(SG8_CR_Diff)
+
+
 SG8_SR_PTS<-Item_Type_Points("SR", SG8_item)
 SG8_SR_Diff<-Item_Type_Diff("science", "SR", SG8_student_item_perf)
-view(SG8_SR_Diff)
+
 
 SG8_MD_PTS<-Practice_Cat_Points("science", "Mathematics and Data", SG8_item)
 SG8_MD_Diff<-Practice_Cat_Diff("science", "Mathematics and Data", SG8_student_item_perf)
@@ -164,6 +164,16 @@ SG5_LS_PTS<-Reporting_Cat_Points("science", "LS", SG5_item)
 SG5_PS_PTS<-Reporting_Cat_Points("science", "PS", SG5_item)
 SG5_TE_PTS<-Reporting_Cat_Points("science", "TE", SG5_item)
 
+SG5_CR_Diff<-Item_Type_Diff("science", "CR", SG5_student_item_perf)
+SG5_SR_Diff<-Item_Type_Diff("science","SR", SG5_student_item_perf)
+SG5_MD_Diff<-Practice_Cat_Diff("science", "Mathematics and Data", SG5_student_item_perf)
+SG5_ERM_Diff<-Practice_Cat_Diff("science", "Evidence, Reasoning, and Modeling", SG5_student_item_perf)
+SG5_IQ_Diff<-Practice_Cat_Diff("science", "Investigations and Questioning", SG5_student_item_perf)
+SG5_ES_Diff<-Reporting_Cat_Diff("science", "ES", SG5_student_item_perf)
+SG5_LS_Diff<-Reporting_Cat_Diff("science", "LS", SG5_student_item_perf)
+SG5_PS_Diff<-Reporting_Cat_Diff("science", "PS", SG5_student_item_perf)
+SG5_TE_Diff<-Reporting_Cat_Diff("science", "TE", SG5_student_item_perf)
+
 #Reporting Categories: G10 Math: 
     #"AF":Algebra and Functions,
     #GE":Geometry,
@@ -179,6 +189,14 @@ MG10_AF_PTS<-Reporting_Cat_Points("math", "AF", MG10_item)
 MG10_GE_PTS<-Reporting_Cat_Points("math", "GE", MG10_item)
 MG10_NQ_PTS<-Reporting_Cat_Points("math", "NQ", MG10_item)
 MG10_SP_PTS<-Reporting_Cat_Points("math", "SP", MG10_item)
+
+MG10_CR_Diff<-Item_Type_Diff("math", "CR", MG10_student_item_perf)
+MG10_SA_Diff<-Item_Type_Diff("math", "SA", MG10_student_item_perf)
+MG10_SR_Diff<-Item_Type_Diff("math", "SR", MG10_student_item_perf)
+MG10_AF_Diff<-Reporting_Cat_Diff("math", "AF", MG10_student_item_perf)
+MG10_GE_Diff<-Reporting_Cat_Diff("math", "GE", MG10_student_item_perf)
+MG10_NQ_Diff<-Reporting_Cat_Diff("math", "NQ", MG10_student_item_perf)
+MG10_SP_Diff<-Reporting_Cat_Diff("math", "SP", MG10_student_item_perf)
 
 #Reporting Categories: G8 Math: 
 # "FN": Functions
@@ -200,6 +218,17 @@ MG8_NSEE_PTS<-Reporting_Cat_Points("math", "NSEE", MG8_item)
 MG8_RP_PTS<-Reporting_Cat_Points("math", "RP", MG8_item)
 MG8_SP_PTS<-Reporting_Cat_Points("math", "SP", MG8_item)
 
+MG8_CR_Diff<-Item_Type_Diff("math", "CR", MG8_student_item_perf)
+MG8_SA_Diff<-Item_Type_Diff("math", "SA", MG8_student_item_perf)
+MG8_SR_Diff<-Item_Type_Diff("math", "SR", MG8_student_item_perf)
+MG8_FN_Diff<-Reporting_Cat_Diff("math", "FN", MG8_student_item_perf)
+MG8_GE_Diff<-Reporting_Cat_Diff("math", "GE", MG8_student_item_perf)
+MG8_NSEE_Diff<-Reporting_Cat_Diff("math", "NSEE", MG8_student_item_perf)
+
+
+MG8_RP_Diff<-Reporting_Cat_Diff("math", "RP", MG8_student_item_perf)
+MG8_SP_Diff<-Reporting_Cat_Diff("math", "SP", MG8_student_item_perf)
+
 #Reporting Categories: G7 Math: 
 # 
 #"GE":Geometry, "MD":Measurement and Data
@@ -217,6 +246,16 @@ MG7_NS_PTS<-Reporting_Cat_Points("math", "NS", MG7_item)
 
 MG7_RP_PTS<-Reporting_Cat_Points("math", "RP", MG7_item)
 MG7_SP_PTS<-Reporting_Cat_Points("math", "SP", MG7_item)
+
+MG7_CR_Diff<-Item_Type_Diff("math", "CR", MG7_student_item_perf)
+MG7_SA_Diff<-Item_Type_Diff("math", "SA", MG7_student_item_perf)
+MG7_SR_Diff<-Item_Type_Diff("math", "SR", MG7_student_item_perf)
+MG7_EE_Diff<-Reporting_Cat_Diff("math", "EE", MG7_student_item_perf)
+MG7_GE_Diff<-Reporting_Cat_Diff("math", "GE", MG7_student_item_perf)
+MG7_NS_Diff<-Reporting_Cat_Diff("math", "NS", MG7_student_item_perf)
+
+MG7_RP_Diff<-Reporting_Cat_Diff("math", "RP", MG7_student_item_perf)
+MG7_SP_Diff<-Reporting_Cat_Diff("math", "SP", MG7_student_item_perf)
 
 #Reporting Categories: G6 Math: 
 # 
@@ -236,6 +275,16 @@ MG6_NS_PTS<-Reporting_Cat_Points("math", "NS", MG6_item)
 MG6_RP_PTS<-Reporting_Cat_Points("math", "RP", MG6_item)
 MG6_SP_PTS<-Reporting_Cat_Points("math", "SP", MG6_item)
 
+MG6_CR_Diff<-Item_Type_Diff("math", "CR", MG6_student_item_perf)
+MG6_SA_Diff<-Item_Type_Diff("math", "SA", MG6_student_item_perf)
+MG6_SR_Diff<-Item_Type_Diff("math","SR", MG6_student_item_perf)
+MG6_EE_Diff<-Reporting_Cat_Diff("math", "EE", MG6_student_item_perf)
+MG6_GE_Diff<-Reporting_Cat_Diff("math", "GE", MG6_student_item_perf)
+MG6_NS_Diff<-Reporting_Cat_Diff("math", "NS", MG6_student_item_perf)
+
+MG6_RP_Diff<-Reporting_Cat_Diff("math", "RP", MG6_student_item_perf)
+MG6_SP_Diff<-Reporting_Cat_Diff("math", "SP", MG6_student_item_perf)
+
 #Reporting Categories: G5 Math: 
 # 
 #"GE":Geometry, 
@@ -246,9 +295,9 @@ MG6_SP_PTS<-Reporting_Cat_Points("math", "SP", MG6_item)
 # Question Type: G6 Math:
 #"CR": Constructed Response, "SA": Short Answer, "SR": Selected Response
 
-MG5_CR_PTS<-Item_Type_Points("CR", MG5_item)
-MG5_SA_PTS<-Item_Type_Points("SA", MG5_item)
-MG5_SR_PTS<-Item_Type_Points("SR", MG5_item)
+MG5_CR_PTS<-Item_Type_Points( "CR", MG5_item)
+MG5_SA_PTS<-Item_Type_Points( "SA", MG5_item)
+MG5_SR_PTS<-Item_Type_Points( "SR", MG5_item)
 
 MG5_GE_PTS<-Reporting_Cat_Points("math", "GE", MG5_item)
 MG5_MD_PTS<-Reporting_Cat_Points("math", "MD", MG5_item)
@@ -256,6 +305,16 @@ MG5_NF_PTS<-Reporting_Cat_Points("math", "NF", MG5_item)
 MG5_NT_PTS<-Reporting_Cat_Points("math", "NT", MG5_item)
 MG5_OA_PTS<-Reporting_Cat_Points("math", "OA", MG5_item)
 
+
+MG5_CR_Diff<-Item_Type_Diff("math", "CR", MG5_student_item_perf)
+MG5_SA_Diff<-Item_Type_Diff("math", "SA", MG5_student_item_perf)
+MG5_SR_Diff<-Item_Type_Diff("math", "SR", MG5_student_item_perf)
+
+MG5_GE_Diff<-Reporting_Cat_Diff("math", "GE", MG5_student_item_perf)
+MG5_MD_Diff<-Reporting_Cat_Diff("math", "MD", MG5_student_item_perf)
+MG5_NF_Diff<-Reporting_Cat_Diff("math", "NF", MG5_student_item_perf)
+MG5_NT_Diff<-Reporting_Cat_Diff("math", "NT", MG5_student_item_perf)
+MG5_OA_Diff<-Reporting_Cat_Diff("math", "OA", MG5_student_item_perf)
 #Reporting Categories: G10 ELA: 
 #"LA":E, 
 #"RE":Reading
