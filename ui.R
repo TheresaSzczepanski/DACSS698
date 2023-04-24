@@ -19,6 +19,7 @@ ui <- dashboardPage(
                   
                menuSubItem("G9 Physics Analysis", tabName = "g9PhysicsAnalysis"),
               menuSubItem("G8 STE Content", tabName = "g8SteContent"),
+              menuSubItem("G8 STE Performance", tabName = "g8StePerf"),
               menuSubItem("G5 STE Content", tabName = "g5SteContent")
               ),
       menuItem("Mathematics", tabName = "math", icon = icon("infinity"),
@@ -210,9 +211,9 @@ ui <- dashboardPage(
                 # A static valueBox
                 #valueBox( scales::percent(22/42), "Motions, Forces, \n and Interactions", icon = icon("rocket"), color = "blue"),
                 
-                valueBox(SG9_MF_PTS[1,2], HTML("<p> Motions, Forces, <br> and Interactions </p>"), icon = icon("rocket"), color = "blue"),
-                valueBox( SG9_EN_PTS[1,2],"Energy",icon = icon("atom"), color = "blue"),
-                valueBox(SG9_WA_PTS[1,2], "Waves", icon = icon("wave-square"), color = "blue")
+                valueBox(SG9_MF_Diff[1,6], HTML("<p> Motions, Forces, <br> and Interactions </p>"), icon = icon("rocket"), color = "blue"),
+                valueBox( SG9_EN_Diff[1,6],"Energy",icon = icon("atom"), color = "blue"),
+                valueBox(SG9_WA_Diff[1,6], "Waves", icon = icon("wave-square"), color = "blue")
                 
                 
               ),
@@ -313,6 +314,56 @@ ui <- dashboardPage(
                 valueBox(SG8_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
                 
                 valueBox(SG8_CR_PTS[1,2], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+                
+              )
+      ),
+      
+      #G8 STE Performance
+      
+      tabItem("g8StePerf",
+              span(h1("How did our students perform?")), #style = "color:black")),
+             
+              h2("RT-State Diff by:"),
+              h3("Content Category"),
+              
+              
+              fluidRow(
+                valueBox(SG8_ES_Diff[1,6], HTML("<p> Earth & <br> Space Science</p>"), icon = icon("earth"), color = "blue"),
+                valueBox( SG8_LS_Diff[1,6],"Life Science",icon = icon("dna"), color = "blue")
+              ),
+              
+              fluidRow(
+                valueBox(SG8_PS_Diff[1,6], "Physical Science", icon = icon("atom"), color = "blue"),
+                valueBox(SG8_TE_Diff[1,6], HTML("<p> Technology & <br> Engineering</p>"), icon = icon("bridge"), color = "blue")
+              ),
+              
+              
+              h3("Practice Category"),
+              HTML("<p>Explore all released questions by   
+                   <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Grade%208&view=PracticeCategory'>
+                   science practice category</a>. \n Note that there are 15 released items and 26 unreleased
+                   items which do not have a listed science practice category. </p>"),
+              fluidRow(
+                # A static valueBox
+                
+                valueBox(SG8_IQ_Diff[1,6], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
+                
+                valueBox(SG8_MD_Diff[1,6], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+                
+                valueBox(SG8_ERM_Diff[1,6], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+                
+                
+                # valueBox(4,  "no category reported ", color = "aqua")
+                
+              ),
+              
+              
+              h3("Question Type"),
+              fluidRow(
+                # A static valueBox
+                valueBox(SG8_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+                
+                valueBox(SG8_CR_Diff[1,6], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
                 
               )
       ),

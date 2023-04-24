@@ -47,29 +47,32 @@ EG10_xWalk<-read_item_xwalk("data/2022MCASItemXWalk.xlsx", "EG10_xwalk",
                            "ela")
 EG10_item<-Join_Item_Xwalk("ela", EG10_item, EG10_xWalk)
 EG10_item<-Join_ELAItem_Cluster(EG10_item, ELA_cluster_xwalk)
-view(EG10_item)
+#view(EG10_item)
 ## Create Student Item Data Frames----------------------------------------------
 student_itemDF<-read_MCAS_Prelim_Private("csv","data/PrivProtectSpring2022_MCAS_full_preliminary_results_04830305.csv")
-#%>%
- # pivot_longer(contains("sitem"), names_to = "sitem", values_to = "sitem_score")
-  #pivot_longer(contains("mitem"), names_to = "mitem", values_to = "mitem_score")%>%
-  #pivot_longer(contains("eitem"), names_to = "eitem", values_to = "eitem_score")
 #view(student_itemDF)
+
 SG9_student_perf<-Student_Perf("physics", 9, student_itemDF)
 SG9_student_item_perf<-Student_Item_Perf("science", SG9_item, SG9_student_perf)
 #view(SG9_student_item_perf)
 #view(SG9_student_perf)
+
 SG8_student_perf<-Student_Perf("science", 8, student_itemDF)
 #view(SG8_student_perf)
+SG8_student_item_perf<-Student_Item_Perf("science", SG8_item, SG8_student_perf)
+
 SG5_student_perf<-Student_Perf("science", 5, student_itemDF)
+SG5_student_item_perf<-Student_Item_Perf("science", SG5_item, SG5_student_perf)
 #view(SG5_student_perf)
+
+
 MG10_student_perf<-Student_Perf("math", 10, student_itemDF)
 #view(MG10_student_perf)
 MG10_student_item_perf<-Student_Item_Perf("math", MG10_item, MG10_student_perf)
 #view(MG10_student_item_perf)
 EG10_student_perf<-Student_Perf("ela", 10, student_itemDF)
 EG10_student_item_perf<-Student_Item_Perf("ela", EG10_item, EG10_student_perf)
-view(EG10_student_item_perf)
+#view(EG10_student_item_perf)
 #view(EG10_student_perf)
 
 
@@ -99,28 +102,56 @@ SG9_WA_PTS<-Reporting_Cat_Points("science", "WA", SG9_item)
 #RT-State Diff
 #G9 Intro Physics
 #To-Do: Change the name of this function to mimic the points naming convention?
-SG9_CR_Diff<-Type_RTState_Diff("science", "CR", SG9_student_item_perf)
-view(SG9_CR_Diff)
-SG9_SR_Diff<-Type_RTState_Diff("science", "SR", SG9_student_item_perf)
+#view(SG9_student_item_perf)
+SG9_CR_Diff<-Item_Type_Diff("science", "CR", SG9_student_item_perf)
+#view(SG9_CR_Diff)
+SG9_SR_Diff<-Item_Type_Diff("science", "SR", SG9_student_item_perf)
 SG9_MD_Diff<-Practice_Cat_Diff("science", "Mathematics and Data", SG9_student_item_perf)
-view(SG9_MD_Diff)
+#view(SG9_MD_Diff)
 SG9_ERM_Diff<-Practice_Cat_Diff("science", "Evidence, Reasoning, and Modeling", SG9_student_item_perf)
 SG9_IQ_Diff<-Practice_Cat_Diff("science", "Investigations and Questioning", SG9_student_item_perf)
 SG9_MF_PTS<-Reporting_Cat_Points("science", "MF", SG9_item)
+SG9_MF_Diff<-Reporting_Cat_Diff("science", "MF", SG9_student_item_perf)
 SG9_EN_PTS<-Reporting_Cat_Points("science", "EN", SG9_item)
+SG9_EN_Diff<-Reporting_Cat_Diff("science", "EN", SG9_student_item_perf)
 SG9_WA_PTS<-Reporting_Cat_Points("science", "WA", SG9_item)
+SG9_WA_Diff<-Reporting_Cat_Diff("science", "WA", SG9_student_item_perf)
 
 #Reporting Categories: G8STE: "MF", "EN", "WA" for science grade levels
 #G8 STE: "ES", ""LS", PS", "TE"
+view(SG8_student_item_perf)
 SG8_CR_PTS<-Item_Type_Points("CR", SG8_item)
+SG8_CR_Diff<-Item_Type_Diff("science", "CR", SG8_student_item_perf)
+SG8_CR_Test<-SG8_student_item_perf%>%
+  group_by(`Type`)%>%
+  summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                      RT_points = sum(`sitem_score`, na.rm = TRUE),
+                      RT_Percent_Points = 100*round(RT_points/available_points,2),
+                      State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+                      mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
+                      filter(`Type`=="SR")
+view(SG8_CR_Test)
+            
+view(SG8_CR_Diff)
 SG8_SR_PTS<-Item_Type_Points("SR", SG8_item)
+SG8_SR_Diff<-Item_Type_Diff("science", "SR", SG8_student_item_perf)
+view(SG8_SR_Diff)
+
 SG8_MD_PTS<-Practice_Cat_Points("science", "Mathematics and Data", SG8_item)
+SG8_MD_Diff<-Practice_Cat_Diff("science", "Mathematics and Data", SG8_student_item_perf)
 SG8_ERM_PTS<-Practice_Cat_Points("science", "Evidence, Reasoning, and Modeling", SG8_item)
+SG8_ERM_Diff<-Practice_Cat_Diff("science", "Evidence, Reasoning, and Modeling", SG8_student_item_perf)
 SG8_IQ_PTS<-Practice_Cat_Points("science", "Investigations and Questioning", SG8_item)
+SG8_IQ_Diff<-Practice_Cat_Diff("science", "Investigations and Questioning", SG8_student_item_perf)
+
 SG8_ES_PTS<-Reporting_Cat_Points("science", "ES", SG8_item)
+SG8_ES_Diff<-Reporting_Cat_Diff("science", "ES", SG8_student_item_perf)
 SG8_LS_PTS<-Reporting_Cat_Points("science", "LS", SG8_item)
+SG8_LS_Diff<-Reporting_Cat_Diff("science", "LS", SG8_student_item_perf)
 SG8_PS_PTS<-Reporting_Cat_Points("science", "PS", SG8_item)
 SG8_TE_PTS<-Reporting_Cat_Points("science", "TE", SG8_item)
+SG8_PS_Diff<-Reporting_Cat_Diff("science", "PS", SG8_student_item_perf)
+SG8_TE_Diff<-Reporting_Cat_Diff("science", "TE", SG8_student_item_perf)
 
 #G5 STE: "ES", ""LS", PS", "TE"
 SG5_CR_PTS<-Item_Type_Points("CR", SG5_item)
@@ -237,8 +268,8 @@ EG10_ES_PTS<-Item_Type_Points("ES", EG10_item)
 EG10_SR_PTS<-Item_Type_Points("SR", EG10_item)
 
 ###RT-State Diff by Question Type
-EG10_SR_Diff<-Type_RTState_Diff("ela", "SR", EG10_student_item_perf)
-EG10_ES_Diff<-Type_RTState_Diff("ela", "ES", EG10_student_item_perf)
+EG10_SR_Diff<-Item_Type_Diff("ela", "SR", EG10_student_item_perf)
+EG10_ES_Diff<-Item_Type_Diff("ela", "ES", EG10_student_item_perf)
 
 
 EG10_RE_PTS<-Reporting_Cat_Points("ela", "RE", EG10_item)
@@ -255,9 +286,9 @@ EG10_RELA_item<-EG10_item %>%
 EG10_RELA_PTS<-Reporting_Cat_Points("ela", "LA", EG10_RELA_item)
 
 ##Diff by LA and RE (need to separate WR LA and RE LA)
-EG10_LA_Diff<-Cat_RTState_Diff("ela", "LA", EG10_student_item_perf)
+EG10_LA_Diff<-Reporting_Cat_Diff("ela", "LA", EG10_student_item_perf)
 #view(EG10_LA_Diff)
-EG10_RE_Diff<-Cat_RTState_Diff("ela", "RE", EG10_student_item_perf)
+EG10_RE_Diff<-Reporting_Cat_Diff("ela", "RE", EG10_student_item_perf)
 #view(EG10_RE_Diff)
 
 # Domain Cluster Points

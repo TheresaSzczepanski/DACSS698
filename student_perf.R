@@ -1,7 +1,7 @@
 ##Student Performance Functions
 
 ##RT-State Diff by Item Type
-Type_RTState_Diff<-function(subject, item_type, studentItemPerfDF){
+Item_Type_Diff<-function(subject, item_type, studentItemPerfDF){
   if(subject == "math"){
     studentItemPerfDF%>%
       group_by(`Type`)%>%
@@ -37,7 +37,7 @@ Type_RTState_Diff<-function(subject, item_type, studentItemPerfDF){
 
 ##RT-Stat Diff by reporting category
 
-Cat_RTState_Diff<-function(subject, category, studentItemPerfDF){
+Reporting_Cat_Diff<-function(subject, category, studentItemPerfDF){
   if(subject == "math"){
     studentItemPerfDF%>%
     group_by(`Reporting Category`)%>%
