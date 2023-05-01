@@ -54,6 +54,9 @@ student_itemDF<-read_MCAS_Prelim_Private("csv","data/PrivProtectSpring2022_MCAS_
 
 SG9_student_perf<-Student_Perf("physics", 9, student_itemDF)
 SG9_student_item_perf<-Student_Item_Perf("science", SG9_item, SG9_student_perf)
+SG9_TopStudent_item_perf<-SG9_student_item_perf%>%
+  filter(sscaleds >= 515)
+view(SG9_TopStudent_item_perf)
 #view(SG9_student_item_perf)
 #view(SG9_student_perf)
 
@@ -81,16 +84,13 @@ MG5_student_item_perf<-Student_Item_Perf("math", MG5_item, MG5_student_perf)
 
 EG10_student_perf<-Student_Perf("ela", 10, student_itemDF)
 EG10_student_item_perf<-Student_Item_Perf("ela", EG10_item, EG10_student_perf)
-view(EG10_item)
-view(EG10_student_item_perf)
-view(EG10_student_perf)
+#view(EG10_item)
+#view(EG10_student_item_perf)
+#view(EG10_student_perf)
 EG10_student_essay_perf<-Student_Essay_Perf(10, student_itemDF, EG10_item)
-view(EG10_student_essay_perf)
+#view(EG10_student_essay_perf)
 
-EG10_ESconv_Diff<-ELA_Subitem_Diff("conv", EG10_student_essay_perf)
-view(EG10_ESconv_Diff)
-EG10_ESidea_Diff<-ELA_Subitem_Diff("idea", EG10_student_essay_perf)
-view(EG10_ESidea_Diff)
+
 ## Create Points Available and RT-State Diff by Category Data Frames------------------------------
 #Reporting Categories: HS Bio: "EC", "EV", "HE", "MO" for science grade levels
 #G11 Biology
@@ -116,8 +116,8 @@ SG9_EN_PTS<-Reporting_Cat_Points("science", "EN", SG9_item)
 SG9_WA_PTS<-Reporting_Cat_Points("science", "WA", SG9_item)
 #RT-State Diff
 #G9 Intro Physics
-#To-Do: Change the name of this function to mimic the points naming convention?
-#view(SG9_student_item_perf)
+
+view(SG9_student_item_perf)
 SG9_CR_Diff<-Item_Type_Diff("science", "CR", SG9_student_item_perf)
 #view(SG9_CR_Diff)
 SG9_SR_Diff<-Item_Type_Diff("science", "SR", SG9_student_item_perf)
@@ -125,12 +125,27 @@ SG9_MD_Diff<-Practice_Cat_Diff("science", "Mathematics and Data", SG9_student_it
 #view(SG9_MD_Diff)
 SG9_ERM_Diff<-Practice_Cat_Diff("science", "Evidence, Reasoning, and Modeling", SG9_student_item_perf)
 SG9_IQ_Diff<-Practice_Cat_Diff("science", "Investigations and Questioning", SG9_student_item_perf)
-SG9_MF_PTS<-Reporting_Cat_Points("science", "MF", SG9_item)
 SG9_MF_Diff<-Reporting_Cat_Diff("science", "MF", SG9_student_item_perf)
-SG9_EN_PTS<-Reporting_Cat_Points("science", "EN", SG9_item)
 SG9_EN_Diff<-Reporting_Cat_Diff("science", "EN", SG9_student_item_perf)
-SG9_WA_PTS<-Reporting_Cat_Points("science", "WA", SG9_item)
 SG9_WA_Diff<-Reporting_Cat_Diff("science", "WA", SG9_student_item_perf)
+
+SG9Top_CR_Diff<-Item_Type_Diff("science", "CR", SG9_TopStudent_item_perf)
+#view(SG9_CR_Diff)
+SG9Top_SR_Diff<-Item_Type_Diff("science", "SR", SG9_TopStudent_item_perf)
+SG9Top_MD_Diff<-Practice_Cat_Diff("science", "Mathematics and Data", SG9_TopStudent_item_perf)
+#view(SG9_MD_Diff)
+SG9Top_ERM_Diff<-Practice_Cat_Diff("science", "Evidence, Reasoning, and Modeling", SG9_TopStudent_item_perf)
+SG9Top_IQ_Diff<-Practice_Cat_Diff("science", "Investigations and Questioning", SG9_TopStudent_item_perf)
+SG9Top_MF_Diff<-Reporting_Cat_Diff("science", "MF", SG9_TopStudent_item_perf)
+SG9Top_EN_Diff<-Reporting_Cat_Diff("science", "EN", SG9_TopStudent_item_perf)
+SG9Top_WA_Diff<-Reporting_Cat_Diff("science", "WA", SG9_TopStudent_item_perf)
+
+SG9Top_MD_Loss<-Practice_Cat_Loss("science","Mathematics and Data", SG9_TopStudent_item_perf)
+view(SG9Top_MD_Loss)
+SG9Top_ERM_Loss<-Practice_Cat_Loss("science", "Evidence, Reasoning, and Modeling", SG9_TopStudent_item_perf)
+view(SG9Top_ERM_Loss)
+SG9Top_IQ_Loss<-Practice_Cat_Loss("science", "Investigations and Questioning", SG9_TopStudent_item_perf)
+view(SG9Top_IQ_Loss)
 
 #Reporting Categories: G8STE: "MF", "EN", "WA" for science grade levels
 #G8 STE: "ES", ""LS", PS", "TE"
@@ -395,6 +410,11 @@ EG10_F_Diff<-ELA_Fiction_RTState("Fiction", EG10_student_item_perf)
 EG10_NF_Diff<-ELA_Fiction_RTState("Non-Fiction", EG10_student_item_perf)
 EG10_2Text_Diff<-ELA_NumText_RTState("More than 1", EG10_student_item_perf)
 EG10_1Text_Diff<-ELA_NumText_RTState("1.0", EG10_student_item_perf)
+
+EG10_ESconv_Diff<-ELA_Subitem_Diff("conv", EG10_student_essay_perf)
+#view(EG10_ESconv_Diff)
+EG10_ESidea_Diff<-ELA_Subitem_Diff("idea", EG10_student_essay_perf)
+#view(EG10_ESidea_Diff)
 
 # EG10_test<-EG10_student_item_perf%>%
 #   group_by(`Cluster`)%>%

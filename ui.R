@@ -16,8 +16,8 @@ ui <- dashboardPage(
                menuSubItem("G11 Biology Content", tabName = "g11BiologyContent"),
                menuSubItem("G9 Physics Content", tabName = "g9PhysicsContent"),
               menuSubItem("G9 Physics Performance", tabName = "g9PhysicsPerf"),
-                  
-               menuSubItem("G9 Physics Analysis", tabName = "g9PhysicsAnalysis"),
+              menuSubItem("G9 Physics Analysis", tabName = "g9PhysicsAnalysis"),
+              menuSubItem("G9 Physics Top Performers", tabName = "g9PhysicsTop"),
               menuSubItem("G8 STE Content", tabName = "g8SteContent"),
               menuSubItem("G8 STE Performance", tabName = "g8StePerf"),
               menuSubItem("G5 STE Content", tabName = "g5SteContent"),
@@ -141,35 +141,21 @@ ui <- dashboardPage(
       tabItem("g9PhysicsContent",
               span(h1("How were students assessed?")), #style = "color:black")),
               HTML("<p>The 2022 Introductory Physics exam consisted of 42 questions
-               worth in <b> total 60 points </b>.
-               Explore the released materials:
-                <ul>
-                <li> Complete and Score released questions in the  
-              <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=ALL'>digital item library. </a> 
-                </li>
-                <li> Download
-              <a href = 'https://www.doe.mass.edu/mcas/2022/release/hs-physics.pdf'>
-                2022 released paper based items PDF </a> 
-                </li>
-                <li> Download 
-                  <a href = 'http://mcas.pearsonsupport.com/resources/student/practice-tests-science/MCAS_2022_HS_Introductory%20Physics_PT_ADA.pdf'>
-                  HS Introductory Physics Paper sample test </a>
-                or 
-                <a href = 'http://mcas.pearsonsupport.com/student/practice-tests-science/'>
-                complete Computer Based tests online </a> and grade with the
-                scoring key/rubrics </a>
-                </li>
-                <li>Review student
-              <a href = 'https://www.doe.mass.edu/mcas/student/2022/hs/physics.html'>
-                released Constructed Response </a> and Scoring Guidelines
-              </li>
-                <li><a href = 'https://www.doe.mass.edu/mcas/tdd/phys_formula.pdf'>
-                Reference Sheet </a>
-                </li>
-                </ul>
+               worth in <b> total 60 points </b>. Students used this <a href = 'https://www.doe.mass.edu/mcas/tdd/phys_formula.pdf'>
+                reference sheet </a>.
+                
                 </p>"),
               h3("Available Points by Content Category"),
-             
+              
+             HTML("<p>Complete and Score released questions in the  
+              <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=ALL'>digital item library. </a> 
+                Download the <a href = 'https://www.doe.mass.edu/mcas/2022/release/hs-physics.pdf'>
+                2022 released paper based items </a>, complete a 
+              <a href = 'http://mcas.pearsonsupport.com/resources/student/practice-tests-science/MCAS_2022_HS_Introductory%20Physics_PT_ADA.pdf'>
+                paper practice test </a>, or complete a
+              <a href = 'http://mcas.pearsonsupport.com/student/practice-tests-science/'>
+                computer based practice test </a>
+                </p>"),
              
               fluidRow(
                 # A static valueBox
@@ -184,7 +170,10 @@ ui <- dashboardPage(
               
               
               h3("Available Points by Practice Category"),
-             
+              HTML("<p>Explore all released questions by   
+                   <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=PracticeCategory'>
+                   science practice category</a>. \n Note that there are 5 unreleased
+                   items which do not have a listed science practice category. </p>"),
               fluidRow(
                 # A static valueBox
                 
@@ -203,13 +192,22 @@ ui <- dashboardPage(
                 # A static valueBox
                 valueBox(SG9_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
                 
-                valueBox(SG9_CR_PTS[1,2], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+                valueBox(SG9_CR_PTS[1,2], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") ),
+                
+                box( width = 4, solidHeader = FALSE,
+                     HTML("<p> 
+                             Student
+                              <a href = 'https://www.doe.mass.edu/mcas/student/2022/hs/physics.html'>
+                              released Constructed Response </a> and Scoring Guidelines
+                              
+                            </p>"))
                
               )
             ),
+      #G9 Physics Performance
       tabItem("g9PhysicsPerf", 
               
-              span(h1("How did our students perform?")), #style = "color:black")),
+              span(h1("How did our students perform compared to their peers by?")), #style = "color:black")),
               
               h3("Content Category"),
               
@@ -244,7 +242,7 @@ ui <- dashboardPage(
                 # valueBox(4,  "no category reported ", color = "aqua")
                 
               ),
-              h3("Available Points by Question Type"),
+              h3("Question Type"),
               fluidRow(
                 # A static valueBox
                 valueBox(SG9_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
@@ -253,7 +251,104 @@ ui <- dashboardPage(
                 
               )
       ),
+      
+      
+     #G9 Physics Analysis
      
+     tabItem("g9PhysicsAnalysis", 
+             
+             span(h1("What is the greatest opportunity for growth?")), #style = "color:black")),
+             
+             h3("Content Category"),
+             
+             
+             fluidRow(
+               # A static valueBox
+               #valueBox( scales::percent(22/42), "Motions, Forces, \n and Interactions", icon = icon("rocket"), color = "blue"),
+               
+               valueBox(SG9_MF_Diff[1,6]/100*SG9_MF_PTS[1,2], HTML("<p> Motions, Forces, <br> and Interactions </p>"), icon = icon("rocket"), color = "blue"),
+               valueBox( SG9_EN_Diff[1,6]/100*SG9_EN_PTS[1,2],"Energy",icon = icon("atom"), color = "blue"),
+               valueBox(SG9_WA_Diff[1,6]/100*SG9_WA_PTS[1,2], "Waves", icon = icon("wave-square"), color = "blue")
+               
+               
+             ),
+             
+             
+             h3("Practice Category"),
+             HTML("<p>Explore all released questions by   
+                   <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=PracticeCategory'>
+                   science practice category</a>. \n Note that there are 5 unreleased
+                   items which do not have a listed science practice category. </p>"),
+             fluidRow(
+               # A static valueBox
+               
+               valueBox(SG9_IQ_Diff[1,6]/100*SG9_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
+               
+               valueBox(SG9_MD_Diff[1,6]/100*SG9_MD_PTS[1,2], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+               
+               valueBox(SG9_ERM_Diff[1,6]/100*SG9_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+               
+               
+               # valueBox(4,  "no category reported ", color = "aqua")
+               
+             ),
+             h3("Available Points by Question Type"),
+             fluidRow(
+               # A static valueBox
+               valueBox(SG9_SR_Diff[1,6]/100*SG9_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+               
+               valueBox(SG9_CR_Diff[1,6]/100*SG9_CR_PTS[1,2], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+               
+             )
+     ),
+     
+     #G9 Physics Top Perf
+     tabItem("g9PhysicsTop", 
+             
+             span(h1("How did our top performing students compare to the state?")), #style = "color:black")),
+             
+             h3("Content Category"),
+             
+             
+             fluidRow(
+               # A static valueBox
+               #valueBox( scales::percent(22/42), "Motions, Forces, \n and Interactions", icon = icon("rocket"), color = "blue"),
+               
+               valueBox(SG9Top_MF_Diff[1,6], HTML("<p> Motions, Forces, <br> and Interactions </p>"), icon = icon("rocket"), color = "blue"),
+               valueBox( SG9Top_EN_Diff[1,6],"Energy",icon = icon("atom"), color = "blue"),
+               valueBox(SG9Top_WA_Diff[1,6], "Waves", icon = icon("wave-square"), color = "blue")
+               
+               
+             ),
+             
+             
+             h3("Practice Category"),
+             HTML("<p>Explore all released questions by   
+                   <a href='https://mcas.digitalitemlibrary.com/home?subject=Science&grades=Physics&view=PracticeCategory'>
+                   science practice category</a>. \n Note that there are 5 unreleased
+                   items which do not have a listed science practice category. </p>"),
+             fluidRow(
+               # A static valueBox
+               
+               valueBox(SG9Top_IQ_Diff[1,6], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
+               
+               valueBox(SG9Top_MD_Diff[1,6], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+               
+               valueBox(SG9Top_ERM_Diff[1,6], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+               
+               
+               # valueBox(4,  "no category reported ", color = "aqua")
+               
+             ),
+             h3("Question Type"),
+             fluidRow(
+               # A static valueBox
+               valueBox(SG9Top_SR_Diff[1,6], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+               
+               valueBox(SG9Top_CR_Diff[1,6], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+               
+             )
+     ),
       #G8 Sci Content
       
       tabItem("g8SteContent",
@@ -899,44 +994,53 @@ ui <- dashboardPage(
               span(h1("How were students assessed?")), #style = "color:black")),
               HTML("<p>The 2022 G10 ELA exam consisted of 28 selected response 
               questions and two essays worth in <b>total 51 points </b>.
-               Explore the released materials:
-                <ul>
-                <li> Complete and Score released questions in the  
-              <a href='https://mcas.digitalitemlibrary.com/home?subject=ELA&grades=Grade%2010&view=ALL'>digital item library. </a> 
-                </li>
-                <li> Download
-                     <a href = 'https://www.doe.mass.edu/mcas/2022/release/gr10-ela.pdf'>
-                        2022 released paper based items PDF </a> 
-                </li>
-                <li> Download
-              <a href = 'http://mcas.pearsonsupport.com/resources/student/practice-tests-ela/MCAS_2022_Gr10_ELA_PT_ADA.pdf'>
-                Sample Paper Based Test PDF </a>or complete the 
-                <a href = 'http://mcas.pearsonsupport.com/student/practice-tests-ela/'> computer based practice test</a> with the
-                scoring key/rubric
-                </li>
-                <li>Student
-              <a href = 'https://www.doe.mass.edu/mcas/student/2022/grade10/ela.html'>
-                essays </a> and Scoring Guidelines
-              </li>
-          
-            </ul>
-                </p>"),
+                  </p>"),
               h3("Available Points by Content Category"),
               
               fluidRow(
                 valueBox( EG10_RE_PTS[1,2],HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
-                valueBox(EG10_RELA_PTS[1,2], HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
-                
+                valueBox(EG10_RELA_PTS[1,2], HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue"),
+                box( title = "Released Materials", width = 4, solidHeader = FALSE,
+                     HTML("<p> <ul>
+                            <li> 
+                          <a href='https://mcas.digitalitemlibrary.com/home?subject=ELA&grades=Grade%2010&view=ALL'>Digital item library. </a> 
+                            </li>
+                            <li>
+                          <a href = 'https://www.doe.mass.edu/mcas/2022/release/gr10-ela.pdf'>
+                            2022 released paper based items </a> 
+                            </li>
+                            </ul>
+                            </p>"))
                 
               ),
               fluidRow(
                 valueBox( EG10_WR_PTS[1,2],HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "blue"),
-                valueBox( EG10_ESLA_pts[1,2],HTML("<p>Essay: <br> Language Conv. <p>"),icon = icon("indent"), color = "blue")
+                valueBox( EG10_ESLA_pts[1,2],HTML("<p>Essay: <br> Language Conv. <p>"),icon = icon("indent"), color = "blue"),
+                box(width = 4, solidHeader = FALSE,
+                     HTML("<p> <ul>
+                            <li> Sample
+                          <a href = 'http://mcas.pearsonsupport.com/resources/student/practice-tests-ela/MCAS_2022_Gr10_ELA_PT_ADA.pdf'>
+                             Paper Based Practice Test PDF </a>
+                            </li>
+                            <li> Sample 
+                          <a href = 'http://mcas.pearsonsupport.com/student/practice-tests-ela/'> computer based practice test</a> with
+                          scoring key/rubric
+                          </li>
+                            <li>Student
+                          <a href = 'https://www.doe.mass.edu/mcas/student/2022/grade10/ela.html'>
+                            essays </a> and Scoring Guidelines
+                          </li>
+                            
+                            </ul>
+                            </p>"))
+                
               ),
             
               
               
               h3("Available Multiple Choice Points by Domain Cluster"),
+              HTML("<p>The 2022 G10 ELA exam consisted of 28 selected response 
+              questions worth in <b>total 35 points </b>.</p>"),
               
               
               fluidRow(
@@ -958,8 +1062,6 @@ ui <- dashboardPage(
                  HTML("<p> Read more about the <a href = 
                       'https://www.doe.mass.edu/frameworks/ela/2017-06.pdf'> 
                        anchor standards.</a> </p>"))
-               
-                
               ),
               h3("Available Points by Text Type"),
               fluidRow(

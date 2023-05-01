@@ -12,7 +12,7 @@ Item_Type_Diff<-function(subject, item_type, studentItemPerfDF){
       mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
       filter(`Type` == item_type)
   }
-  #to-do try with other subjects
+ 
   else if(subject == "science"){
     studentItemPerfDF%>%
       group_by(`Type`)%>%
@@ -104,22 +104,48 @@ Practice_Cat_Diff <-function(subject, practiceCategory, studentItemPerfDF){
                 State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
       mutate(`RT-State Diff` =RT_Percent_Points-State_Percent_Points)%>%
       filter(`Cluster` == practiceCategory)
-    
-    # #}else{
-    #  studentItemPerfDF%>%
-    #   filter(!str_detect(eitem,"LA|WR"))%>%
-    #   group_by(`Cluster`)%>%
-    #   summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
-    #             RT_points = sum(`eitem_score`, na.rm = TRUE),
-    #             RT_Percent_Points = 100*round(RT_points/available_points,2),
-    #             State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
-    #   mutate(`RT-State Diff` =RT_Percent_Points-State_Percent_Points)%>%
-    #   filter(`Cluster` == practiceCategory)
-    # 
-    # }
-  }
+     }
 }    
 
+Practice_Cat_Loss <-function(subject, practiceCategory, studentItemPerfDF){
+  if(subject == "science"){
+    Total_Lost_Points<-studentItemPerfDF%>%
+      summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`sitem_score`))
+    view(Total_Lost_Points)
+    studentItemPerfDF%>%
+      group_by(`Practice Category`)%>%
+      summarize(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`sitem_score`, na.rm = TRUE),
+                RT_lost_points = RT_points-available_points,
+                RT_percent_lost_points = 
+                  100*round(sum(`RT_lost_points`/Total_Lost_Points[1,1],
+                                na.rm = TRUE),2))%>%
+      filter(`Practice Category` == practiceCategory)
+  }
+  ##To-Do Need to Identify Equivalent to Practice category in math (perhaps representation type?)
+  # else if (subject == "math"){
+  #   subjectItemDF%>%
+  #     select(`mitem`, `item Possible Points`, `Reporting Category`)%>%
+  #     group_by(`Reporting Category`)%>%
+  #     summarise(available_points = sum(`item Possible Points`, na.rm=TRUE))
+  
+  #} 
+  #To-Do adjust for ELA
+  else if(subject == "ela"){
+    # if (practiceCategory == ""){
+    studentItemPerfDF%>%
+      filter(!str_detect(`Type`,"ES"))%>%
+      group_by(`Cluster`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`eitem_score`, na.rm = TRUE),
+                RT_Percent_Points = 100*round(RT_points/available_points,2),
+                State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
+      mutate(`RT-State Diff` =RT_Percent_Points-State_Percent_Points)%>%
+      filter(`Cluster` == practiceCategory)
+  }
+} 
+
+### ELA specific performance functions
 ## RT STate-Diff for ELA Essay sub scores
 
 ELA_Subitem_Diff<-function(subitem, studentSubItemPerfDF){
@@ -133,6 +159,8 @@ ELA_Subitem_Diff<-function(subitem, studentSubItemPerfDF){
     
 }
 ## RT State-Diff for ELA xWalk Items
+
+##To-Do Rename this function to fit other naming conventions
 
 ELA_NumText_RTState<-function(value, studentItemPerfDF){
   studentItemPerfDF%>%
