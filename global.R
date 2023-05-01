@@ -81,10 +81,16 @@ MG5_student_item_perf<-Student_Item_Perf("math", MG5_item, MG5_student_perf)
 
 EG10_student_perf<-Student_Perf("ela", 10, student_itemDF)
 EG10_student_item_perf<-Student_Item_Perf("ela", EG10_item, EG10_student_perf)
-#view(EG10_student_item_perf)
-#view(EG10_student_perf)
+view(EG10_item)
+view(EG10_student_item_perf)
+view(EG10_student_perf)
+EG10_student_essay_perf<-Student_Essay_Perf(10, student_itemDF, EG10_item)
+view(EG10_student_essay_perf)
 
-
+EG10_ESconv_Diff<-ELA_Subitem_Diff("conv", EG10_student_essay_perf)
+view(EG10_ESconv_Diff)
+EG10_ESidea_Diff<-ELA_Subitem_Diff("idea", EG10_student_essay_perf)
+view(EG10_ESidea_Diff)
 ## Create Points Available and RT-State Diff by Category Data Frames------------------------------
 #Reporting Categories: HS Bio: "EC", "EV", "HE", "MO" for science grade levels
 #G11 Biology

@@ -78,7 +78,7 @@ ui <- dashboardPage(
                 2022 released paper based items PDF </a> 
                 </li>
                 <li> Download 
-                  <a href = 'http://mcas.pearsonsupport.com/resources/student/practice-tests-science/MCAS_2022_HS_Introductory%20Physics_PT_ADA.pdf'>
+                  <a href = 'http://mcas.pearsonsupport.com/resources/student/practice-tests-science/MCAS_2022_HS_Biology_PT_ADA.pdf'>
                   HS Biology Paper sample test </a>
                 or 
                 <a href = 'http://mcas.pearsonsupport.com/student/practice-tests-science/'>
@@ -930,13 +930,13 @@ ui <- dashboardPage(
                 
               ),
               fluidRow(
-                valueBox( EG10_WR_PTS[1,2],HTML("<p>Writing: <br> Idea Development <p>"),icon = icon("file-pen"), color = "blue"),
-                valueBox( EG10_ESLA_pts[1,2],HTML("<p>Writing: <br> Language Conv. <p>"),icon = icon("indent"), color = "blue")
+                valueBox( EG10_WR_PTS[1,2],HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "blue"),
+                valueBox( EG10_ESLA_pts[1,2],HTML("<p>Essay: <br> Language Conv. <p>"),icon = icon("indent"), color = "blue")
               ),
             
               
               
-              h3("Available Points by Domain Cluster"),
+              h3("Available Multiple Choice Points by Domain Cluster"),
               
               
               fluidRow(
@@ -944,7 +944,7 @@ ui <- dashboardPage(
                 
                 valueBox(EG10_CS_PTS[1,2], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "light-blue"),
                 valueBox(EG10_CV_PTS[1,2], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "light-blue"),
-                valueBox(EG10_ID_PTS[1,2], HTML("<p> Idea Development </p>"), icon = icon("lightbulb"), color = "light-blue"),
+               
                 
                 valueBox(EG10_IK_PTS[1,2], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
                 
@@ -952,9 +952,12 @@ ui <- dashboardPage(
                 
                # valueBox(EG10_KL_PTS[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "light-blue"),
                 
-                valueBox(EG10_VA_PTS[1,2], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue") 
+                valueBox(EG10_VA_PTS[1,2], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue"), 
                 
-                
+               box( title = "Notes", width = 4, solidHeader = FALSE,
+                 HTML("<p> Read more about the <a href = 
+                      'https://www.doe.mass.edu/frameworks/ela/2017-06.pdf'> 
+                       anchor standards.</a> </p>"))
                
                 
               ),
@@ -997,36 +1000,37 @@ ui <- dashboardPage(
                 
                 
               ),
+              #To-Do Now
               fluidRow(
-                valueBox( -6,HTML("<p>Writing: <br> Idea Development <p>"),icon = icon("file-pen"), color = "blue"),
-                valueBox( -4,HTML("<p> Writing: Language Conv. <p>"),icon = icon("indent"), color = "blue")
+                valueBox( EG10_ESidea_Diff[1,5],HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "light-blue"),
+                valueBox( EG10_ESconv_Diff[1,5],HTML("<p> Essay:<br> Language Conv. <p>"),icon = icon("indent"), color = "light-blue")
               ),
               
               
               
-              h3("RT-State Diff by Domain Cluster"),
+              h3("Multiple Choice RT-State Diff by Domain Cluster"),
               
               
               fluidRow(
                 # A static valueBox
                 
-                valueBox(EG10_CS_Diff[1,6], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "light-blue"),
-                valueBox(EG10_CV_Diff[1,6], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "light-blue"),
-                valueBox(EG10_ID_Diff[1,6], HTML("<p> Idea Development </p>"), icon = icon("lightbulb"), color = "light-blue"),
+                valueBox(EG10_CS_Diff[1,6], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "blue"),
+                valueBox(EG10_CV_Diff[1,6], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "blue"),
+               
                 
-                valueBox(EG10_IK_Diff[1,6], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
+                valueBox(EG10_IK_Diff[1,6], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "blue"),
                 
-                valueBox(EG10_KD_Diff[1,6], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "light-blue"), 
+                valueBox(EG10_KD_Diff[1,6], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "blue"), 
                 
-                # valueBox(EG10_KL_Diff[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "light-blue"),
+                # valueBox(EG10_KL_Diff[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "blue"),
                 
-                valueBox(EG10_VA_Diff[1,6], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue") 
+                valueBox(EG10_VA_Diff[1,6], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "blue") 
                 
                 
                 
                 
               ),
-              h3("Median RT-State Diff by Text Type"),
+              h3("RT-State Diff by Text Type"),
               fluidRow(
                 # A static valueBox
                 valueBox(EG10_F_Diff[1,6], HTML("<p> Fiction </p>"), icon=icon("book")),

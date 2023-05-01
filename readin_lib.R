@@ -66,12 +66,14 @@ read_item<-function(file_path, sheet_name, subject){
       select(!contains("delete"))%>%
       filter(!str_detect(eitem,"Legend|legend"))%>%
       mutate(eitem = as.character(eitem))%>%
-      separate(c(1), c("eitem", "delete"))%>%
-      select(!contains("delete"))%>%
+      separate(c(1), c("eitem", "esubitem"))%>%
+     # select(!contains("sub"))%>%
       mutate(eitem =
-               str_c(subject_item, eitem))
-    
-  }
+               str_c(subject_item, eitem))%>%
+      mutate(esubitem = str_to_lower(esubitem))%>%
+      mutate(esubitem = as.character(esubitem))%>%
+      replace_with_na(replace = list(esubitem = "0"))
+    }
   
 }
 
@@ -168,7 +170,7 @@ Join_ELAItem_Cluster<-function(elaItemDF, clusterXwalk){
 read_MCAS_Prelim_Private<-function(format, file_path){
   if(format=="csv"){
     read_csv(file_path)%>%
-      
+     
       #Recode all nominal variables as characters
       ##6 = NextGen Phys, 2 = Legacy Chem
       mutate(ssubject = as.character(ssubject))%>%
@@ -318,6 +320,9 @@ Student_Perf<-function(subject, gradeLevel, rawStudentPerfDF){
                    contains("attempt"), contains("subject"))%>%
               filter((grade == gradeLevel) & eattempt != "N")%>%
               #ToDo-Address the Essay subscores and Item report join to student performance
+             
+              #pivot_longer(contains("conv1")|contains("conv2")|contains("conv3")|contains("idea1")|contains("idea2")|contains("idea3"), 
+               #names_to = "esubitem", values_to = "esubitem_score")%>%
               # mutate(eitem_conv1 = recode_factor(conv1,
               #                                     "OT" = "0.0",
               #                                     "0.0" = "0.0",
@@ -330,26 +335,69 @@ Student_Perf<-function(subject, gradeLevel, rawStudentPerfDF){
               #to-do figure out how to add the essay idea and conv. sub scores
               pivot_longer(contains("eitem"), 
                            names_to = "eitem", values_to = "eitem_score")
+            #pivot_longer(contains("idea1")|contains("idea2")
+            #)
           }
 }
+
+### Function to Create ELA Writing only Data Frame? with Essay subscore
+
+
 ### Function to Join Student Performance Data Frame to Subject Item Data Frame
 
 
 Student_Item_Perf<-function(subject, subjectItemDF, studentPerfDF){
   if(subject == "science"){
     item_type = "sitem"
+    left_join(subjectItemDF, studentPerfDF, item_type)%>%
+      filter(`item Possible Points` >=1)
     
   }else if(subject == "math"){
     item_type = "mitem"
+    left_join(subjectItemDF, studentPerfDF, item_type)%>%
+      filter(`item Possible Points` >=1)
   }#To-Do review the eitem codings in raw performance data for the essay subscores...
   ##and address in crosswalk or read?
   else if(subject == "ela"){
     item_type = "eitem"
+    subjectItemDFJoin<-subjectItemDF%>%
+      select(!contains("esubitem"))%>%
+      filter(!str_detect(eitem,"WR|LA"))
+    studentPerfDFJoin<-studentPerfDF%>%
+      select(!contains("esubitem"))
+    left_join(subjectItemDFJoin, studentPerfDFJoin, item_type)%>%
+      filter(`item Possible Points` >=1)
   }
-  left_join(subjectItemDF, studentPerfDF, item_type)%>%
-    filter(`item Possible Points` >=1)
+  
+  
   
 }
+
+
+
+
+Student_Essay_Perf<-function(gradeLevel, rawStudentPerfDF, ELAItemDF){
+  #create Essay subscore DF only
+  studentEssayPerfDF<-select(rawStudentPerfDF, grade, contains("scaleds"),contains("perf"), 
+        contains("sgp"),contains("conv"),contains("idea"),
+        contains("attempt"), contains("subject"))%>%
+        filter((grade == gradeLevel) & eattempt != "N")%>%
+        pivot_longer(contains("conv1")|contains("conv2")|contains("conv3")|
+                       contains("idea1")|contains("idea2")|contains("idea3"), 
+        names_to = "esubitem", values_to = "esubitem_score")%>%
+        replace_with_na(replace = list(esubitem_score = "OT"))%>%
+        mutate(esubitem_score = as.integer(esubitem_score))
+  ELAsubItemDF<-ELAItemDF%>%
+    filter(str_detect(`esubitem`, "conv") | str_detect(`esubitem`, "idea"))
+  left_join(ELAsubItemDF, studentEssayPerfDF, "esubitem")
+    
+}
+
+ # Student_Essay_subItem_Perf<-function(studentEssayPerfDF, ELAItemDF){
+ #   ELAItemDF%>%
+ #     filter(str_detect(`esubitem`, "conv") | str_detect(`esubitem`, "idea"))%>%
+ #     left_join(ELAItemDF, studentEssayPerfDF, "esubitem")
+ # }
 
 
 
