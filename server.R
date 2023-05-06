@@ -14,7 +14,11 @@ server <- function(input, output){
     hist(data)
   })
   
-  #output$SG9Item <- renderDataTable(SG9_item)
+  output$SG9Top_Loss_Bar<-renderPlot({
+    SG9Top_Loss_Bar
+    })
+  
+  output$SG9_TopStudent_item_perf<- renderDataTable(SG9_TopStudent_item_perf)
   
   output$approvalBox <- renderValueBox({
     MF_Points<-Reporting_Cat_Points("science", "MF", SG9_item)[1,2]

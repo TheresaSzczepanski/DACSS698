@@ -1,6 +1,7 @@
 
 
 library(dplyr)
+library(forcats)
 library(ggplot2)
 library(ggpubr)
 library(hrbrthemes)
@@ -10,6 +11,7 @@ library(plotly)
 library(purrr)
 library(RColorBrewer)
 library(readxl)
+library(scales)
 library(shiny)
 library(shinydashboard)
 library(tidyverse)

@@ -56,7 +56,7 @@ SG9_student_perf<-Student_Perf("physics", 9, student_itemDF)
 SG9_student_item_perf<-Student_Item_Perf("science", SG9_item, SG9_student_perf)
 SG9_TopStudent_item_perf<-SG9_student_item_perf%>%
   filter(sscaleds >= 515)
-view(SG9_TopStudent_item_perf)
+#view(SG9_TopStudent_item_perf)
 #view(SG9_student_item_perf)
 #view(SG9_student_perf)
 
@@ -117,7 +117,7 @@ SG9_WA_PTS<-Reporting_Cat_Points("science", "WA", SG9_item)
 #RT-State Diff
 #G9 Intro Physics
 
-view(SG9_student_item_perf)
+#view(SG9_student_item_perf)
 SG9_CR_Diff<-Item_Type_Diff("science", "CR", SG9_student_item_perf)
 #view(SG9_CR_Diff)
 SG9_SR_Diff<-Item_Type_Diff("science", "SR", SG9_student_item_perf)
@@ -143,9 +143,12 @@ SG9Top_WA_Diff<-Reporting_Cat_Diff("science", "WA", SG9_TopStudent_item_perf)
 SG9Top_MD_Loss<-Practice_Cat_Loss("science","Mathematics and Data", SG9_TopStudent_item_perf)
 view(SG9Top_MD_Loss)
 SG9Top_ERM_Loss<-Practice_Cat_Loss("science", "Evidence, Reasoning, and Modeling", SG9_TopStudent_item_perf)
-view(SG9Top_ERM_Loss)
+#view(SG9Top_ERM_Loss)
 SG9Top_IQ_Loss<-Practice_Cat_Loss("science", "Investigations and Questioning", SG9_TopStudent_item_perf)
-view(SG9Top_IQ_Loss)
+#view(SG9Top_IQ_Loss)
+
+SG9Top_Loss_Bar<-Practice_Cat_Loss_Bar("science", SG9_TopStudent_item_perf)
+#view(SG9Top_Loss_Bar)
 
 #Reporting Categories: G8STE: "MF", "EN", "WA" for science grade levels
 #G8 STE: "ES", ""LS", PS", "TE"

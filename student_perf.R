@@ -111,12 +111,12 @@ Practice_Cat_Loss <-function(subject, practiceCategory, studentItemPerfDF){
   if(subject == "science"){
     Total_Lost_Points<-studentItemPerfDF%>%
       summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`sitem_score`))
-    view(Total_Lost_Points)
+    #view(Total_Lost_Points)
     studentItemPerfDF%>%
       group_by(`Practice Category`)%>%
       summarize(available_points = sum(`item Possible Points`, na.rm=TRUE),
                 RT_points = sum(`sitem_score`, na.rm = TRUE),
-                RT_lost_points = RT_points-available_points,
+                RT_lost_points = available_points-RT_points,
                 RT_percent_lost_points = 
                   100*round(sum(`RT_lost_points`/Total_Lost_Points[1,1],
                                 na.rm = TRUE),2))%>%
@@ -144,6 +144,39 @@ Practice_Cat_Loss <-function(subject, practiceCategory, studentItemPerfDF){
       filter(`Cluster` == practiceCategory)
   }
 } 
+
+###Practice Category Loss Visual
+Practice_Cat_Loss_Bar <-function(subject, studentItemPerfDF){
+  if(subject == "science"){
+    Total_Lost_Points<-studentItemPerfDF%>%
+      summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`sitem_score`))
+    #view(Total_Lost_Points)
+    studentItemPerfDF%>%
+      group_by(`Practice Category`)%>%
+      summarize(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`sitem_score`, na.rm = TRUE),
+                RT_lost_points = available_points-RT_points,
+                RT_percent_lost_points = 
+                  100*round(sum(`RT_lost_points`/Total_Lost_Points[1,1],
+                                na.rm = TRUE),2))%>%
+      mutate(`Practice Category` = fct_reorder(`Practice Category`, 
+                                  `RT_percent_lost_points`, .desc =TRUE))%>%
+      ggplot( aes(fill = `Practice Category`, y=`RT_percent_lost_points`, 
+                  x=`Practice Category`)) +
+       geom_bar(position="dodge", stat="identity") +
+        #coord_flip()+
+      scale_fill_manual(values = c("Mathematics and Data" = "navy"))+
+     # scale_fill_brewer(palette = "Blues", na.value = "blue")+
+      theme(#axis.title.x=element_blank(),
+        legend.position = "none",
+            axis.text.x=element_blank())
+   # na.value="blue"
+       #     axis.ticks.x=element_blank()
+            # axis.text.y=element_blank(),  #remove y axis labels
+            # axis.ticks.y=element_blank()  #remove y axis ticks
+      #)
+  }
+}
 
 ### ELA specific performance functions
 ## RT STate-Diff for ELA Essay sub scores

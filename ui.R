@@ -142,8 +142,11 @@ ui <- dashboardPage(
               span(h1("How were students assessed?")), #style = "color:black")),
               HTML("<p>The 2022 Introductory Physics exam consisted of 42 questions
                worth in <b> total 60 points </b>. Students used this <a href = 'https://www.doe.mass.edu/mcas/tdd/phys_formula.pdf'>
-                reference sheet </a>.
-                
+                reference sheet </a>. 
+                Students were assessed on the
+                <a href = 'https://www.doe.mass.edu/stem/ste/hs-intro-phys.pdf'>
+                <b> content and skills </b> from the STE curriculum framework.
+                </a>
                 </p>"),
               h3("Available Points by Content Category"),
               
@@ -232,11 +235,11 @@ ui <- dashboardPage(
               fluidRow(
                 # A static valueBox
                 
-                valueBox(SG9_IQ_Diff[1,6], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
+                valueBox(paste(SG9_IQ_Diff[1,6],  "%"), HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
                 
-                valueBox(SG9_MD_Diff[1,6], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+                valueBox(paste(SG9_MD_Diff[1,6],  "%"), HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
                 
-                valueBox(SG9_ERM_Diff[1,6], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+                valueBox(paste(SG9_ERM_Diff[1,6],  "%"), HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
                 
                 
                 # valueBox(4,  "no category reported ", color = "aqua")
@@ -259,19 +262,33 @@ ui <- dashboardPage(
              
              span(h1("What is the greatest opportunity for growth?")), #style = "color:black")),
              
-             h3("Content Category"),
-             
+             h3("% of Points Lost by Practice Category"),
              
              fluidRow(
-               # A static valueBox
-               #valueBox( scales::percent(22/42), "Motions, Forces, \n and Interactions", icon = icon("rocket"), color = "blue"),
+               box(
+                 status = "primary", solidHeader = TRUE,
+                 collapsible = TRUE, width = 500,
+                 plotOutput("SG9Top_Loss_Bar")
+               )
                
-               valueBox(SG9_MF_Diff[1,6]/100*SG9_MF_PTS[1,2], HTML("<p> Motions, Forces, <br> and Interactions </p>"), icon = icon("rocket"), color = "blue"),
-               valueBox( SG9_EN_Diff[1,6]/100*SG9_EN_PTS[1,2],"Energy",icon = icon("atom"), color = "blue"),
-               valueBox(SG9_WA_Diff[1,6]/100*SG9_WA_PTS[1,2], "Waves", icon = icon("wave-square"), color = "blue")
-               
+             
                
              ),
+            
+             #fluidRow(
+              # dataTableOutput("SG9_TopStudent_item_perf")
+              #   ),
+             
+             # fluidRow(
+             #   # A static valueBox
+             #   #valueBox( scales::percent(22/42), "Motions, Forces, \n and Interactions", icon = icon("rocket"), color = "blue"),
+             #   
+             #   valueBox(SG9_MF_Diff[1,6]/100*SG9_MF_PTS[1,2], HTML("<p> Motions, Forces, <br> and Interactions </p>"), icon = icon("rocket"), color = "blue"),
+             #   valueBox( SG9_EN_Diff[1,6]/100*SG9_EN_PTS[1,2],"Energy",icon = icon("atom"), color = "blue"),
+             #   valueBox(SG9_WA_Diff[1,6]/100*SG9_WA_PTS[1,2], "Waves", icon = icon("wave-square"), color = "blue")
+             #   
+             #   
+             # ),
              
              
              h3("Practice Category"),
@@ -281,25 +298,31 @@ ui <- dashboardPage(
                    items which do not have a listed science practice category. </p>"),
              fluidRow(
                # A static valueBox
+               valueBox(paste(SG9Top_IQ_Loss[1,5], "%"), HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
                
-               valueBox(SG9_IQ_Diff[1,6]/100*SG9_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
+               valueBox(paste(SG9Top_MD_Loss[1,5], "%"), HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
                
-               valueBox(SG9_MD_Diff[1,6]/100*SG9_MD_PTS[1,2], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+               valueBox(paste(SG9Top_ERM_Loss[1,5], "%"), HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
                
-               valueBox(SG9_ERM_Diff[1,6]/100*SG9_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+               
+              # valueBox(SG9_IQ_[1,6]/100*SG9_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
+               
+               #valueBox(SG9_MD_Diff[1,6]/100*SG9_MD_PTS[1,2], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+               
+              # valueBox(SG9_ERM_Diff[1,6]/100*SG9_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
                
                
                # valueBox(4,  "no category reported ", color = "aqua")
                
              ),
-             h3("Available Points by Question Type"),
-             fluidRow(
-               # A static valueBox
-               valueBox(SG9_SR_Diff[1,6]/100*SG9_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
-               
-               valueBox(SG9_CR_Diff[1,6]/100*SG9_CR_PTS[1,2], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
-               
-             )
+             # h3("Available Points by Question Type"),
+             # fluidRow(
+             #   # A static valueBox
+             #   valueBox(SG9_SR_Diff[1,6]/100*SG9_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check")),
+             #   
+             #   valueBox(SG9_CR_Diff[1,6]/100*SG9_CR_PTS[1,2], HTML("<p> Constructed <br> Response </p>"),icon=icon("pencil") )
+             #   
+             # )
      ),
      
      #G9 Physics Top Perf
@@ -1014,8 +1037,8 @@ ui <- dashboardPage(
                 
               ),
               fluidRow(
-                valueBox( EG10_WR_PTS[1,2],HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "blue"),
-                valueBox( EG10_ESLA_pts[1,2],HTML("<p>Essay: <br> Language Conv. <p>"),icon = icon("indent"), color = "blue"),
+                valueBox( EG10_WR_PTS[1,2],HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "light-blue"),
+                valueBox( EG10_ESLA_pts[1,2],HTML("<p>Essay: <br> Language Conv. <p>"),icon = icon("indent"), color = "light-blue"),
                 box(width = 4, solidHeader = FALSE,
                      HTML("<p> <ul>
                             <li> Sample
@@ -1026,10 +1049,7 @@ ui <- dashboardPage(
                           <a href = 'http://mcas.pearsonsupport.com/student/practice-tests-ela/'> computer based practice test</a> with
                           scoring key/rubric
                           </li>
-                            <li>Student
-                          <a href = 'https://www.doe.mass.edu/mcas/student/2022/grade10/ela.html'>
-                            essays </a> and Scoring Guidelines
-                          </li>
+                            
                             
                             </ul>
                             </p>"))
@@ -1038,7 +1058,7 @@ ui <- dashboardPage(
             
               
               
-              h3("Available Multiple Choice Points by Domain Cluster"),
+              h3("Available Selected Response Points by Domain Cluster"),
               HTML("<p>The 2022 G10 ELA exam consisted of 28 selected response 
               questions worth in <b>total 35 points </b>.</p>"),
               
@@ -1046,29 +1066,36 @@ ui <- dashboardPage(
               fluidRow(
                 # A static valueBox
                 
-                valueBox(EG10_CS_PTS[1,2], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "light-blue"),
-                valueBox(EG10_CV_PTS[1,2], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "light-blue"),
+                valueBox(EG10_CS_PTS[1,2], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "blue"),
+                valueBox(EG10_CV_PTS[1,2], HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "blue"),
                
                 
-                valueBox(EG10_IK_PTS[1,2], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
+                valueBox(EG10_IK_PTS[1,2], HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "blue"),
                 
-                valueBox(EG10_KD_PTS[1,2], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "light-blue"), 
+                valueBox(EG10_KD_PTS[1,2], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "blue"), 
                 
-               # valueBox(EG10_KL_PTS[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "light-blue"),
+               # valueBox(EG10_KL_PTS[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "blue"),
                 
-                valueBox(EG10_VA_PTS[1,2], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "light-blue"), 
+                valueBox(EG10_VA_PTS[1,2], HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "blue"), 
                 
                box( title = "Notes", width = 4, solidHeader = FALSE,
                  HTML("<p> Read more about the <a href = 
                       'https://www.doe.mass.edu/frameworks/ela/2017-06.pdf'> 
-                       anchor standards.</a> </p>"))
+                       anchor standards.</a> in the frameworks</p>"))
               ),
               h3("Available Points by Text Type"),
               fluidRow(
                 # A static valueBox
                 valueBox(EG10_F_PTS[1,2], HTML("<p> Fiction </p>"), icon=icon("book")),
                 
-                valueBox(EG10_NF_PTS[1,2], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper") )
+                valueBox(EG10_NF_PTS[1,2], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper") ),
+                
+                box( title = "Notes", width = 4, solidHeader = FALSE,
+                     
+                     HTML("<p> Text title and types in the <a href = 
+                      'https://docs.google.com/spreadsheets/d/1TLJTY_twbuuSqCZx_9h_g4ZO4_pLuCWGgpCwklRebdE/edit?usp=sharing'> 
+                       G10 ELA xWalk.</a> </p>"))
+              
                 
               ),
               h3("Available Points by Text Quantity"),
@@ -1076,15 +1103,27 @@ ui <- dashboardPage(
                 # A static valueBox
                 valueBox(EG10_1Text_PTS[1,2], HTML("<p> Single Text </p>"), icon=icon("1")),
                 
-                valueBox(EG10_2Text_PTS[1,2], HTML("<p> Multiple Texts </p>"),icon=icon("right-left") )
-                
+                valueBox(EG10_2Text_PTS[1,2], HTML("<p> Multiple Texts </p>"),icon=icon("right-left") ),
+                box( title = "Notes", width = 4, solidHeader = FALSE,
+                     
+                     HTML("<p> Links to questions in the <a href = 
+                      'https://docs.google.com/spreadsheets/d/1TLJTY_twbuuSqCZx_9h_g4ZO4_pLuCWGgpCwklRebdE/edit?usp=sharing'> 
+                       G10 ELA xWalk.</a> </p>"))
               ),
+                
+              
               h3("Available Points by Question Type"),
               fluidRow(
                 # A static valueBox
                 valueBox(EG10_SR_PTS[1,2], HTML("<p> Selected <br> Response </p>"), icon=icon("square-check"), color = "teal"),
                 
-                valueBox(EG10_ES_PTS[1,2], HTML("<p> Essay: Lang. <br>& Idea Dev.</p>"),icon=icon("file-pen"), color = "teal" )
+                valueBox(EG10_ES_PTS[1,2], HTML("<p> Essay: Lang. <br>& Idea Dev.</p>"),icon=icon("file-pen"), color = "teal" ),
+                
+                box(  width = 4, solidHeader = FALSE,
+                     HTML("<p> 2022 student released
+                          <a href = 'https://www.doe.mass.edu/mcas/student/2022/grade10/ela.html'>
+                            essays </a> and Scoring Guidelines </p>")
+              )
                 
               )
       ),
@@ -1110,7 +1149,7 @@ ui <- dashboardPage(
               
               
               
-              h3("Multiple Choice RT-State Diff by Domain Cluster"),
+              h3("Selected Response RT-State Diff by Domain Cluster"),
               
               
               fluidRow(
