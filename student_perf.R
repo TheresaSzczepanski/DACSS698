@@ -111,7 +111,7 @@ Practice_Cat_Loss <-function(subject, practiceCategory, studentItemPerfDF){
   if(subject == "science"){
     Total_Lost_Points<-studentItemPerfDF%>%
       summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`sitem_score`, na.rm=TRUE))
-    view(Total_Lost_Points)
+    #view(Total_Lost_Points)
     studentItemPerfDF%>%
       group_by(`Practice Category`)%>%
       summarize(available_points = sum(`item Possible Points`, na.rm=TRUE),
@@ -132,16 +132,20 @@ Practice_Cat_Loss <-function(subject, practiceCategory, studentItemPerfDF){
   #} 
   #To-Do adjust for ELA
   else if(subject == "ela"){
-    # if (practiceCategory == ""){
-    studentItemPerfDF%>%
-      filter(!str_detect(`Type`,"ES"))%>%
+      Total_Lost_Points<-studentItemPerfDF%>%
+        filter(!str_detect(`Type`,"ES"))%>%
+        summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`eitem_score`, na.rm=TRUE))
+      view(Total_Lost_Points)
+      studentItemPerfDF%>%
+        filter(!str_detect(`Type`,"ES"))%>%
       group_by(`Cluster`)%>%
       summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
                 RT_points = sum(`eitem_score`, na.rm = TRUE),
-                RT_Percent_Points = 100*round(RT_points/available_points,2),
-                State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
-      mutate(`RT-State Diff` =RT_Percent_Points-State_Percent_Points)%>%
-      filter(`Cluster` == practiceCategory)
+                RT_lost_points = available_points-RT_points,
+                RT_percent_lost_points = 
+                  100*round(sum(`RT_lost_points`/Total_Lost_Points[1,1],
+                                na.rm = TRUE),2))%>%
+                filter(`Cluster` == practiceCategory)
   }
 } 
 
@@ -191,11 +195,10 @@ ELA_Subitem_Diff<-function(subitem, studentSubItemPerfDF){
     mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))
     
 }
-## RT State-Diff for ELA xWalk Items
+## RT State-Diff for ELA xWalk Items and %PtsLost by xWalk items
 
-##To-Do Rename this function to fit other naming conventions
 
-ELA_NumText_RTState<-function(value, studentItemPerfDF){
+ELA_NumText_Diff<-function(value, studentItemPerfDF){
   studentItemPerfDF%>%
     group_by(`Num Texts`)%>%
     summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
@@ -206,7 +209,23 @@ ELA_NumText_RTState<-function(value, studentItemPerfDF){
     mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
     filter(`Num Texts`==value)
 }
-ELA_Fiction_RTState<-function(value, studentItemPerfDF){
+
+ELA_NumText_Loss<-function(value, studentItemPerfDF){
+  Total_Lost_Points<-studentItemPerfDF%>%
+    summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`eitem_score`, na.rm=TRUE))
+  view(Total_Lost_Points)
+  studentItemPerfDF%>%
+  group_by(`Num Texts`)%>%
+  summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+            RT_points = sum(`eitem_score`, na.rm = TRUE),
+            RT_lost_points = available_points-RT_points,
+            RT_percent_lost_points = 
+              100*round(sum(`RT_lost_points`/Total_Lost_Points[1,1],
+                            na.rm = TRUE),2))%>%
+    filter(`Num Texts` == value)
+}
+
+ELA_Fiction_Diff<-function(value, studentItemPerfDF){
   studentItemPerfDF%>%
     group_by(`Fiction-Non`)%>% 
     summarise(available_points = 
@@ -216,5 +235,20 @@ ELA_Fiction_RTState<-function(value, studentItemPerfDF){
                 State_Percent_Points = 100*round(sum(`State Percent Points`*`item Possible Points`/available_points, na.rm = TRUE),2))%>%
     mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))%>%
     filter(`Fiction-Non`==value)
+}
+
+ELA_Fiction_Loss<-function(value, studentItemPerfDF){
+  Total_Lost_Points<-studentItemPerfDF%>%
+    summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`eitem_score`, na.rm=TRUE))
+  view(Total_Lost_Points)
+  studentItemPerfDF%>%
+  group_by(`Fiction-Non`)%>%
+    summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+              RT_points = sum(`eitem_score`, na.rm = TRUE),
+              RT_lost_points = available_points-RT_points,
+              RT_percent_lost_points = 
+                100*round(sum(`RT_lost_points`/Total_Lost_Points[1,1],
+                              na.rm = TRUE),2))%>%
+    filter(`Fiction-Non` == value)
 }
 

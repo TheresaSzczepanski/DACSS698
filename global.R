@@ -47,7 +47,12 @@ EG10_xWalk<-read_item_xwalk("data/2022MCASItemXWalk.xlsx", "EG10_xwalk",
                            "ela")
 EG10_item<-Join_Item_Xwalk("ela", EG10_item, EG10_xWalk)
 EG10_item<-Join_ELAItem_Cluster(EG10_item, ELA_cluster_xwalk)
-#view(EG10_item)
+view(EG10_item)
+EG10_reading_item <- EG10_item%>%
+  filter(!str_detect(`Type`,"ES"))
+EG10_writing_item <- EG10_item%>%
+  filter(str_detect(`Type`,"ES") & str_detect(`Reporting Category`, "-"))
+
 ## Create Student Item Data Frames----------------------------------------------
 student_itemDF<-read_MCAS_Prelim_Private("csv","data/PrivProtectSpring2022_MCAS_full_preliminary_results_04830305.csv")
 #view(student_itemDF)
@@ -87,10 +92,18 @@ MG5_student_item_perf<-Student_Item_Perf("math", MG5_item, MG5_student_perf)
 EG10_student_perf<-Student_Perf("ela", 10, student_itemDF)
 EG10_student_item_perf<-Student_Item_Perf("ela", EG10_item, EG10_student_perf)
 #view(EG10_item)
-#view(EG10_student_item_perf)
+view(EG10_student_item_perf)
+EG10_student_reading_item_perf<-EG10_student_item_perf%>%
+  filter(!str_detect(`Type`,"ES"))
+
+## This is without the essay subscores but used for RT-state diff and loss with xWalk
+EG10_student_writing_item_perf<-EG10_student_item_perf%>%
+  filter(str_detect(`Type`, "ES"))
 #view(EG10_student_perf)
+
+## This is to calculate the Essay Subscores
 EG10_student_essay_perf<-Student_Essay_Perf(10, student_itemDF, EG10_item)
-#view(EG10_student_essay_perf)
+view(EG10_student_essay_perf)
 
 
 ## Create Points Available and RT-State Diff by Category Data Frames------------------------------
@@ -145,22 +158,22 @@ SG9Top_WA_Diff<-Reporting_Cat_Diff("science", "WA", SG9_TopStudent_item_perf)
 #SG9Low RT-State Diff
 
 SG9Low_SR_Diff<-Item_Type_Diff("science", "SR", SG9_LowStudent_item_perf)
-view(SG9Low_SR_Diff)
+#view(SG9Low_SR_Diff)
 SG9Low_CR_Diff<-Item_Type_Diff("science", "CR", SG9_LowStudent_item_perf)
-view(SG9Low_CR_Diff)
+#view(SG9Low_CR_Diff)
 
 
 SG9Low_MF_Diff<-Reporting_Cat_Diff("science", "MF", SG9_LowStudent_item_perf)
-view(SG9Low_MF_Diff)
+#view(SG9Low_MF_Diff)
 SG9Low_EN_Diff<-Reporting_Cat_Diff("science", "EN", SG9_LowStudent_item_perf)
-view(SG9Low_EN_Diff)
+#view(SG9Low_EN_Diff)
 SG9Low_WA_Diff<-Reporting_Cat_Diff("science", "WA", SG9_LowStudent_item_perf)
-view(SG9Low_WA_Diff)
+#view(SG9Low_WA_Diff)
 
 ## SG9 Percent Points Loss by Performance Level
 
 SG9Top_MD_Loss<-Practice_Cat_Loss("science","Mathematics and Data", SG9_TopStudent_item_perf)
-view(SG9Top_MD_Loss)
+#view(SG9Top_MD_Loss)
 SG9Top_ERM_Loss<-Practice_Cat_Loss("science", "Evidence, Reasoning, and Modeling", SG9_TopStudent_item_perf)
 #view(SG9Top_ERM_Loss)
 SG9Top_IQ_Loss<-Practice_Cat_Loss("science", "Investigations and Questioning", SG9_TopStudent_item_perf)
@@ -184,11 +197,11 @@ SG9_Loss_Bar<-Practice_Cat_Loss_Bar("science", SG9_student_item_perf)
 
 ## SG9 Practice Category Percent Points Lost
 SG9Low_MD_Loss<-Practice_Cat_Loss("science","Mathematics and Data", SG9_LowStudent_item_perf)
-view(SG9Low_MD_Loss)
+#view(SG9Low_MD_Loss)
 SG9Low_ERM_Loss<-Practice_Cat_Loss("science", "Evidence, Reasoning, and Modeling", SG9_LowStudent_item_perf)
-view(SG9Low_ERM_Loss)
+#view(SG9Low_ERM_Loss)
 SG9Low_IQ_Loss<-Practice_Cat_Loss("science", "Investigations and Questioning", SG9_LowStudent_item_perf)
-view(SG9Low_IQ_Loss)
+#view(SG9Low_IQ_Loss)
 
 SG9Low_Loss_Bar<-Practice_Cat_Loss_Bar("science", SG9_LowStudent_item_perf)
 
@@ -430,7 +443,7 @@ EG10_IK_PTS<-Practice_Cat_Points("ela", "Integration of Knowledge and Ideas", EG
 EG10_VA_PTS<-Practice_Cat_Points("ela", "Vocabulary Acquisition and Use", EG10_item)
 EG10_WC_PTS<-Practice_Cat_Points("ela", "Writing Combined (Conv/Idea Dev)", EG10_item)
 
-##Domain Cluster RT-State
+##Domain Cluster RT-State and % Loss
 EG10_CS_Diff<-Practice_Cat_Diff("ela", "Craft and Structure", EG10_student_item_perf)
 EG10_CV_Diff<-Practice_Cat_Diff("ela", "Conventions", EG10_student_item_perf)
 #view(EG10_CV_Diff)
@@ -447,20 +460,59 @@ EG10_VA_Diff<-Practice_Cat_Diff("ela", "Vocabulary Acquisition and Use", EG10_st
 EG10_WC_Diff<-Practice_Cat_Diff("ela", "Writing Combined (Conv/Idea Dev)", EG10_student_item_perf)
 #view(EG10_WC_Diff)
 
+EG10_CS_Loss<-Practice_Cat_Loss("ela", "Craft and Structure", EG10_student_item_perf)
+#view(EG10_CV_Loss)
+EG10_CV_Loss<-Practice_Cat_Loss("ela", "Conventions", EG10_student_item_perf)
+#view(EG10_CV_Loss)
+EG10_KD_Loss<-Practice_Cat_Loss("ela", "Key Ideas and Details", EG10_student_item_perf)
+#view(EG10_KD_Loss)
+EG10_KL_Loss<-Practice_Cat_Loss("ela", "Knowledge of Language", EG10_student_item_perf)
+#view(EG10_KL_Loss)
+EG10_ID_Loss<-Practice_Cat_Loss("ela", "Idea Development", EG10_student_item_perf)
+#view(EG10_ID_Loss)
+EG10_IK_Loss<-Practice_Cat_Loss("ela", "Integration of Knowledge and Ideas", EG10_student_item_perf)
+#view(EG10_IK_Loss)
+EG10_VA_Loss<-Practice_Cat_Loss("ela", "Vocabulary Acquisition and Use", EG10_student_item_perf)
+#view(EG10_VA_Loss)
+EG10_WC_Loss<-Practice_Cat_Loss("ela", "Writing Combined (Conv/Idea Dev)", EG10_student_item_perf)
+#view(EG10_WC_Loss)
+
+
+
 # xWalk Items Pts & RT-State Diff
-EG10_F_PTS<-ELA_Fiction_Points("Fiction", EG10_item)
-EG10_NF_PTS<-ELA_Fiction_Points("Non-Fiction", EG10_item)
-EG10_2Text_PTS<-ELA_NumText_Points("More than 1", EG10_item)
-EG10_1Text_PTS<-ELA_NumText_Points("1.0", EG10_item)
-EG10_F_Diff<-ELA_Fiction_RTState("Fiction", EG10_student_item_perf)
-EG10_NF_Diff<-ELA_Fiction_RTState("Non-Fiction", EG10_student_item_perf)
-EG10_2Text_Diff<-ELA_NumText_RTState("More than 1", EG10_student_item_perf)
-EG10_1Text_Diff<-ELA_NumText_RTState("1.0", EG10_student_item_perf)
+#EG10_student_reading_item_perf
+#EG10_student_essay_perf
+
+EG10_FRead_PTS<-ELA_Fiction_Points("Fiction", EG10_reading_item)
+EG10_NFRead_PTS<-ELA_Fiction_Points("Non-Fiction", EG10_reading_item)
+EG10_2TextRead_PTS<-ELA_NumText_Points("More than 1", EG10_reading_item)
+EG10_1TextRead_PTS<-ELA_NumText_Points("1.0", EG10_reading_item)
+EG10_FWrite_PTS<-ELA_Fiction_Points("Fiction", EG10_writing_item)
+EG10_NFWrite_PTS<-ELA_Fiction_Points("Non-Fiction", EG10_writing_item)
+EG10_2TextWrite_PTS<-ELA_NumText_Points("More than 1", EG10_writing_item)
+EG10_1TextWrite_PTS<-ELA_NumText_Points("1.0", EG10_writing_item)
+EG10_FRead_Diff<-ELA_Fiction_Diff("Fiction", EG10_student_reading_item_perf)
+EG10_NFRead_Diff<-ELA_Fiction_Diff("Non-Fiction", EG10_student_reading_item_perf)
+EG10_FWrite_Diff<-ELA_Fiction_Diff("Fiction", EG10_student_writing_item_perf)
+EG10_NFWrite_Diff<-ELA_Fiction_Diff("Non-Fiction", EG10_student_writing_item_perf)
+EG10_2TextRead_Diff<-ELA_NumText_Diff("More than 1", EG10_student_reading_item_perf)
+EG10_1TextRead_Diff<-ELA_NumText_Diff("1.0", EG10_student_reading_item_perf)
+EG10_2TextWrite_Diff<-ELA_NumText_Diff("More than 1", EG10_student_writing_item_perf)
+EG10_1TextWrite_Diff<-ELA_NumText_Diff("1.0", EG10_student_writing_item_perf)
 
 EG10_ESconv_Diff<-ELA_Subitem_Diff("conv", EG10_student_essay_perf)
 #view(EG10_ESconv_Diff)
 EG10_ESidea_Diff<-ELA_Subitem_Diff("idea", EG10_student_essay_perf)
 #view(EG10_ESidea_Diff)
+
+EG10_FRead_Loss<-ELA_Fiction_Loss("Fiction", EG10_student_reading_item_perf)
+EG10_NFRead_Loss<-ELA_Fiction_Loss("Non-Fiction", EG10_student_reading_item_perf)
+EG10_FWrite_Loss<-ELA_Fiction_Loss("Fiction", EG10_student_writing_item_perf)
+EG10_NFWrite_Loss<-ELA_Fiction_Loss("Non-Fiction", EG10_student_writing_item_perf)
+EG10_2TextRead_Loss<-ELA_NumText_Loss("More than 1", EG10_student_reading_item_perf)
+EG10_1TextRead_Loss<-ELA_NumText_Loss("1.0", EG10_student_reading_item_perf)
+EG10_2TextWrite_Loss<-ELA_NumText_Loss("More than 1", EG10_student_writing_item_perf)
+EG10_1TextWrite_Loss<-ELA_NumText_Loss("1.0", EG10_student_writing_item_perf)
 
 # EG10_test<-EG10_student_item_perf%>%
 #   group_by(`Cluster`)%>%
