@@ -49,6 +49,7 @@ Practice_Cat_Points <-function(subject, practiceCategory, subjectItemDF){
   #} 
   else if (subject == "ela"){
     subjectItemDF%>%
+      filter(!str_detect(`Type`,"ES"))%>%
       select(`eitem`, `item Possible Points`, `Cluster`)%>%
       group_by(`Cluster`)%>%
       summarise(available_points = sum(`item Possible Points`, na.rm=TRUE))%>%

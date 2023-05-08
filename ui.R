@@ -117,13 +117,9 @@ ui <- dashboardPage(
                    items which do not have a listed science practice category. </p>"),
               fluidRow(
                 # A static valueBox
-                
-                valueBox(SG11_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
-                
+                valueBox(SG11_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"), 
                 valueBox(SG11_MD_PTS[1,2], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
-                
-                valueBox(SG11_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
-                
+                valueBox(SG11_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue")
                 
                 # valueBox(4,  "no category reported ", color = "aqua")
                 
@@ -179,12 +175,12 @@ ui <- dashboardPage(
                    items which do not have a listed science practice category. </p>"),
               fluidRow(
                 # A static valueBox
-                
-                valueBox(SG9_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
-                
                 valueBox(SG9_MD_PTS[1,2], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+                valueBox(SG9_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"), 
+                valueBox(SG9_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue")
                 
-                valueBox(SG9_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+                
+                
     
                 
                # valueBox(4,  "no category reported ", color = "aqua")
@@ -210,7 +206,7 @@ ui <- dashboardPage(
       #G9 Physics Performance
       tabItem("g9PhysicsPerf", 
               
-              span(h1("How did our students perform to their peers in the state?")), #style = "color:black")),
+              span(h1("How do our students compare to their peers in the state?")), #style = "color:black")),
               
               h3("RT-State Diff by: Content Category"),
               
@@ -219,9 +215,9 @@ ui <- dashboardPage(
                 # A static valueBox
                 #valueBox( scales::percent(22/42), "Motions, Forces, \n and Interactions", icon = icon("rocket"), color = "blue"),
                 
-                valueBox(SG9_MF_Diff[1,6], HTML("<p> Motions, Forces, <br> and Interactions </p>"), icon = icon("rocket"), color = "blue"),
-                valueBox( SG9_EN_Diff[1,6],"Energy",icon = icon("atom"), color = "blue"),
-                valueBox(SG9_WA_Diff[1,6], "Waves", icon = icon("wave-square"), color = "blue")
+                valueBox(paste(SG9_MF_Diff[1,6], "%"), HTML("<p> Motions, Forces, <br> and Interactions </p>"), icon = icon("rocket"), color = "blue"),
+                valueBox( paste(SG9_EN_Diff[1,6], "%"),"Energy",icon = icon("atom"), color = "blue"),
+                valueBox(paste(SG9_WA_Diff[1,6], "%"), "Waves", icon = icon("wave-square"), color = "blue")
                 
                 
               ),
@@ -235,11 +231,11 @@ ui <- dashboardPage(
               fluidRow(
                 # A static valueBox
                 
-                valueBox(paste(SG9_IQ_Diff[1,6],  "%"), HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
-                
                 valueBox(paste(SG9_MD_Diff[1,6],  "%"), HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
+                valueBox(paste(SG9_ERM_Diff[1,6],  "%"), HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
+                valueBox(paste(SG9_IQ_Diff[1,6],  "%"), HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue")
                 
-                valueBox(paste(SG9_ERM_Diff[1,6],  "%"), HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+                 
                  ),
               
               h3("RT-State Diff by: Question Type"),
@@ -434,14 +430,9 @@ ui <- dashboardPage(
                    items which do not have a listed science practice category. </p>"),
               fluidRow(
                 # A static valueBox
-                
-                valueBox(SG8_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
-                
+                valueBox(SG8_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"), 
                 valueBox(SG8_MD_PTS[1,2], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
-                
-                valueBox(SG8_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
-                
-                
+                valueBox(SG8_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue")
                 # valueBox(4,  "no category reported ", color = "aqua")
                 
               ),
@@ -460,10 +451,8 @@ ui <- dashboardPage(
       #G8 STE Performance
       
       tabItem("g8StePerf",
-              span(h1("How did our students perform?")), #style = "color:black")),
-             
-              h2("RT-State Diff by:"),
-              h3("Content Category"),
+              span(h1("How do our students compare to their peers in the state?")), #style = "color:black")),
+              h3("RT-State Diff by: Content Category"),
               
               
               fluidRow(
@@ -485,11 +474,11 @@ ui <- dashboardPage(
               fluidRow(
                 # A static valueBox
                 
-                valueBox(SG8_IQ_Diff[1,6], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
                 
+                valueBox(SG8_ERM_Diff[1,6], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
                 valueBox(SG8_MD_Diff[1,6], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
-                
-                valueBox(SG8_ERM_Diff[1,6], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
+                valueBox(SG8_IQ_Diff[1,6], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue") 
+                 
                 
                 
                 # valueBox(4,  "no category reported ", color = "aqua")
@@ -554,14 +543,9 @@ ui <- dashboardPage(
                    items which do not have a listed science practice category. </p>"),
               fluidRow(
                 # A static valueBox
-                
-                valueBox(SG5_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
-                
+                valueBox(SG5_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"), 
                 valueBox(SG5_MD_PTS[1,2], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
-                
-                valueBox(SG5_ERM_PTS[1,2], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
-                
-                
+                valueBox(SG5_IQ_PTS[1,2], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue")
                 # valueBox(4,  "no category reported ", color = "aqua")
                 
               ),
@@ -578,10 +562,8 @@ ui <- dashboardPage(
       #G5 STE Student Performance
       
       tabItem("g5StePerf",
-              span(h1("How did our students perform?")), #style = "color:black")),
-              
-              h2("RT-State Diff by:"),
-              h3("Content Category"),
+              span(h1("How do our students compare to their peers in the state?")), #style = "color:black")),
+              h3("RT-State Diff by: Content Category"),
               
               
               fluidRow(
@@ -602,13 +584,9 @@ ui <- dashboardPage(
                    items which do not have a listed science practice category. </p>"),
               fluidRow(
                 # A static valueBox
-                
-                valueBox(SG5_IQ_Diff[1,6], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue"),
-                
+                valueBox(SG5_ERM_Diff[1,6], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue"),
                 valueBox(SG5_MD_Diff[1,6], HTML("<p> Mathematics <br> and Data</p>"), icon = icon("calculator"), color = "light-blue"),
-                
-                valueBox(SG5_ERM_Diff[1,6], HTML("<p> Evidence, Reasoning, <br> and Modeling</p>"), icon = icon("magnifying-glass-chart"), color = "light-blue") 
-                
+                valueBox(SG5_IQ_Diff[1,6], HTML("<p> Investigating <br> and Questioning</p>"), icon = icon("question"), color = "light-blue")
                 
                 # valueBox(4,  "no category reported ", color = "aqua")
                 

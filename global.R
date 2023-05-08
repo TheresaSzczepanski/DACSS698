@@ -142,6 +142,23 @@ SG9Top_MF_Diff<-Reporting_Cat_Diff("science", "MF", SG9_TopStudent_item_perf)
 SG9Top_EN_Diff<-Reporting_Cat_Diff("science", "EN", SG9_TopStudent_item_perf)
 SG9Top_WA_Diff<-Reporting_Cat_Diff("science", "WA", SG9_TopStudent_item_perf)
 
+#SG9Low RT-State Diff
+
+SG9Low_SR_Diff<-Item_Type_Diff("science", "SR", SG9_LowStudent_item_perf)
+view(SG9Low_SR_Diff)
+SG9Low_CR_Diff<-Item_Type_Diff("science", "CR", SG9_LowStudent_item_perf)
+view(SG9Low_CR_Diff)
+
+
+SG9Low_MF_Diff<-Reporting_Cat_Diff("science", "MF", SG9_LowStudent_item_perf)
+view(SG9Low_MF_Diff)
+SG9Low_EN_Diff<-Reporting_Cat_Diff("science", "EN", SG9_LowStudent_item_perf)
+view(SG9Low_EN_Diff)
+SG9Low_WA_Diff<-Reporting_Cat_Diff("science", "WA", SG9_LowStudent_item_perf)
+view(SG9Low_WA_Diff)
+
+## SG9 Percent Points Loss by Performance Level
+
 SG9Top_MD_Loss<-Practice_Cat_Loss("science","Mathematics and Data", SG9_TopStudent_item_perf)
 view(SG9Top_MD_Loss)
 SG9Top_ERM_Loss<-Practice_Cat_Loss("science", "Evidence, Reasoning, and Modeling", SG9_TopStudent_item_perf)
@@ -155,11 +172,11 @@ SG9practice_width<-3
 
 ## SG9 Practice Category Percent Points Lost
 SG9_MD_Loss<-Practice_Cat_Loss("science","Mathematics and Data", SG9_student_item_perf)
-view(SG9_MD_Loss)
+#view(SG9_MD_Loss)
 SG9_ERM_Loss<-Practice_Cat_Loss("science", "Evidence, Reasoning, and Modeling", SG9_student_item_perf)
-view(SG9_ERM_Loss)
+#view(SG9_ERM_Loss)
 SG9_IQ_Loss<-Practice_Cat_Loss("science", "Investigations and Questioning", SG9_student_item_perf)
-view(SG9_IQ_Loss)
+#view(SG9_IQ_Loss)
 
 SG9_Loss_Bar<-Practice_Cat_Loss_Bar("science", SG9_student_item_perf)
 
