@@ -56,6 +56,8 @@ SG9_student_perf<-Student_Perf("physics", 9, student_itemDF)
 SG9_student_item_perf<-Student_Item_Perf("science", SG9_item, SG9_student_perf)
 SG9_TopStudent_item_perf<-SG9_student_item_perf%>%
   filter(sscaleds >= 515)
+SG9_LowStudent_item_perf<-SG9_student_item_perf%>%
+  filter(sscaleds < 500)
 #view(SG9_TopStudent_item_perf)
 #view(SG9_student_item_perf)
 #view(SG9_student_perf)
@@ -148,7 +150,31 @@ SG9Top_IQ_Loss<-Practice_Cat_Loss("science", "Investigations and Questioning", S
 #view(SG9Top_IQ_Loss)
 
 SG9Top_Loss_Bar<-Practice_Cat_Loss_Bar("science", SG9_TopStudent_item_perf)
-#view(SG9Top_Loss_Bar)
+
+SG9practice_width<-3
+
+## SG9 Practice Category Percent Points Lost
+SG9_MD_Loss<-Practice_Cat_Loss("science","Mathematics and Data", SG9_student_item_perf)
+view(SG9_MD_Loss)
+SG9_ERM_Loss<-Practice_Cat_Loss("science", "Evidence, Reasoning, and Modeling", SG9_student_item_perf)
+view(SG9_ERM_Loss)
+SG9_IQ_Loss<-Practice_Cat_Loss("science", "Investigations and Questioning", SG9_student_item_perf)
+view(SG9_IQ_Loss)
+
+SG9_Loss_Bar<-Practice_Cat_Loss_Bar("science", SG9_student_item_perf)
+
+##SG9Low Practice Category Percent Points Lost
+
+## SG9 Practice Category Percent Points Lost
+SG9Low_MD_Loss<-Practice_Cat_Loss("science","Mathematics and Data", SG9_LowStudent_item_perf)
+view(SG9Low_MD_Loss)
+SG9Low_ERM_Loss<-Practice_Cat_Loss("science", "Evidence, Reasoning, and Modeling", SG9_LowStudent_item_perf)
+view(SG9Low_ERM_Loss)
+SG9Low_IQ_Loss<-Practice_Cat_Loss("science", "Investigations and Questioning", SG9_LowStudent_item_perf)
+view(SG9Low_IQ_Loss)
+
+SG9Low_Loss_Bar<-Practice_Cat_Loss_Bar("science", SG9_LowStudent_item_perf)
+
 
 #Reporting Categories: G8STE: "MF", "EN", "WA" for science grade levels
 #G8 STE: "ES", ""LS", PS", "TE"

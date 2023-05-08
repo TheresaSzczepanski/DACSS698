@@ -110,8 +110,8 @@ Practice_Cat_Diff <-function(subject, practiceCategory, studentItemPerfDF){
 Practice_Cat_Loss <-function(subject, practiceCategory, studentItemPerfDF){
   if(subject == "science"){
     Total_Lost_Points<-studentItemPerfDF%>%
-      summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`sitem_score`))
-    #view(Total_Lost_Points)
+      summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`sitem_score`, na.rm=TRUE))
+    view(Total_Lost_Points)
     studentItemPerfDF%>%
       group_by(`Practice Category`)%>%
       summarize(available_points = sum(`item Possible Points`, na.rm=TRUE),
@@ -165,11 +165,11 @@ Practice_Cat_Loss_Bar <-function(subject, studentItemPerfDF){
                   x=`Practice Category`)) +
        geom_bar(position="dodge", stat="identity") +
         #coord_flip()+
-      scale_fill_manual(values = c("Mathematics and Data" = "navy"))+
+      scale_fill_manual(values = c("Mathematics and Data" = "red"))+
      # scale_fill_brewer(palette = "Blues", na.value = "blue")+
       theme(#axis.title.x=element_blank(),
-        legend.position = "none",
-            axis.text.x=element_blank())
+        legend.position = "none")
+            #axis.text.x=element_blank())
    # na.value="blue"
        #     axis.ticks.x=element_blank()
             # axis.text.y=element_blank(),  #remove y axis labels
