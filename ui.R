@@ -1247,15 +1247,15 @@ ui <- dashboardPage(
              h2("% Points Lost by Reporting Category"),
              h3("Reading"),
              fluidRow(
-               valueBox( EG10_RE_Diff[1,6],HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
-               valueBox(EG10_RELA_PTS[1,2], HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
+               valueBox( paste(EG10_RE_Loss[1,5], "%"),HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
+               valueBox(paste(EG10_LA_Loss[1,5], "%"), HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
                
                
              ),
              h3("Writing"),
              fluidRow(
-               valueBox( EG10_ESidea_Diff[1,5],HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "light-blue"),
-               valueBox( EG10_ESconv_Diff[1,5],HTML("<p> Essay:<br> Language Conv. <p>"),icon = icon("indent"), color = "light-blue")
+               valueBox( paste(EG10_ESidea_Loss[1,4], "%"),HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "light-blue"),
+               valueBox( paste(EG10_ESconv_Loss[1,4], "%"),HTML("<p> Essay:<br> Language Conv. <p>"),icon = icon("indent"), color = "light-blue")
              ),
              
              

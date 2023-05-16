@@ -35,7 +35,7 @@ Item_Type_Diff<-function(subject, item_type, studentItemPerfDF){
   }
 }
 
-##RT-Stat Diff by reporting category
+##RT-Stat Diff and %Points Lost by reporting category
 
 Reporting_Cat_Diff<-function(subject, category, studentItemPerfDF){
   if(subject == "math"){
@@ -70,6 +70,51 @@ Reporting_Cat_Diff<-function(subject, category, studentItemPerfDF){
   }
 }
 
+##% Points Lost by Reporting Category
+Reporting_Cat_Loss<-function(subject, category, studentItemPerfDF){
+  if(subject == "math"){
+    Total_Lost_Points<-studentItemPerfDF%>%
+      summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`mitem_score`, na.rm=TRUE))
+    studentItemPerfDF%>%
+      group_by(`Reporting Category`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`mitem_score`, na.rm = TRUE),
+                RT_lost_points = available_points-RT_points,
+                RT_percent_lost_points = 
+                  100*round(sum(`RT_lost_points`/Total_Lost_Points[1,1],
+                                na.rm = TRUE),2))%>%
+      filter(`Reporting Category` == category)
+  }
+  else if(subject == "science"){
+    Total_Lost_Points<-studentItemPerfDF%>%
+      summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`sitem_score`, na.rm=TRUE))
+    studentItemPerfDF%>%
+      group_by(`Reporting Category`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`sitem_score`, na.rm = TRUE),
+                RT_lost_points = available_points-RT_points,
+                RT_percent_lost_points = 
+                  100*round(sum(`RT_lost_points`/Total_Lost_Points[1,1],
+                                na.rm = TRUE),2))%>%
+      filter(`Reporting Category` == category)
+  }
+  else if(subject == "ela"){
+    Total_Lost_Points<-studentItemPerfDF%>%
+      filter(!str_detect(`Type`,"ES"))%>%
+      summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`eitem_score`, na.rm=TRUE))
+    #view(Total_Lost_Points)
+    studentItemPerfDF%>%
+      group_by(`Reporting Category`)%>%
+      summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+                RT_points = sum(`eitem_score`, na.rm = TRUE),
+                RT_lost_points = available_points-RT_points,
+                RT_percent_lost_points = 
+                  100*round(sum(`RT_lost_points`/Total_Lost_Points[1,1],
+                                na.rm = TRUE),2))%>%
+      filter(`Reporting Category` == category)
+  }
+}
+### Practice Category/Domain Cluster Performance Functions
 ##RT-Stat Diff by ELA cluster or Science Practice category
 
 Practice_Cat_Diff <-function(subject, practiceCategory, studentItemPerfDF){
@@ -107,6 +152,7 @@ Practice_Cat_Diff <-function(subject, practiceCategory, studentItemPerfDF){
      }
 }    
 
+
 Practice_Cat_Loss <-function(subject, practiceCategory, studentItemPerfDF){
   if(subject == "science"){
     Total_Lost_Points<-studentItemPerfDF%>%
@@ -130,12 +176,12 @@ Practice_Cat_Loss <-function(subject, practiceCategory, studentItemPerfDF){
   #     summarise(available_points = sum(`item Possible Points`, na.rm=TRUE))
   
   #} 
-  #To-Do adjust for ELA
+  
   else if(subject == "ela"){
       Total_Lost_Points<-studentItemPerfDF%>%
         filter(!str_detect(`Type`,"ES"))%>%
         summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`eitem_score`, na.rm=TRUE))
-      view(Total_Lost_Points)
+      #view(Total_Lost_Points)
       studentItemPerfDF%>%
         filter(!str_detect(`Type`,"ES"))%>%
       group_by(`Cluster`)%>%
@@ -195,6 +241,22 @@ ELA_Subitem_Diff<-function(subitem, studentSubItemPerfDF){
     mutate(`RT-State Diff` = round(RT_Percent_Points - State_Percent_Points, 2))
     
 }
+
+#To-Do come back here and test subitem loss scores
+ELA_Subitem_Loss<-function(subitem, studentSubItemPerfDF){
+  Total_Lost_Points<-studentSubItemPerfDF%>%
+    summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`esubitem_score`, na.rm=TRUE))
+  #view(Total_Lost_Points)
+  studentSubItemPerfDF%>%
+    filter(str_detect(esubitem, subitem))%>%
+    summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
+              RT_points = sum(`esubitem_score`, na.rm = TRUE),
+              RT_lost_points = available_points-RT_points,
+              RT_percent_lost_points = 
+                100*round(sum(`RT_lost_points`/Total_Lost_Points[1,1],
+                              na.rm = TRUE),2))
+
+}
 ## RT State-Diff for ELA xWalk Items and %PtsLost by xWalk items
 
 
@@ -213,7 +275,7 @@ ELA_NumText_Diff<-function(value, studentItemPerfDF){
 ELA_NumText_Loss<-function(value, studentItemPerfDF){
   Total_Lost_Points<-studentItemPerfDF%>%
     summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`eitem_score`, na.rm=TRUE))
-  view(Total_Lost_Points)
+  #view(Total_Lost_Points)
   studentItemPerfDF%>%
   group_by(`Num Texts`)%>%
   summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
@@ -240,7 +302,7 @@ ELA_Fiction_Diff<-function(value, studentItemPerfDF){
 ELA_Fiction_Loss<-function(value, studentItemPerfDF){
   Total_Lost_Points<-studentItemPerfDF%>%
     summarize(Total_Lost_Points = sum(`item Possible Points`, na.rm=TRUE)-sum(`eitem_score`, na.rm=TRUE))
-  view(Total_Lost_Points)
+  #view(Total_Lost_Points)
   studentItemPerfDF%>%
   group_by(`Fiction-Non`)%>%
     summarise(available_points = sum(`item Possible Points`, na.rm=TRUE),
