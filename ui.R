@@ -40,7 +40,8 @@ ui <- dashboardPage(
       menuItem("ELA", tabName = "ela", icon = icon("book-bookmark"),
                menuSubItem("G10 ELA Content", tabName = "g10ELAContent"),
                menuSubItem("G10 ELA Performance", tabName = "g10ELAPerformance"),
-               menuSubItem("G10 ELA Analysis", tabName = "g10ELAAnalysis")
+               menuSubItem("G10 ELA Writing Analysis", tabName = "g10ELAWritingAnalysis"),
+               menuSubItem("G10 ELA Reading Analysis", tabName = "g10ELAReadingAnalysis")
       )
       
     )
@@ -1241,10 +1242,10 @@ ui <- dashboardPage(
      
      #G10 ELA Analysis
      
-     tabItem("g10ELAAnalysis",
+     tabItem("g10ELAWritingAnalysis",
              span(h1("How do we improve?")), #style = "color:black")),
              
-             h2("% Points Lost by Reporting Category"),
+             h2("Writing with Text Synthesis"),
              h3("Reading"),
              fluidRow(
                valueBox( paste(EG10_RE_Loss[1,5], "%"),HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
@@ -1325,7 +1326,181 @@ ui <- dashboardPage(
                
              )
              
+     ),
+     
+     tabItem("g10ELAReadingAnalysis",
+             span(h1("How do we improve our reading?")), #style = "color:black")),
+             
+             h2("Fiction and Poetry Analysis using Multiple Texts"),
+             
+             
+            
+             
+             
+             
+             
+             h2("% Points Lost by Text Type"),
+             HTML("<p> Despite there being <b> more </b> reading points associated with items
+                  assessing a student's comprhension of non-fiction texts, <b> Rising Tide</b> students lost 
+                  <b> significantly more points </b> in the comprehension and analysis of <b>fictional </b> 
+                  texts. </p>"),
+             h3("All Students"),
+            
+             fluidRow(
+               
+               valueBox(paste(EG10_NFRead_Loss[1,5], "%"), HTML("<p> Non-Fiction </p>"),icon=icon("newspaper"), color = "blue" ),
+               valueBox(paste(EG10_FRead_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "red")
+               
+               
+               
+             ),
+             
+             
+             h3("Top Scoring Students"),
+             HTML("<p> This trend is <b> more pronounced</b> in Rising Tide's <b> top performing students</b>.
+             This suggests, that students need an adjustment at the <b>curricular level </b> in fiction reading comprehension
+             and text analysis. </p>"),
+             fluidRow(
+               
+               valueBox(paste(EG10Top_NFRead_Loss[1,5], "%"), HTML("<p> Non-Fiction </p>"),icon=icon("newspaper"), color = "blue" ),
+               valueBox(paste(EG10Top_FRead_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "red")
+               
+               
+               
+             ),
+            
+             h2("% Reading Points Lost by Text Quantity"),
+             
+             h3("All Students"),
+             HTML("<p><b> 57% </b> of reading points are from items asking 
+                  students to sythesize between two texts, these items account for
+                  <b> 65%</b> of reading points lost by <b>Rising Tide students </b>. </p>"),
+             
+             fluidRow(
+               # A static valueBox
+               valueBox(paste(EG10_2TextRead_Loss[1,5], "%"), HTML("<p> Multiple Texts </p>"),icon=icon("right-left"), color = "red" ),
+               valueBox(paste(EG10_1TextRead_Loss[1,5], "%"), HTML("<p> Single Text </p>"), icon=icon("1"), color = "blue")
+               
+               
+               
+             ),
+            
+            
+             h3("Top Performing Students"),
+          
+             fluidRow(
+               # A static valueBox
+               valueBox(paste(EG10Top_2TextRead_Loss[1,5], "%"), HTML("<p> Multiple Texts </p>"),icon=icon("right-left"), color = "red" ),
+               valueBox(paste(EG10Top_1TextRead_Loss[1,5], "%"), HTML("<p> Single Text </p>"), icon=icon("1"), color = "blue")
+               
+               
+               
+             ),
+             HTML("<p> This trend is <b> more pronounced</b> in Rising Tide's <b> top performing students</b>.
+             This suggests, that students are practicing synthesizing multiple <b> non-fiction</b>
+             texts and need to review how this skill is taught and practiced with <b> fiction </b> in 
+                  <b> ELA class </b> at the <b>curricular level </b>. </p>"),
+             h2("% of Reading Points Lost by Reporting Category"),
+             h3("All Students"),
+        
+             fluidRow(
+               valueBox( paste(EG10_RE_Loss[1,5], "%"),HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
+               valueBox(paste(EG10_LA_Loss[1,5], "%"), HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue"),
+               box(  width = 4, solidHeader = FALSE,
+                     HTML("<p><b> 86% </b> of slected response points are from items assessing 
+                  student's reading comprehension, and these items account for
+                  <b> 91%</b> of selected response points lost by <b>Rising Tide students </b>. </p>")),
+             ),
+             h3("Top Performing Students"),
+             fluidRow(
+               valueBox( paste(EG10Top_RE_Loss[1,5], "%"),HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
+               valueBox(paste(EG10Top_LA_Loss[1,5], "%"), HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue"),
+               box(  width = 4, solidHeader = FALSE,
+                     HTML("<p> Rising Tide's <b> top performing students</b> also lost a 
+              disproportionate amount of points in reading comprehension.
+             This suggests that all students would benefit from more curricular attention
+             to <b> targeted reading comprehenshion </b>. </p>")),
+               
+               
+             ),
+              
+             h1("What reading domain cluster should we review?"),
+             h2("Craft and Structure"),
+             
+             HTML("<p> The <b> Craft and Structure </b> cluster comprises three <b> abstract </b>  standards.
+                <ul>
+                <li>  
+                    Interpreting words and phrases as they are used in a text,
+                </li>
+                <li> 
+                  Analyzing the structure of texts
+                  
+                </li>
+                    
+                <li> 
+                  Assessing how point of view or purpose shapes the content and style of a text.
+                </li>
+                </ul>
+                Read about all of the literacy standards 
+                <a href='https://www.doe.mass.edu/frameworks/ela/2017-06.pdf'>here. </a>
+                </p>"),
+             h3("% Points Lost by Domain Cluster: All Students"),
+              
+             
+             fluidRow(
+               # A static valueBox
+               
+               valueBox(paste(EG10_KD_Loss[1,5], "%"), HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "blue"), 
+               valueBox(paste(EG10_CS_Loss[1,5], "%"), HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "red"),
+               
+               
+               
+               valueBox(paste(EG10_IK_Loss[1,5], "%"), HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "blue"),
+               
+               
+               
+               # valueBox(EG10_KL_Loss[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "blue"),
+               
+               valueBox(paste(EG10_VA_Loss[1,5], "%"), HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "blue"),
+               box(  width = 4, solidHeader = FALSE,
+                    HTML("<p> Craft and Structure items account for <b> 29%</b> of available selected response points
+                    and <b> 39% </b> of points lost by <b> Rising Tide students </b> </p>")),
+                    
+                valueBox(paste(EG10_CV_Loss[1,5], "%"), HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "blue")
+             
+               ),
+               
+               
+               
+             h3("% Points Lost by Domain Cluster: Top Performing Students"),
+             
+             
+             fluidRow(
+               # A static valueBox
+               
+               valueBox(paste(EG10Top_KD_Loss[1,5], "%"), HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "blue"), 
+               valueBox(paste(EG10Top_CS_Loss[1,5], "%"), HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "red"),
+               
+               
+               
+               valueBox(paste(EG10Top_IK_Loss[1,5], "%"), HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "blue"),
+               
+               
+               
+               # valueBox(EG10_KL_Loss[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "blue"),
+               
+               valueBox(paste(EG10Top_VA_Loss[1,5], "%"), HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "blue"),
+               box(  width = 4, solidHeader = FALSE,
+                     HTML("<p> Top Performing students lost <b>disproportionately more </b> craft and structure points. </p>")),
+               valueBox(paste(EG10Top_CV_Loss[1,5], "%"), HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "blue")
+               
+               
+               
+             )
+            
+             
      )
+     
       
       
     )
