@@ -14,9 +14,9 @@ ui <- dashboardPage(
       menuItem("Home", tabName = "home", icon = icon("home")),
       menuItem("Science", tabName = "science", icon = icon("microscope"),
                menuSubItem("G11 Biology Content", tabName = "g11BiologyContent"),
+               menuSubItem("G9 Physics Analysis", tabName = "g9PhysicsAnalysis"),
                menuSubItem("G9 Physics Content", tabName = "g9PhysicsContent"),
-              menuSubItem("G9 Physics Performance", tabName = "g9PhysicsPerf"),
-              menuSubItem("G9 Physics Analysis", tabName = "g9PhysicsAnalysis"),
+              menuSubItem("G9 Physics RT-State Diff", tabName = "g9PhysicsPerf"),
               menuSubItem("G9 Physics Top Performers", tabName = "g9PhysicsTop"),
               menuSubItem("G8 STE Content", tabName = "g8SteContent"),
               menuSubItem("G8 STE Performance", tabName = "g8StePerf"),
@@ -38,10 +38,10 @@ ui <- dashboardPage(
                menuSubItem("G5 Math Performance", tabName = "g5MathPerf")
               ),
       menuItem("ELA", tabName = "ela", icon = icon("book-bookmark"),
-               menuSubItem("G10 ELA Content", tabName = "g10ELAContent"),
-               menuSubItem("G10 ELA Performance", tabName = "g10ELAPerformance"),
                menuSubItem("G10 ELA Writing Analysis", tabName = "g10ELAWritingAnalysis"),
-               menuSubItem("G10 ELA Reading Analysis", tabName = "g10ELAReadingAnalysis")
+               menuSubItem("G10 ELA Reading Analysis", tabName = "g10ELAReadingAnalysis"),
+               menuSubItem("G10 ELA Content", tabName = "g10ELAContent"),
+               menuSubItem("G10 ELA RT-State Diff", tabName = "g10ELADiff")
       )
       
     )
@@ -1155,7 +1155,7 @@ ui <- dashboardPage(
       
       #G10 ELA Performance
       
-      tabItem("g10ELAPerformance",
+      tabItem("g10ELADiff",
               span(h1("How do our students compare to their peers in the state?")), #style = "color:black")),
               
               h2("RT-State Diff by Content Category"),
@@ -1168,8 +1168,8 @@ ui <- dashboardPage(
               ),
               h3("Writing"),
               fluidRow(
-                valueBox( EG10_ESidea_Diff[1,5],HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "light-blue"),
-                valueBox( EG10_ESconv_Diff[1,5],HTML("<p> Essay:<br> Language Conv. <p>"),icon = icon("indent"), color = "light-blue")
+                valueBox( EG10_ESidea_Diff[1,5],HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "red"),
+                valueBox( EG10_ESconv_Diff[1,5],HTML("<p> Essay:<br> Language Conv. <p>"),icon = icon("indent"), color = "red")
               ),
               
               
@@ -1180,7 +1180,7 @@ ui <- dashboardPage(
               fluidRow(
                 
                 valueBox(EG10_NFRead_Diff[1,6], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper"), color = "blue" ),
-                valueBox(EG10_FRead_Diff[1,6], HTML("<p> Fiction </p>"), icon=icon("book"), color = "blue")
+                valueBox(EG10_FRead_Diff[1,6], HTML("<p> Fiction </p>"), icon=icon("book"), color = "red")
                 
                 
                 
@@ -1188,8 +1188,8 @@ ui <- dashboardPage(
               h3("Writing"),
               fluidRow(
                 # A static valueBox
-                valueBox(EG10_NFWrite_Diff[1,6], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper"), color = "light-blue" ),
-                valueBox(EG10_FWrite_Diff[1,6], HTML("<p> Fiction </p>"), icon=icon("book"), color = "light-blue")
+                valueBox(EG10_NFWrite_Diff[1,6], HTML("<p> Non-Fiction </p>"),icon=icon("newspaper"), color = "red" ),
+                valueBox(EG10_FWrite_Diff[1,6], HTML("<p> Fiction </p>"), icon=icon("book"), color = "red")
                 
                 
                 
@@ -1208,7 +1208,7 @@ ui <- dashboardPage(
               h3("Writing"),
               fluidRow(
                
-                valueBox(EG10_2TextWrite_Diff[1,6], HTML("<p> Multiple Texts </p>"),icon=icon("right-left"), color = "light-blue" ),
+                valueBox(EG10_2TextWrite_Diff[1,6], HTML("<p> Multiple Texts </p>"),icon=icon("right-left"), color = "red" ),
                 valueBox(EG10_1TextWrite_Diff[1,6], HTML("<p> Single Text </p>"), icon=icon("1"), color = "light-blue")
                 
                 
@@ -1221,7 +1221,7 @@ ui <- dashboardPage(
                 # A static valueBox
                 
                 valueBox(EG10_KD_Diff[1,6], HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "blue"), 
-                valueBox(EG10_CS_Diff[1,6], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "blue"),
+                valueBox(EG10_CS_Diff[1,6], HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "red"),
                 
                 
                 
@@ -1340,16 +1340,17 @@ ui <- dashboardPage(
              
              
              h2("% Points Lost by Text Type"),
-             HTML("<p> Despite there being <b> more </b> reading points associated with items
-                  assessing a student's comprhension of non-fiction texts, <b> Rising Tide</b> students lost 
-                  <b> significantly more points </b> in the comprehension and analysis of <b>fictional </b> 
-                  texts. </p>"),
+             
              h3("All Students"),
             
              fluidRow(
                
                valueBox(paste(EG10_NFRead_Loss[1,5], "%"), HTML("<p> Non-Fiction </p>"),icon=icon("newspaper"), color = "blue" ),
-               valueBox(paste(EG10_FRead_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "red")
+               valueBox(paste(EG10_FRead_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "red"),
+               box(  width = 4, solidHeader = FALSE,
+                     HTML("<p>  <b> Rising Tide</b> students lost 
+                  <b> significantly more points </b> in the comprehension and analysis of <b>fictional </b> 
+                  texts. </p>"))
                
                
                
@@ -1357,14 +1358,15 @@ ui <- dashboardPage(
              
              
              h3("Top Scoring Students"),
-             HTML("<p> This trend is <b> more pronounced</b> in Rising Tide's <b> top performing students</b>.
-             This suggests, that students need an adjustment at the <b>curricular level </b> in fiction reading comprehension
-             and text analysis. </p>"),
+             
              fluidRow(
                
                valueBox(paste(EG10Top_NFRead_Loss[1,5], "%"), HTML("<p> Non-Fiction </p>"),icon=icon("newspaper"), color = "blue" ),
-               valueBox(paste(EG10Top_FRead_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "red")
-               
+               valueBox(paste(EG10Top_FRead_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "red"),
+               box(  width = 4, solidHeader = FALSE,
+                     HTML("<p> This trend is <b> more pronounced</b> in Rising Tide's <b> top performing students</b>.
+             This suggests, that students need an adjustment at the <b>curricular level </b> in fiction reading comprehension
+             and text analysis. </p>"))
                
                
              ),
@@ -1372,17 +1374,16 @@ ui <- dashboardPage(
              h2("% Reading Points Lost by Text Quantity"),
              
              h3("All Students"),
-             HTML("<p><b> 57% </b> of reading points are from items asking 
-                  students to sythesize between two texts, these items account for
-                  <b> 65%</b> of reading points lost by <b>Rising Tide students </b>. </p>"),
+             
              
              fluidRow(
                # A static valueBox
                valueBox(paste(EG10_2TextRead_Loss[1,5], "%"), HTML("<p> Multiple Texts </p>"),icon=icon("right-left"), color = "red" ),
-               valueBox(paste(EG10_1TextRead_Loss[1,5], "%"), HTML("<p> Single Text </p>"), icon=icon("1"), color = "blue")
-               
-               
-               
+               valueBox(paste(EG10_1TextRead_Loss[1,5], "%"), HTML("<p> Single Text </p>"), icon=icon("1"), color = "blue"),
+               box(  width = 4, solidHeader = FALSE,
+                     HTML("<p><b> 57% </b> of reading points are from items asking 
+                  students to sythesize between two texts, yet these items account for
+                  <b> 65%</b> of reading points lost by <b>Rising Tide students </b>. </p>"))
              ),
             
             
@@ -1391,20 +1392,22 @@ ui <- dashboardPage(
              fluidRow(
                # A static valueBox
                valueBox(paste(EG10Top_2TextRead_Loss[1,5], "%"), HTML("<p> Multiple Texts </p>"),icon=icon("right-left"), color = "red" ),
-               valueBox(paste(EG10Top_1TextRead_Loss[1,5], "%"), HTML("<p> Single Text </p>"), icon=icon("1"), color = "blue")
+               valueBox(paste(EG10Top_1TextRead_Loss[1,5], "%"), HTML("<p> Single Text </p>"), icon=icon("1"), color = "blue"),
+               box(  width = 4, solidHeader = FALSE,
+                     HTML("<p> This trend is <b> more pronounced</b> in Rising Tide's <b> top performing students</b>.
+             This suggests, that students are practicing synthesizing multiple <b> non-fiction</b>
+             texts and need to review how this skill is taught and practiced with <b> fiction </b> in 
+                  <b> ELA class </b> at the <b>curricular level </b>. </p>"))
                
                
                
              ),
-             HTML("<p> This trend is <b> more pronounced</b> in Rising Tide's <b> top performing students</b>.
-             This suggests, that students are practicing synthesizing multiple <b> non-fiction</b>
-             texts and need to review how this skill is taught and practiced with <b> fiction </b> in 
-                  <b> ELA class </b> at the <b>curricular level </b>. </p>"),
+             
              h2("% of Reading Points Lost by Reporting Category"),
              h3("All Students"),
         
              fluidRow(
-               valueBox( paste(EG10_RE_Loss[1,5], "%"),HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
+               valueBox( paste(EG10_RE_Loss[1,5], "%"),HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "red"),
                valueBox(paste(EG10_LA_Loss[1,5], "%"), HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue"),
                box(  width = 4, solidHeader = FALSE,
                      HTML("<p><b> 86% </b> of slected response points are from items assessing 
@@ -1413,13 +1416,13 @@ ui <- dashboardPage(
              ),
              h3("Top Performing Students"),
              fluidRow(
-               valueBox( paste(EG10Top_RE_Loss[1,5], "%"),HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
+               valueBox( paste(EG10Top_RE_Loss[1,5], "%"),HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "red"),
                valueBox(paste(EG10Top_LA_Loss[1,5], "%"), HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue"),
                box(  width = 4, solidHeader = FALSE,
                      HTML("<p> Rising Tide's <b> top performing students</b> also lost a 
               disproportionate amount of points in reading comprehension.
              This suggests that all students would benefit from more curricular attention
-             to <b> targeted reading comprehenshion </b>. </p>")),
+             to <b> targeted reading comprehension </b>. </p>"))
                
                
              ),
@@ -1430,15 +1433,15 @@ ui <- dashboardPage(
              HTML("<p> The <b> Craft and Structure </b> cluster comprises three <b> abstract </b>  standards.
                 <ul>
                 <li>  
-                    Interpreting words and phrases as they are used in a text,
+                    <b>Interpreting </b> words and phrases as they are used in a text,
                 </li>
                 <li> 
-                  Analyzing the structure of texts
+                  <b> Analyzing</b> the <b>structure </b> of texts
                   
                 </li>
                     
                 <li> 
-                  Assessing how point of view or purpose shapes the content and style of a text.
+                  Assessing how <b> point of view </b> or purpose <b> shapes </b> the content and style of a text.
                 </li>
                 </ul>
                 Read about all of the literacy standards 
