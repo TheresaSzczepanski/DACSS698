@@ -1244,89 +1244,74 @@ ui <- dashboardPage(
      
      tabItem("g10ELAWritingAnalysis",
              span(h1("How do we improve?")), #style = "color:black")),
+             span( h2("Writing with Text Synthesis")),
              
-             h2("Writing with Text Synthesis"),
-             h3("Reading"),
+             
+            
+             
              fluidRow(
-               valueBox( paste(EG10_RE_Loss[1,5], "%"),HTML("<p> Reading: <br>Comprehension</p>"),icon = icon("book-open-reader"), color = "blue"),
-               valueBox(paste(EG10_LA_Loss[1,5], "%"), HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue")
-               
-               
+               valueBox( EG10_ESidea_Diff[1,5],HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "red"),
+               valueBox( EG10_ESconv_Diff[1,5],HTML("<p> Essay:<br> Language Conv. <p>"),icon = icon("indent"), color = "red"),
+               box( width = 4, solidHeader = FALSE,
+                    HTML("<p> Rising Tide students earned <b> fewer points </b> than their peers in the state
+             across <b> all writing categories </b>. </p>"))
              ),
-             h3("Writing"),
+             
+             #To-Do: Produce visual here?
+             #fluidRow(
+             #   box(
+             #     status = "primary", solidHeader = TRUE,
+             #     collapsible = TRUE, width = 500,
+             #     plotOutput("SG9Top_Loss_Bar")
+             #   )
+             # ),
+             
+             h3("% Points Lost by Writing Subscore"),
+             
              fluidRow(
-               valueBox( paste(EG10_ESidea_Loss[1,4], "%"),HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "light-blue"),
-               valueBox( paste(EG10_ESconv_Loss[1,4], "%"),HTML("<p> Essay:<br> Language Conv. <p>"),icon = icon("indent"), color = "light-blue")
+               valueBox( paste(EG10_ESidea_Loss[1,4], "%"),HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "red"),
+               valueBox( paste(EG10_ESconv_Loss[1,4], "%"),HTML("<p> Essay:<br> Language Conv. <p>"),icon = icon("indent"), color = "light-blue"),
+               box( width = 4, solidHeader = FALSE,
+                    HTML("<p> Idea Development accounts for <b>63% </b> of available <b> writing </b> points 
+                  on the MCAS and <b> 77% of points lost by Rising Tide </b> students. </p>"))
+             ),
+             
+             h3("Top-Performing Students"),
+             fluidRow(
+               valueBox( paste(EG10Top_ESidea_Loss[1,4], "%"),HTML("<p>Essay: <br> Idea Development <p>"),icon = icon("lightbulb"), color = "red"),
+               valueBox( paste(EG10Top_ESconv_Loss[1,4], "%"),HTML("<p> Essay:<br> Language Conv. <p>"),icon = icon("indent"), color = "light-blue"),
+               box( width = 4, solidHeader = FALSE,
+                    HTML("<p> The trend is <b> more pronounced </b> in students with scores <b> greater
+                  than 515 </b> </p>"))
              ),
              
              
              
              
              h2("% Points Lost by Text Type"),
-             h3("Reading"),
-             fluidRow(
-               
-               valueBox(paste(EG10_NFRead_Loss[1,5], "%"), HTML("<p> Non-Fiction </p>"),icon=icon("newspaper"), color = "blue" ),
-               valueBox(paste(EG10_FRead_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "blue")
-               
-               
-               
-             ),
-             h3("Writing"),
              fluidRow(
                # A static valueBox
                valueBox(paste(EG10_NFWrite_Loss[1,5], "%"), HTML("<p> Non-Fiction </p>"),icon=icon("newspaper"), color = "light-blue" ),
-               valueBox(paste(EG10_FWrite_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "light-blue")
-               
-               
-               
-             ),
+               valueBox(paste(EG10_FWrite_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "light-blue"),
+               box( width = 4, solidHeader = FALSE,
+                    HTML("<p> In <b> contrast</b> to their reading scores by text,
+                    Rising Tide students lost points regardless of the text type and student performance level. 
+                    This suggests the need to review the practice of writing in <b> both ELA and Social Studies </b>. </p>"))
+                ),
              h2("% Points Lost by Text Quantity"),
-             h3("Reading"),
-             fluidRow(
-               # A static valueBox
-               valueBox(paste(EG10_2TextRead_Loss[1,5], "%"), HTML("<p> Multiple Texts </p>"),icon=icon("right-left"), color = "blue" ),
-               valueBox(paste(EG10_1TextRead_Loss[1,5], "%"), HTML("<p> Single Text </p>"), icon=icon("1"), color = "blue")
-               
-               
-               
-             ),
              
              h3("Writing"),
              fluidRow(
                
                valueBox(paste(EG10_2TextWrite_Loss[1,5], "%"), HTML("<p> Multiple Texts </p>"),icon=icon("right-left"), color = "light-blue" ),
-               valueBox(EG10_1TextWrite_Loss[1,5], HTML("<p> Single Text </p>"), icon=icon("1"), color = "light-blue")
-               
-               
+               valueBox(EG10_1TextWrite_Loss[1,5], HTML("<p> Single Text </p>"), icon=icon("1"), color = "light-blue"),
+               box( width = 4, solidHeader = FALSE,
+                    HTML("<p> <b>All</b> essay prompts required students to synthesize <b> two </b> texts. </p>"))
                
              ),
-             h2("Selected Response % Points Lost by Domain Cluster"),
-             h3("Reading Only"),
-             
-             
-             fluidRow(
-               # A static valueBox
-               
-               valueBox(paste(EG10_KD_Loss[1,5], "%"), HTML("<p> Key Ideas <br> and Details</p>"), icon = icon("circle-info"), color = "blue"), 
-               valueBox(paste(EG10_CS_Loss[1,5], "%"), HTML("<p> Craft and Structure </p>"), icon = icon("paragraph"), color = "blue"),
-               
-               
-               
-               valueBox(paste(EG10_IK_Loss[1,5], "%"), HTML("<p> Integration of <br> Knowledge and Ideas</p>"), icon = icon("magnifying-glass-chart"), color = "blue"),
-               
-               
-               
-               # valueBox(EG10_KL_Loss[1,2], HTML("<p> Knowledge of <br>Language </p>"), icon = icon("message"), color = "blue"),
-               
-               valueBox(paste(EG10_VA_Loss[1,5], "%"), HTML("<p> Vocabulary <br> Acquisition & Use</p>"), icon = icon("spell-check"), color = "blue"), 
-               valueBox(paste(EG10_CV_Loss[1,5], "%"), HTML("<p> Conventions </p>"), icon = icon("quote-right"), color = "blue")
-               
-               
-               
-             )
              
      ),
+           
      
      tabItem("g10ELAReadingAnalysis",
              span(h1("How do we improve our reading?")), #style = "color:black")),
