@@ -279,7 +279,7 @@ ui <- dashboardPage(
             
              h3("Top-Performing Students"),
              HTML("<p> The trend is <b> more pronounced </b> in students with scores <b> greater
-                  than 515 </b> </p>"),
+                  than 515 </b>. </p>"),
              
             
              
@@ -1282,7 +1282,7 @@ ui <- dashboardPage(
                valueBox( paste(EG10Top_ESconv_Loss[1,4], "%"),HTML("<p> Essay:<br> Language Conv. <p>"),icon = icon("indent"), color = "light-blue"),
                box( width = 4, solidHeader = FALSE,
                     HTML("<p> The trend is <b> more pronounced </b> in students with scores <b> greater
-                  than 515 </b> </p>"))
+                  than 515 </b>. </p>"))
              ),
              
              
@@ -1324,7 +1324,7 @@ ui <- dashboardPage(
              
              
              
-             h2("% Points Lost by Text Type"),
+             h2("% Reading Points Lost by Text Type"),
              
              h3("All Students"),
             
@@ -1334,8 +1334,7 @@ ui <- dashboardPage(
                valueBox(paste(EG10_FRead_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "red"),
                box(  width = 4, solidHeader = FALSE,
                      HTML("<p>  <b> Rising Tide</b> students lost 
-                  <b> significantly more points </b> in the comprehension and analysis of <b>fictional </b> 
-                  texts. </p>"))
+                  <b> significantly more points </b> in the comprehension and analysis of <b>literature </b>. </p>"))
                
                
                
@@ -1350,8 +1349,8 @@ ui <- dashboardPage(
                valueBox(paste(EG10Top_FRead_Loss[1,5], "%"), HTML("<p> Fiction </p>"), icon=icon("book"), color = "red"),
                box(  width = 4, solidHeader = FALSE,
                      HTML("<p> This trend is <b> more pronounced</b> in Rising Tide's <b> top performing students</b>.
-             This suggests, that students need an adjustment at the <b>curricular level </b> in fiction reading comprehension
-             and text analysis. </p>"))
+             This suggests that students need an adjustment at the <b>curricular level </b> in reading comprehension
+             and <b> textual analysis </b> of <b>literature </b>. </p>"))
                
                
              ),
@@ -1380,9 +1379,8 @@ ui <- dashboardPage(
                valueBox(paste(EG10Top_1TextRead_Loss[1,5], "%"), HTML("<p> Single Text </p>"), icon=icon("1"), color = "blue"),
                box(  width = 4, solidHeader = FALSE,
                      HTML("<p> This trend is <b> more pronounced</b> in Rising Tide's <b> top performing students</b>.
-             This suggests, that students are practicing synthesizing multiple <b> non-fiction</b>
-             texts and need to review how this skill is taught and practiced with <b> fiction </b> in 
-                  <b> ELA class </b> at the <b>curricular level </b>. </p>"))
+             This suggests that students need more targeted instruction in synthesizing <b> multiple literary and informational texts</b> in 
+                  <b> ELA </b>  and <b> Social Studies </b> at the <b>curricular level </b>. </p>"))
                
                
                
@@ -1396,7 +1394,7 @@ ui <- dashboardPage(
                valueBox(paste(EG10_LA_Loss[1,5], "%"), HTML("<p>Reading: <br>Language Conv. <br> & Vocabulary </p>"), icon = icon("quote-left"), color = "blue"),
                box(  width = 4, solidHeader = FALSE,
                      HTML("<p><b> 86% </b> of slected response points are from items assessing 
-                  student's reading comprehension, and these items account for
+                  students' reading comprehension. These items account for
                   <b> 91%</b> of selected response points lost by <b>Rising Tide students </b>. </p>")),
              ),
              h3("Top Performing Students"),
@@ -1415,7 +1413,7 @@ ui <- dashboardPage(
              h1("What reading domain cluster should we review?"),
              h2("Craft and Structure"),
              
-             HTML("<p> The <b> Craft and Structure </b> cluster comprises three <b> abstract </b>  standards.
+             HTML("<p> The <b> Craft and Structure </b> cluster is comprised of three <b> abstract </b>  standards.
                 <ul>
                 <li>  
                     <b>Interpreting </b> words and phrases as they are used in a text,
